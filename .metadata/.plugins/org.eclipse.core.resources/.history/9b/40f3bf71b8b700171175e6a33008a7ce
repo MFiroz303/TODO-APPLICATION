@@ -1,0 +1,17 @@
+package com.bridgeit.todo.model;
+
+import org.springframework.stereotype.Component;
+@Component
+public class ErrorMessage {
+	
+	private String responseMessage;
+
+	public String getResponseMessage() {
+		return responseMessage;
+	}
+
+	public void setResponseMessage(String responseMessage) {
+		this.responseMessage = responseMessage;
+	}
+
+}

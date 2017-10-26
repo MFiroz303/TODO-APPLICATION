@@ -3,6 +3,7 @@ package com.bridgeit.todo.service;
 import java.util.List;
 
 import com.bridgeit.todo.model.Note;
+import com.bridgeit.todo.model.User;
 
 public interface NoteService {
 
@@ -10,7 +11,7 @@ public interface NoteService {
 
 	void deleteNoteById(int id);
 
-	List<Note> findAllNote();
+	List<Note> findAllNote(User user);
 
 	void updateNote(int id, Note note);
 

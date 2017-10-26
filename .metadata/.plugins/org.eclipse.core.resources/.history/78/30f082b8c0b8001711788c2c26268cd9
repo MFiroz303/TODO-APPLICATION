@@ -1,0 +1,13 @@
+package com.bridgeit.todo.dao;
+
+import com.bridgeit.todo.model.Note;
+
+public interface NoteDao {
+	
+	public void saveNotes(Note note);
+
+	public void deleteNoteById(int id);
+
+	public Note findById(int id);
+
+}

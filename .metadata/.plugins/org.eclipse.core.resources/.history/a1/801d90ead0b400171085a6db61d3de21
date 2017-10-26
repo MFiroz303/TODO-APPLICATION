@@ -1,0 +1,56 @@
+package com.bridgeit.todo.dao;
+
+import javax.transaction.SystemException;
+import javax.transaction.Transaction;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.bridgeit.todo.model.User;
+
+@Service("UserDao")
+public class UserDaoImpl implements UserDao {
+
+	@Autowired
+	private SessionFactory sessionFactory;
+
+	public SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
+
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+
+	/*public void saveUser(User user) {
+		Session session = sessionFactory.openSession();
+		Transaction transaction = null;
+		try {
+			 transaction = (Transaction) session.beginTransaction();
+			session.save(user);
+			transaction.commit();
+
+		} catch (Exception e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+		} finally {
+			session.close();
+		}*/
+	public void saveUsr(User user) throws IllegalStateException, SystemException {
+		Session session = sessionFactory.openSession();
+		Transaction transaction = null;
+		try {
+			transaction = (Transaction) session.beginTransaction();
+			session.save(user);
+			transaction.commit();
+		} catch (Exception e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+		} finally {
+			session.close();
+		}
+	}
+}

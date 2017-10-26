@@ -1,0 +1,9 @@
+package com.bridgeit.todo.dao;
+
+import com.bridgeit.todo.model.User;
+
+public interface UserDao {
+	public void saveUser(User user);
+	public void userLogin(String email, String password);
+
+}

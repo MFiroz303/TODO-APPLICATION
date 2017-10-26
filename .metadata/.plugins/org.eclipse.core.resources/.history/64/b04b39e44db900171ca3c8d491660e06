@@ -1,0 +1,104 @@
+package com.bridgeit.todo.dao;
+
+import java.util.List;
+
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import com.bridgeit.todo.model.Note;
+
+@Service("NoteDao")
+public class NoteDaoImpl implements NoteDao {
+
+	@Autowired
+	private SessionFactory sessionFactory;
+
+	public SessionFactory getSessionFactory() {
+		return sessionFactory;
+	}
+
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
+	}
+
+	@Override
+	public void saveNotes(Note note) {
+		Session session = sessionFactory.openSession();
+		org.hibernate.Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			session.persist(note);
+			transaction.commit();
+
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+
+	}
+
+	@Override
+	public void deleteNoteById(int id) {
+
+		Session session = sessionFactory.openSession();
+		org.hibernate.Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			Note note = new Note();
+			note.setId(id);
+			session.delete(note);
+			transaction.commit();
+		} catch (Exception e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+		} finally {
+			session.close();
+
+		}
+
+	}
+
+	@Override
+	public List<Note> findAllNote() {
+		Session session = sessionFactory.openSession();
+		@SuppressWarnings("deprecation")
+		Criteria criteria = session.createCriteria(Note.class);
+		@SuppressWarnings("unchecked")
+		List<Note> list = criteria.list();
+		return list;
+
+	}
+
+	@Override
+	public void updateNote(Note note) {
+
+		Session session = sessionFactory.openSession();
+		org.hibernate.Transaction transaction = null;
+		try {
+
+			transaction = session.beginTransaction();
+			@SuppressWarnings("deprecation")
+			Criteria criteria = session.createCriteria(Note.class);
+			criteria.add(Restrictions.eq("id", "id"));
+			note.setTitle(note.getTitle());
+			note.setDescription(note.getDescription());
+			note.setModifiedDate(note.getModifiedDate());
+			session.saveOrUpdate(note);
+			transaction.commit();
+		} catch (Exception e) {
+			if (transaction != null) {
+				transaction.rollback();
+			}
+		} finally {
+			session.close();
+
+		}
+
+	}
+
+}

@@ -1,0 +1,9 @@
+package com.bridgeit.todo.dao;
+
+import com.bridgeit.todo.model.Note;
+
+public interface NoteDao {
+
+	void saveNotes(Note note);
+
+}

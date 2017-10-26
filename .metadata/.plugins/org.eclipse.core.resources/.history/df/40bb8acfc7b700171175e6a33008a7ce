@@ -1,0 +1,20 @@
+/*package com.bridgeit.todo.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.bridgeit.todo.service.UserService;
+
+@RestController
+public class LogingController {
+
+	@Autowired
+	UserService  userService;
+	
+	@RequestMapping(value = "/login" )
+	public ResponseEntity<void> getLoging(@RequestBody  User user)
+}
+*/

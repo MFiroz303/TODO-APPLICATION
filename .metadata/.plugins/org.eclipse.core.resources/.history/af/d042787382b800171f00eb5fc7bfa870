@@ -1,0 +1,6 @@
+package com.bridgeit.todo.dao;
+
+public interface NoteDao {
+	public void saveNotes();
+
+}

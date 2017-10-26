@@ -1,0 +1,5 @@
+package com.bridgeit.todo.validation;
+
+public class Validator {
+
+}

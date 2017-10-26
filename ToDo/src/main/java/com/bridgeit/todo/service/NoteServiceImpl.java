@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.bridgeit.todo.dao.NoteDao;
 import com.bridgeit.todo.model.Note;
+import com.bridgeit.todo.model.User;
 
 @Service("noteService")
 public class NoteServiceImpl implements NoteService {
@@ -25,8 +26,8 @@ public class NoteServiceImpl implements NoteService {
 		
 	}
 
-	public List<Note> findAllNote() {
-		return noteDao.findAllNote();
+	public List<Note> findAllNote(User user) {
+		return noteDao.findAllNote(user);
 		
 	}
 
