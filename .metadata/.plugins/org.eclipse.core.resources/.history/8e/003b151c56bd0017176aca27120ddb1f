@@ -1,0 +1,21 @@
+package com.bridgeit.todo.service;
+
+public class MailServiceImpl implements MailService{
+
+    MailSender mailSender;
+	@Override
+	public void sendMail(String from, String to, String subject, String msg) {
+		
+		 
+		 SimpleMailMessage message = new SimpleMailMessage();
+		
+		
+		 message.setFrom(from);
+		 message.setTo(to);
+		 message.setSubject(subject);
+		 message.setText(message);
+			mailSender.send(mailMessage);
+		 
+	}
+
+}

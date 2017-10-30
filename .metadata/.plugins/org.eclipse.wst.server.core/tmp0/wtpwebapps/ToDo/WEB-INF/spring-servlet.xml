@@ -26,7 +26,7 @@
 
 		<property name="annotatedClasses">
 			<list>
-			    <value>com.bridgeit.todo.model.Note</value>
+				<value>com.bridgeit.todo.model.Note</value>
 				<value>com.bridgeit.todo.model.User</value>
 			</list>
 		</property>
@@ -46,4 +46,23 @@
 	<bean id="errorMessage" class="com.bridgeit.todo.model.ErrorMessage" />
 	<bean id="validator" class="com.bridgeit.todo.validation.Validator" />
 	<bean id="noteService" class="com.bridgeit.todo.service.NoteServiceImpl" />
+	
+	
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="smtp.gmail.com" />
+		<property name="port" value="587" />
+		<property name="username" value="mdfirozahmad2222@gmail.com" />
+		<property name="password" value="8969047112" />
+
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">true</prop>
+				<prop key="mail.smtp.starttls.enable">true</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="mailService" class="com.bridgeit.todo.service.MailServiceImpl">
+		<property name="mailSender" ref="mailSender" />
+	</bean>
 </beans>

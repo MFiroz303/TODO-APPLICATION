@@ -48,7 +48,7 @@ public class Validator {
 		        }
 		        
 		        else if(!user.getPassword().matches(passwordReg)){
-		            result="Password must contain words followed numbers.";
+		            result="Password must contain alphabates and numbers.";
 		            return result;
 		        }
 		        

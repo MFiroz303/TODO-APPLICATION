@@ -1,0 +1,6 @@
+package com.bridgeit.todo.model;
+
+public class SendingMail {
+
+	 private MailSender mailSender;
+}

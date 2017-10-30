@@ -1,0 +1,32 @@
+package com.bridgeit.todo.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
+
+
+public class MailServiceImpl implements MailService{
+
+	@Autowired
+    MailSender mailSender;
+   
+   /*public void setMailSender(MailSender mailSender) {
+		this.mailSender = mailSender;
+	} */
+   
+	@Override
+	public void sendMail(String from, String to, String subject, String msg) {
+		
+		 
+		 SimpleMailMessage message = new SimpleMailMessage();
+		
+		
+		 message.setFrom(from);
+		 message.setTo("asfiroz007@gmail.com");
+		 message.setSubject(subject);
+		 message.setText(message);
+			mailSender.send(mailMessage);
+		 
+	}
+
+}

@@ -4,6 +4,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +29,7 @@ public class NoteDaoImpl implements NoteDao {
 	@Override
 	public int saveNotes(Note note) {
 		Session session = sessionFactory.openSession();
-		org.hibernate.Transaction transaction = null;
+		 Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
 			session.persist(note);
@@ -47,7 +48,7 @@ public class NoteDaoImpl implements NoteDao {
 	public void deleteNoteById(int id) {
 
 		Session session = sessionFactory.openSession();
-		org.hibernate.Transaction transaction = null;
+		 Transaction transaction= null;
 		try {
 			transaction = session.beginTransaction();
 			Note note = new Note();
@@ -78,7 +79,7 @@ public class NoteDaoImpl implements NoteDao {
 
 	public void updateNote(int id, Note note) {
 		Session session = sessionFactory.openSession();
-		org.hibernate.Transaction transaction = null;
+		Transaction transaction = null;
 		try {
 
 			transaction = session.beginTransaction();

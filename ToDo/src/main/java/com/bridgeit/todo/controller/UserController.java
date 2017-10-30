@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import com.bridgeit.todo.model.ErrorMessage;
 import com.bridgeit.todo.model.User;
+import com.bridgeit.todo.service.MailService;
 import com.bridgeit.todo.service.UserService;
 import com.bridgeit.todo.validation.Validator;
 
@@ -21,6 +22,9 @@ public class UserController {
 
 	@Autowired
 	UserService userService;
+	
+	@Autowired
+	MailService mailservice;
 
 	@Autowired
 	ErrorMessage errorMessage;
@@ -34,6 +38,7 @@ public class UserController {
 		String isValid = validator.validateUserRegistration(user);
 
 		if (isValid.equals("true")) {
+			mailservice.sendMail(user.getEmail());
 			userService.saveUser(user);
 			errorMessage.setResponseMessage("registered Successfully....");
 			return ResponseEntity.ok(errorMessage);
@@ -59,7 +64,7 @@ public class UserController {
 		errorMessage.setResponseMessage("Login Successfully....");
 		return ResponseEntity.ok(errorMessage);
 	}
-
+	
 	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
 	@ExceptionHandler(value = Exception.class)
 	public String exceptionHandler(Exception e) {
