@@ -1,0 +1,14 @@
+127.0.0.1 - - [31/Oct/2017:15:47:43 +0530] "GET / HTTP/1.1" 404 1070
+127.0.0.1 - - [31/Oct/2017:15:47:55 +0530] "GET /ToDo/ HTTP/1.1" 200 52
+127.0.0.1 - - [31/Oct/2017:15:47:56 +0530] "GET /favicon.ico HTTP/1.1" 404 1081
+127.0.0.1 - - [31/Oct/2017:15:47:56 +0530] "GET /favicon.ico HTTP/1.1" 404 1081
+0:0:0:0:0:0:0:1 - - [31/Oct/2017:15:49:22 +0530] "POST /ToDo/login HTTP/1.1" 400 57
+0:0:0:0:0:0:0:1 - - [31/Oct/2017:15:49:45 +0530] "POST /ToDo/login HTTP/1.1" 200 55
+127.0.0.1 - - [31/Oct/2017:16:21:27 +0530] "GET / HTTP/1.1" 404 1070
+127.0.0.1 - - [31/Oct/2017:16:21:28 +0530] "GET /ToDo/ HTTP/1.1" 200 52
+0:0:0:0:0:0:0:1 - - [31/Oct/2017:16:21:38 +0530] "POST /ToDo/login HTTP/1.1" 200 55
+127.0.0.1 - - [31/Oct/2017:16:24:47 +0530] "GET / HTTP/1.1" 404 1070
+127.0.0.1 - - [31/Oct/2017:16:24:48 +0530] "GET /ToDo/WEB-INF/classes/com/bridgeit/todo/Token/TokenGenerate.java HTTP/1.1" 404 1047
+127.0.0.1 - - [31/Oct/2017:16:25:16 +0530] "GET /ToDo/WEB-INF/classes/com/bridgeit/todo/Token/TokenVerify.java HTTP/1.1" 404 1047
+127.0.0.1 - - [31/Oct/2017:16:25:16 +0530] "GET /favicon.ico HTTP/1.1" 404 1081
+127.0.0.1 - - [31/Oct/2017:16:25:16 +0530] "GET /favicon.ico HTTP/1.1" 404 1081

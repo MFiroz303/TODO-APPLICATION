@@ -1,0 +1,51 @@
+package com.bridgeit.todo.Token;
+
+import java.security.Key;
+import java.util.Date;
+
+import javax.crypto.spec.SecretKeySpec;
+import javax.xml.bind.DatatypeConverter;
+
+import com.bridgeit.todo.model.User;
+
+import io.jsonwebtoken.JwtBuilder;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.impl.crypto.MacProvider;
+
+public class TokenGenerate {
+	
+	String key="secretKey";
+	String compactJws= null;
+	//Sample method to construct a JWT
+	private String createJWT(String id, String issuer, String subject, long ttlMillis) {
+
+	    //The JWT signature algorithm we will be using to sign the token
+	    SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
+
+	    long nowMillis = 1000*60;
+	    Date now = new Date(nowMillis);
+
+	    //We will sign our JWT with our ApiKey secret
+	   // byte[] apiKeySecretBytes = DatatypeConverter.parseBase64Binary(Key.getSecret());
+	   // Key signingKey = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
+
+	  //  Key key = MacProvider.generateKey();
+	    //Let's set the JWT Claims
+	    String compactJws = Jwts.builder()
+	    		  .setSubject("abc..")
+	    		  .signWith(SignatureAlgorithm.HS512, key)
+	    		  .compact();
+
+	    //if it has been specified, let's add the expiration
+	    if (ttlMillis >= 0) {
+	    long expMillis = nowMillis + ttlMillis;
+	        Date exp = new Date(expMillis);
+	        compactJws.setExpiration(exp);
+	    }
+
+	    //Builds the JWT and serializes it to a compact, URL-safe string
+	    return compactJws;
+	}
+
+}
