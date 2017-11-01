@@ -1,0 +1,15 @@
+var todoApp = angular.module('todoApp');
+todoApp.factory('registrationService',  function($http, $location))
+
+   register = {};
+   register.registerUser = function(user){
+   
+    $http({
+	      method = "POST",
+	      url= 'register',
+	      data = user
+
+         });
+   }
+return register;
+)};

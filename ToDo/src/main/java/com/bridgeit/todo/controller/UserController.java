@@ -34,12 +34,14 @@ public class UserController {
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public ResponseEntity<ErrorMessage> saveUser(@RequestBody User user, HttpSession session) {
-		
+		System.out.println(user);
 		String isValid = validator.validateUserRegistration(user);
-
+		System.out.println("validation checking"+isValid);
 		if (isValid.equals("true")) {
-			mailservice.sendMail(user.getEmail());
+			System.out.println("inside validation:");
 			userService.saveUser(user);
+			mailservice.sendMail(user.getEmail());
+			
 			errorMessage.setResponseMessage("registered Successfully....");
 			return ResponseEntity.ok(errorMessage);
 		} else {
@@ -61,6 +63,7 @@ public class UserController {
 		}
 		session.setAttribute("user", userLogin);
 		user.setPassword("");
+		System.out.println("logged in");
 		errorMessage.setResponseMessage("Login Successfully....");
 		return ResponseEntity.ok(errorMessage);
 	}

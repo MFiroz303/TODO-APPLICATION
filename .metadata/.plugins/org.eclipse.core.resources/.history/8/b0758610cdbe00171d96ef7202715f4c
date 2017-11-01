@@ -1,0 +1,10 @@
+ var todoApp = angular.module('todoApp', ['ui.router']);
+
+    todoApp.config(['$stateProvider','$urlRouterProvider',function($stateProvider,$urlRouterProvider){
+        $stateProvider.state('register',{
+            url:'/register',
+            templateUrl: 'template/Register.html',
+            controller: 'registerController'
+        });
+     $urlRouterProvider.otherwise('register');
+      }]);

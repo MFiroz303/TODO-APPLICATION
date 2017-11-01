@@ -1,0 +1,2 @@
+var todoApp = angular.module('todoApp');
+todoApp.factory('registration'function($http, $location))

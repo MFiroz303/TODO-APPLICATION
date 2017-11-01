@@ -1,0 +1,6 @@
+var todoApp = angular.module("todoApp");
+ 
+  todoApp.controller('loginController', function($scope, $location){
+	
+	  
+  });

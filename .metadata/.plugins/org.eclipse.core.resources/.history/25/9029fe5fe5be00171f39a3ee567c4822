@@ -1,0 +1,19 @@
+body {
+	padding-top: 10px;
+	background-color: aqua;
+	font-size: 23px;
+}
+
+p.dotted {
+	border-style: dotted;
+}
+
+test {
+	margin: 0 auto;
+}
+
+#pid {
+	float: none;
+	margin: 0 auto;
+	background-color: white;
+}

@@ -1,15 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <qualifiedTypeNameHistroy>
-<fullyQualifiedTypeName name="com.bridgeit.model.User"/>
-<fullyQualifiedTypeName name="org.hibernate.SessionFactory"/>
-<fullyQualifiedTypeName name="com.bridgeit.todo.dao.UserDao"/>
-<fullyQualifiedTypeName name="org.springframework.web.bind.annotation.ResponseStatus"/>
-<fullyQualifiedTypeName name="org.springframework.web.bind.annotation.ExceptionHandler"/>
-<fullyQualifiedTypeName name="java.lang.Exception"/>
-<fullyQualifiedTypeName name="javax.validation.constraints.Size"/>
-<fullyQualifiedTypeName name="javax.validation.constraints.Pattern"/>
-<fullyQualifiedTypeName name="javax.validation.constraints.Max"/>
-<fullyQualifiedTypeName name="com.google.gson.annotations.JsonAdapter"/>
 <fullyQualifiedTypeName name="com.fasterxml.jackson.annotation.JsonInclude"/>
 <fullyQualifiedTypeName name="org.springframework.stereotype.Component"/>
 <fullyQualifiedTypeName name="javax.validation.constraints.NotNull"/>
@@ -32,7 +22,6 @@
 <fullyQualifiedTypeName name="com.bridgeit.todo.service.NoteService"/>
 <fullyQualifiedTypeName name="com.bridgeit.todo.dao.NoteDao"/>
 <fullyQualifiedTypeName name="javax.persistence.JoinColumn"/>
-<fullyQualifiedTypeName name="java.util.Date"/>
 <fullyQualifiedTypeName name="org.springframework.web.bind.annotation.PathVariable"/>
 <fullyQualifiedTypeName name="org.springframework.http.HttpStatus"/>
 <fullyQualifiedTypeName name="org.springframework.stereotype.Service"/>
@@ -52,12 +41,23 @@
 <fullyQualifiedTypeName name="java.rmi.server.UID"/>
 <fullyQualifiedTypeName name="javax.persistence.criteria.Order"/>
 <fullyQualifiedTypeName name="org.hibernate.criterion.Order"/>
-<fullyQualifiedTypeName name="com.bridgeit.todo.model.User"/>
 <fullyQualifiedTypeName name="javax.servlet.http.HttpSession"/>
 <fullyQualifiedTypeName name="org.hibernate.Transaction"/>
-<fullyQualifiedTypeName name="java.lang.String"/>
 <fullyQualifiedTypeName name="com.bridgeit.todo.service.MailService"/>
 <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
 <fullyQualifiedTypeName name="org.springframework.mail.MailSender"/>
 <fullyQualifiedTypeName name="com.bridgeit.todo.service.UserService"/>
+<fullyQualifiedTypeName name="io.jsonwebtoken.SignatureAlgorithm"/>
+<fullyQualifiedTypeName name="java.util.Date"/>
+<fullyQualifiedTypeName name="javax.crypto.spec.SecretKeySpec"/>
+<fullyQualifiedTypeName name="io.jsonwebtoken.JwtBuilder"/>
+<fullyQualifiedTypeName name="com.fasterxml.classmate.util.ResolvedTypeCache.Key"/>
+<fullyQualifiedTypeName name="io.jsonwebtoken.Claims"/>
+<fullyQualifiedTypeName name="io.jsonwebtoken.Jwts"/>
+<fullyQualifiedTypeName name="javax.xml.bind.DatatypeConverter"/>
+<fullyQualifiedTypeName name="java.security.Key"/>
+<fullyQualifiedTypeName name="java.lang.Integer"/>
+<fullyQualifiedTypeName name="com.bridgeit.todo.model.User"/>
+<fullyQualifiedTypeName name="java.lang.String"/>
+<fullyQualifiedTypeName name="io.jsonwebtoken.impl.crypto.MacProvider"/>
 </qualifiedTypeNameHistroy>
