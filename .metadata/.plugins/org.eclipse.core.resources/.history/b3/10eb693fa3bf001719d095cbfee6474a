@@ -1,0 +1,18 @@
+var todoApp = angular.module("todoApp");
+todoApp.factory('homeService', function($http, $location){
+	
+	var home = {};
+	 
+	home.cardUser = function() {
+		return $http({
+			method : "get",
+			url : 'list',
+			data : note
+
+		/*}).then(function(response) {
+			$location.path('/home')*/
+		});
+	}
+	return login;
+});
+

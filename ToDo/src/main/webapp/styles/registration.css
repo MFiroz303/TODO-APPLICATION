@@ -1,9 +1,9 @@
 body{
-    padding-top: 1px;
-	float: none;
+    padding-top: 2px; 
+    background-color:#f2f2f2;
+	float: none; 
 	margin: 0 auto;
-	background-color: aqua;
-	font-size: 23px;
+	font-size: 18px;
 }
 
 p.dotted {
@@ -15,7 +15,13 @@ test {
 }
 
 #registrationid {
+	top-margin: 0 auto;
 	float: none;
 	margin: 0 auto;
-	background-color: white;
+	background-color: #ffffff;
+	;
+	 box-shadow: 1px 1px 1px 1px gray;
 }
+#rid{
+	/*  background-color:#f2f2f2;  */
+   }

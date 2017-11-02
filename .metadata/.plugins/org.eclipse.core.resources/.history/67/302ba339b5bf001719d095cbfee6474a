@@ -1,0 +1,14 @@
+var todoApp = angular.module("todoApp");
+
+todoApp.controller('registrationController', function($scope, registrationService, $location) {
+
+	$scope.registerUser = function() {
+		console.log("abc....")
+		var httpServiceUser = registrationService.registerUser($scope.user);
+	}/*.then(function(response) {
+		console.log("this is to redirect ");
+		$location.path('login');
+	},function(respnse){
+		alert("not registered....!!");
+	})*/
+});

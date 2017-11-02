@@ -1,6 +1,5 @@
 var todoApp = angular.module('todoApp');
-todoApp.factory('registrationService',
-	function($http, $location) {
+todoApp.factory('registrationService', function($http, $location) {
 
 	var register = {};
 
@@ -10,11 +9,8 @@ todoApp.factory('registrationService',
 			method : "POST",
 			url : 'register',
 			data : user
-
-		}).then(function(response) {
-			$location.path('/login')
 		});
 	}
 	return register;
 
-});	
+});

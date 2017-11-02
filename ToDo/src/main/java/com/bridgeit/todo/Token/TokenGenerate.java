@@ -11,8 +11,8 @@ public class TokenGenerate {
 	
 	  String key="secretKey";
 	  String compactJws=null;
-	//Sample method to construct a JWT
-	@SuppressWarnings("unused")
+	  
+		@SuppressWarnings("unused")
 	private String createJWT(String id, String issuer, String subject, long ttlMillis) {
 
 	    //The JWT signature algorithm we will be using to sign the token

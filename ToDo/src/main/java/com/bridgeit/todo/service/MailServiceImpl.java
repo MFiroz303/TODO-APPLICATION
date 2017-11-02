@@ -2,6 +2,7 @@ package com.bridgeit.todo.service;
 
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.scheduling.annotation.Async;
 
 
 public class MailServiceImpl implements MailService{
@@ -13,6 +14,7 @@ public class MailServiceImpl implements MailService{
 		this.mailSender = mailSender;
 	} 
    
+   @Async
 	@Override
 	public void sendMail(String to) {
 		

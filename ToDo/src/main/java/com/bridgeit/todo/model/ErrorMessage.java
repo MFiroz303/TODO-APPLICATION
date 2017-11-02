@@ -12,4 +12,9 @@ public class ErrorMessage {
 		this.responseMessage = responseMessage;
 	}
 
+	@Override
+	public String toString() {
+		return "ErrorMessage [responseMessage=" + responseMessage + "]";
+	}
+
 }

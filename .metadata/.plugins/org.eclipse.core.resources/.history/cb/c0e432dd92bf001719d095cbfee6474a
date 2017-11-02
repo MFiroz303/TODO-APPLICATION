@@ -1,0 +1,45 @@
+.input-group {
+	margin-bottom: 10px;
+}
+
+.separator {
+	border-right: 1px solid #dfdfe0;
+}
+
+.facebook, .google {
+	min-width: 170px;
+}
+
+.facebook {
+	background-color: #354E84;
+	color: #fff;
+}
+
+.google {
+	background-color: black;
+	color: #fff;
+}
+
+.facebook:hover, .google:hover {
+	color: #fff;
+}
+
+.row {
+	margin-right: 15px;
+}
+
+#loginid {
+	height:100px;
+	width:20px;
+	/* float: none;
+	margin: 0 auto; */
+	margin-top:50px;
+}
+
+.center {
+	text-align: center;
+	border-radius: 5px;
+}
+#lid{
+  background-color:white;
+}

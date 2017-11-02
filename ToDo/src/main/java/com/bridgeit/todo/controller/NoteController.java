@@ -76,7 +76,7 @@ public class NoteController {
 
 	}
 
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	@RequestMapping(value = "/noteList", method = RequestMethod.GET)
 	public List<Note> findAllNote(HttpSession session) {
 		
 		User user = (User) session.getAttribute("user");

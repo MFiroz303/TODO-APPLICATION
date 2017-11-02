@@ -1,0 +1,56 @@
+<div class="container" id="lid">
+	<div class="row">
+		<div class="col-xs-12 col-sm-12 col-md-6" id="loginid">
+			<div class="panel-heading">
+
+				<h3>Sign In.</h3>
+				<hr color="green">
+			</div>
+
+			<div class="col-xs-6 col-sm-6 col-md-6 separator social-login-box">
+				<h4>use other account</h4>
+				<p>
+					You can also sing in using facbook account and google account<br>
+					<br> <a href="" class="btn facebook btn-block">Log in
+						using Facebook</a> <br /> <a href="" class="btn google btn-block">Log
+						in using google</a>
+			</div>
+			<h4 class="text-center">Using your account</h4>
+			<br>
+			<div class="col-xs-6 col-sm-6 col-md-6 login-box">
+				<form  name="submit" onsubmit="return validate()"
+					method="post" class="form-horizontal">
+					<div class="form-group">
+						<div class="col-sm-12">
+							<input type="email" class="form-control"
+								placeholder="Enter your Email" name="email" ng-model="user.email">
+						</div>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12">
+							<input type="password" class="form-control"
+								placeholder="Enter your password" name="password" ng-model="user.password">
+
+						</div>
+					</div>
+
+
+					<div class="form-group">
+						<div class="col-sm-12">
+							<div class="btn-group btn-group-justified">
+								<div class="btn-group">
+									<button type="button" class="btn btn-success" ng-click="log()">Login</button>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="center">
+						<a href="#!\Registration.html">New Registration?
+						</a>
+					</div>
+				</form>
+			</div>
+
+		</div>
+	</div>
+</div>

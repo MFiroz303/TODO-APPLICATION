@@ -1,0 +1,29 @@
+var todoApp = angular.module('todoApp', [ 'ui.router' ]);
+
+todoApp.config([ '$stateProvider', '$urlRouterProvider',
+		function($stateProvider, $urlRouterProvider) {
+			/* alert('hello'); */
+			$stateProvider.state('register', {
+
+				url : '/register',
+				templateUrl : 'templates/Registration.html',
+				controller : 'registrationController'
+			})
+			.state('login', {
+
+				url : '/login',
+				templateUrl : 'templates/Login.html',
+				controller : 'loginController'
+			})	
+			.state('login', {
+
+				url : '/login',
+				templateUrl : 'templates/Login.html',
+				controller : 'loginController'
+			});
+			$urlRouterProvider.otherwise('register');
+			/*$urlRouterProvider.otherwise('login');*/
+			
+			$urlRouterProvider.otherwise('register');
+			/*$urlRouterProvider.otherwise('login');*/
+		} ]);

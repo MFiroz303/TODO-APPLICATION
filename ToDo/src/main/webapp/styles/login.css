@@ -31,7 +31,7 @@
 #loginid {
 	float: none;
 	margin: 0 auto;
-	margin-top: 50px;
+	margin-top:50px;
 }
 
 .center {
@@ -39,5 +39,7 @@
 	border-radius: 5px;
 }
 #lid{
-  background-color:white;
+	height:100%;
+	width:100%;
+    background-color:white;
 }

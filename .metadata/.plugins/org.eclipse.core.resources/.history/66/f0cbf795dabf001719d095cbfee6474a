@@ -1,0 +1,27 @@
+body{
+    padding-top: 2px; 
+    background-color:#f2f2f2;
+	float: none; 
+	margin: 0 auto;
+	font-size: 18px;
+}
+
+p.dotted {
+	border-style: dotted;
+}
+
+test {
+	margin: 0 auto;
+}
+
+#registrationid {
+	top-margin: 0 auto;
+	float: none;
+	margin: 0 auto;
+	background-color: #eeeeec;
+	;
+	 box-shadow: 1px 3px 5px black;
+}
+#rid{
+	/*  background-color:#f2f2f2;  */
+   }

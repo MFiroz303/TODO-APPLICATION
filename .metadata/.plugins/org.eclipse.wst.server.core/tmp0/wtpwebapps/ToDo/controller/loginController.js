@@ -4,6 +4,11 @@ var todoApp = angular.module("todoApp");
 	  
 	  $scope.log = function() {
 			console.log("abc....")
-			var httpServiceUser1 = loginService.loginUser($scope.user);
-		}
+			var httpServiceUser= loginService.loginUser($scope.user);
+			httpServiceUser.then(function(response) {
+				console.log("this is to redirect after login");
+				$location.path('home');
+
+			});
+	  }
 	});

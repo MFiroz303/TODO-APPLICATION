@@ -9,9 +9,6 @@ todoApp.factory('loginService',
 			method : "POST",
 			url : 'login',
 			data : user
-
-		}).then(function(response) {
-			$location.path('/home')
 		});
 	}
 	return login;

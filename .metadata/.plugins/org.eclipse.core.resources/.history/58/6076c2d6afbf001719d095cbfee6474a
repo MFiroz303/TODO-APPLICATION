@@ -1,0 +1,9 @@
+var todoApp = angular.module("todoApp");
+ 
+  todoApp.controller('loginController', function($scope, loginService, $location){
+	  
+	  $scope.log = function() {
+			console.log("zzzzz....")
+			var httpServiceUser1 = homeService.loginUser($scope.user);
+		}
+	});
