@@ -1,0 +1,17 @@
+@CHARSET "UTF-8";
+/* #p{
+    height:200px;
+    width:300px;
+
+   }  */
+#homeid{
+	heigth:500px;
+	width:100%;
+	background-color:#FFC300;
+
+       }
+#idg{
+	
+	heigth:50%px;
+	width:100%
+    }

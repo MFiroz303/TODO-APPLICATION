@@ -19,9 +19,8 @@ todoApp.config([ '$stateProvider', '$urlRouterProvider',
 				url : '/home',
 				templateUrl : 'templates/Home.html',
 				controller : 'homeController'
-
 			});
 
-			// $urlRouterProvider.otherwise('register');
+         	// $urlRouterProvider.otherwise('register');
 			$urlRouterProvider.otherwise('login');
 		} ]);

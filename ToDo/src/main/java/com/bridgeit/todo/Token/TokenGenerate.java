@@ -1,4 +1,4 @@
-package com.bridgeit.todo.Token;
+/*package com.bridgeit.todo.Token;
 
 import java.security.Key;
 import java.util.Date;
@@ -37,3 +37,35 @@ public class TokenGenerate {
 		return "TokenGenerate [key=" + key + ", compactJws=" + compactJws + "]";
 	}
 }
+
+
+
+private static final String KEY = "application";
+
+public static String generate(int id){
+
+Date issueDate = new Date();
+System.out.println("Issue date -->"+issueDate);
+
+Date expireDate = new Date(issueDate.getTime()+1000*60*30);
+System.out.println("Expire date -->"+expireDate);
+
+
+JwtBuilder builder = Jwts.builder();
+builder.setSubject("accessToken");
+
+builder.setIssuedAt(issueDate);
+
+builder.setExpiration(expireDate);
+
+builder.setIssuer(String.valueOf(id));
+System.out.println("Issue id -->"+id);
+
+builder.signWith(SignatureAlgorithm.HS256, KEY);
+String compactJwt = builder.compact();
+
+System.out.println("Generated jwt : " + compactJwt);
+return compactJwt;
+}
+
+}*/

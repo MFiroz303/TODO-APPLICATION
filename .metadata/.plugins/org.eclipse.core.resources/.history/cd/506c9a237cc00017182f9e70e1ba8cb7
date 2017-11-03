@@ -1,0 +1,9 @@
+var todoApp = angular.module("todoApp");
+todoApp.directive('homeDirectives', function(){
+	
+	return{
+		//restrict:'E',
+		templateUrl : 'templates/TopNavBar.html'
+	}
+	
+});	

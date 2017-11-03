@@ -1,0 +1,31 @@
+
+<div class="row">
+	<div class="side-menu">
+		<nav class="navbar-default">
+			<div class="navbar-header">
+				<div class="brand-wrapper" id="sideNav">	
+					<div class="brand-name-wrapper">
+						<a class="navbar-brand" href="#"> Link1 </a>
+					</div>
+					<!-- Brand -->
+					<div class="brand-name-wrapper">
+						<a class="navbar-brand" href="#"> Link1 </a>
+					</div>
+					<!-- Brand -->
+					<div class="brand-name-wrapper">
+						<a class="navbar-brand" href="#"> Link1 </a>
+					</div>
+					<!-- Brand -->
+					<div class="brand-name-wrapper">
+						<a class="navbar-brand" href="#"> Link1 </a>
+					</div>
+					<!-- Brand -->
+					<div class="brand-name-wrapper">
+						<a class="navbar-brand" href="#"> Link1 </a>
+					</div>
+					</div>
+					</div>
+		</nav>
+
+	</div>
+</div>

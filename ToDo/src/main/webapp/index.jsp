@@ -28,10 +28,13 @@
 <script type="text/javascript" src="services/registrationService.js"></script>
 <script type="text/javascript" src="services/loginService.js"></script>
 <script type="text/javascript" src="services/homeService.js"></script>
+<script type="text/javascript" src="directives/homeDirectives.js"></script>
+
 
 <link rel="stylesheet" href="styles/registration.css" />
 <link rel="stylesheet" href="styles/login.css" />
-<link rel="stylesheet" href="styles/home.css" />
+<link rel="stylesheet" href="styles/topNavBar.css" />
+<link rel="stylesheet" href="styles/sideNavBar.css" />
 
 
 </head>

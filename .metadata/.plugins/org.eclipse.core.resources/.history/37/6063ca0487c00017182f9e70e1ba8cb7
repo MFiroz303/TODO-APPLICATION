@@ -1,0 +1,10 @@
+<nav class="navbar">
+		<div class="container-fluid" id="homeid">
+			<div class="navbar-header">
+			<button type="button" class="btn btn-default btn-sm">
+                <span class="glyphicon glyphicon-menu-hamburger"></span></button>
+			   <a href="#">Google Keep</a>
+			</div>
+		</div>
+	</nav>
+	
