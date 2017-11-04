@@ -30,12 +30,11 @@
 <script type="text/javascript" src="services/homeService.js"></script>
 <script type="text/javascript" src="directives/homeDirectives.js"></script>
 
-
 <link rel="stylesheet" href="styles/registration.css" />
 <link rel="stylesheet" href="styles/login.css" />
 <link rel="stylesheet" href="styles/topNavBar.css" />
 <link rel="stylesheet" href="styles/sideNavBar.css" />
-
+<link rel="stylesheet" href="styles/home.css" />
 
 </head>
 

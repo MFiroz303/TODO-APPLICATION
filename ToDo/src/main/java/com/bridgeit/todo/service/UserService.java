@@ -6,9 +6,6 @@ public interface UserService {
 
 	 void saveUser(User user);
 	 User userLogin(String email, String password);
-	static void sendMail(String email) {
-		
-		
-	}
-	 
+	 static void sendMail(String email) {}	
+	 User getUserByEmail(String email); 
 }

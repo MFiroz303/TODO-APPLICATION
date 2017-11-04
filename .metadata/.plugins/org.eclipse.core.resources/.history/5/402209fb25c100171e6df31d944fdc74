@@ -1,0 +1,6 @@
+<div>
+<form  method="POST">
+Enter Your Email:<input type="email" value="email" name="email" />
+<button type="button" class="btn btn-success" ng-click="log()">Login</button>
+</form>
+</div>
