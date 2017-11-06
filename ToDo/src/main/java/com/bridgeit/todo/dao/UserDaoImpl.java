@@ -7,8 +7,6 @@ import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import com.bridgeit.todo.model.Note;
 import com.bridgeit.todo.model.User;
 
 @Service("UserDao")
@@ -66,7 +64,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public void resetPassword(User user) {
+	public boolean setPassword(User user) {
 		// TODO Auto-generated method stub
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
@@ -82,6 +80,7 @@ public class UserDaoImpl implements UserDao {
 		} finally {
 			session.close();
 		}
+		return true;
 	}
 
 }

@@ -19,8 +19,16 @@ todoApp.config([ '$stateProvider', '$urlRouterProvider',
 				url : '/home',
 				templateUrl : 'templates/Home.html',
 				controller : 'homeController'
+					
+			}).state('forgotPassword',{
+				url:'/forgotPassword',
+				templateUrl : 'templates/forgptPassword.html',
+				controller : 'setController'
+					
+			}).state('setPassword',{
+				url:'/setPassword',
+				templateUrl : 'templates/setPassword.html',
+				controller : 'setController'
 			});
-
-         	// $urlRouterProvider.otherwise('register');
 			$urlRouterProvider.otherwise('login');
 		} ]);

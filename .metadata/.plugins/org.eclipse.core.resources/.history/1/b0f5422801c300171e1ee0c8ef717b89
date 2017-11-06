@@ -1,0 +1,23 @@
+var toDoApp = angular.module('toDoApp');
+
+toDoApp.factory('forgotpasswordService', function($http, $location) {
+	var set = {};
+
+	reset.linkForEmail = function(user) {
+		return $http({
+			method : "POST",
+			url : 'forgotPassword',
+			data : user
+		})
+	}
+
+	set.resetPassword = function(user) {
+		console.log(user);
+		return $http({
+			method : "PUT",
+			url : 'setPassword',
+			data : user
+		})
+	}
+	return set;
+});

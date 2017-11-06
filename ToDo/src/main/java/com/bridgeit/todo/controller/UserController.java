@@ -1,11 +1,11 @@
 package com.bridgeit.todo.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bridgeit.todo.Token.TokenGenerate;
+import com.bridgeit.todo.Token.TokenVerify;
 import com.bridgeit.todo.model.ErrorMessage;
 import com.bridgeit.todo.model.User;
 import com.bridgeit.todo.service.MailService;
@@ -30,17 +31,31 @@ public class UserController {
 
 	@Autowired
 	ErrorMessage errorMessage;
-	
+
 	@Autowired
 	Validator validator;
+	
+	@Autowired
+	TokenGenerate tokenGenerate;
 
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public ResponseEntity<ErrorMessage> saveUser(@RequestBody User user, HttpSession session) {
-		System.out.println(user);
+	public ResponseEntity<ErrorMessage> saveUser(@RequestBody User user, HttpSession session, HttpServletRequest request) {
+		
+		String url = request.getRequestURL().toString();
+		url = url.substring(0, url.lastIndexOf("/"));
+		
 		String isValid = validator.validateUserRegistration(user);
 
 		if (isValid.equals("true")) {
 			userService.saveUser(user);
+			
+			String token = tokenGenerate.generate(user.getId());
+			mailservice.sendMail( user.getEmail(), "asfiroz007@gmail.com", "emailVerification", url + "/" + "userValidate" + "/" + user.getId());
+
+			/*
+			String token = tokenGenerate.generate(user.getId());
+			mailservice.sendMail(user.getEmail(), "mdfirozahmad2222@gmail.com", "Hello", "Link: " + token);*/
+
 			errorMessage.setResponseMessage("registered Successfully....");
 			return ResponseEntity.ok(errorMessage);
 
@@ -60,41 +75,82 @@ public class UserController {
 		}
 
 		session.setAttribute("user", userLogin);
-		TokenGenerate tokenGenerate = new TokenGenerate();
-		String token = tokenGenerate.generate(user.getId());
-		mailservice.sendMail("mdfirozahmad2222@gmail.com", "HELLO..", user.getEmail(), "Link:" +token);
-		System.out.println("Token  :" + token);
-
-		System.out.println("successfully login");
 		errorMessage.setResponseMessage("Login Successfully....");
 		return ResponseEntity.ok(errorMessage);
 	}
 
 	@RequestMapping(value = "/forgotPassword", method = RequestMethod.POST)
-	public ResponseEntity<ErrorMessage> forgaotPassword(@RequestBody User user, HttpSession session) {
-	User email = userService.getUserByEmail(user.getEmail());
+	public ResponseEntity<ErrorMessage> forgaotPassword(@RequestBody User user, HttpServletRequest request,
+			HttpSession session) {
 
-		if (email != null) {
-			errorMessage.setResponseMessage("valid  email...");
+		String url = request.getRequestURL().toString();
+		url = url.substring(0, url.lastIndexOf("/")) + "/resetPassword";
+		
+		User email = userService.getUserByEmail(user.getEmail());
+
+		if (email == null) {
+			errorMessage.setResponseMessage("Enter valid  email...");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
+
+		}
+		try {
+			String token = tokenGenerate.generate(user.getId());
+			System.out.println("token"+token);
+			session.setAttribute("Token", token);
+
+			mailservice.sendMail( user.getEmail(), "asfiroz007@gmail.com", "token is :", url + "token=" + token);
+		} catch (Exception e) {
+			e.printStackTrace();
+			errorMessage.setResponseMessage("");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
+		}
+
+		errorMessage.setResponseMessage("success");
+		return ResponseEntity.ok(errorMessage);
+	}
+	
+	@SuppressWarnings("unused")
+	@RequestMapping(value = "/setPassword", method = RequestMethod.PUT)
+	public ResponseEntity<ErrorMessage> setPassword(@RequestBody User user,HttpSession session) {
+		System.out.println("inside set passwors");
+		String email = user.getEmail();
+		String password = user.getPassword();
+	
+		System.out.println("before generating token");
+		System.out.println(session.getAttribute("Token"));
+		
+		int userId = TokenVerify.verify((String) session.getAttribute("Token"));
+		System.out.println("uerid"+userId);
+		System.out.println("after generating token");
+		
+		if (userId == 0) {
+			errorMessage.setResponseMessage("Invalid token");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
+
+		}
+	     	user = userService.getUserByEmail(user.getEmail());
+		if (user == null) {
+			System.out.println("inside user by email");
+			errorMessage.setResponseMessage("User not found :");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
+	}
+	
+		if (userId != user.getId()) {
+			errorMessage.setResponseMessage("Invalid token");
 			return ResponseEntity.ok(errorMessage);
 		}
-		errorMessage.setResponseMessage("insert valid email");
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
-	}
-
-	@RequestMapping(value = "/resetPassword", method=RequestMethod.PUT)
-	public ResponseEntity<ErrorMessage> resetPassword(@RequestBody User user){
-	    String email = user.getEmail();
-	    String password = user.getPassword();
-	    
-	    if(email==null){
-	    	errorMessage.setResponseMessage("Enter valid email...");
-	    	return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
-	    	
-	    }
-	    return null;
 		
+        	user.setPassword(password);
+	    	if (userService.setPassword(user)) {
+			errorMessage.setResponseMessage("Success :");
+			return ResponseEntity.ok(errorMessage);
+			
+		} else {
+			errorMessage.setResponseMessage("password error:");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
+		}
 	}
+	
 	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
 	@ExceptionHandler(value = Exception.class)
 	public String exceptionHandler(Exception e) {
@@ -102,3 +158,4 @@ public class UserController {
 
 	}
 }
+

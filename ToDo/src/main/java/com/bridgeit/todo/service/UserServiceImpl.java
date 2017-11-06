@@ -24,4 +24,12 @@ public class UserServiceImpl implements UserService {
 		// TODO Auto-generated method stub
 		return userDao.getUserByEmail(email);
 	}
+
+	@Override
+	public boolean setPassword(User user) {
+			// TODO Auto-generated method stub
+			return userDao.setPassword(user);
+		}
+
+	
 }

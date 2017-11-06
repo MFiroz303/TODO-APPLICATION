@@ -30,12 +30,16 @@ public class User {
 
 	private String email;
 	
-	@OneToMany(mappedBy="user")
-	private Set<Note> note;
-	
 	private String contact;
 
 	private String password;
+	
+	/*@Column(name="isActivated")
+	private boolean isActivated;*/
+	
+	@OneToMany(mappedBy="user")
+	private Set<Note> note;
+	
 
 	public int getId() {
 		return id;

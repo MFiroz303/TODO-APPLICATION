@@ -5,19 +5,19 @@ import io.jsonwebtoken.Jwts;
 
 public class TokenVerify {
 
-  private String key="secretKey";
+  private  static String key="secretKey";
 	
 	//Sample method to validate and read the JWT
-	@SuppressWarnings("unused")
-	private void generate(String jwt) {
+	public static int verify(String token) {
 	 
 	    //This line will throw an exception if it is not a signed JWS (as expected)
 	    Claims claims = Jwts.parser()         
 	       .setSigningKey(key)
-	       .parseClaimsJws(jwt).getBody();
+	       .parseClaimsJws(token).getBody();
 	    System.out.println("ID: " + claims.getId());
 	    System.out.println("Subject: " + claims.getSubject());
 	    System.out.println("Issuer: " + claims.getIssuer());
 	    System.out.println("Expiration: " + claims.getExpiration());
+	    return 0;
 	}
 }

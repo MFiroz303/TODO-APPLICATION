@@ -1,7 +1,0 @@
-package com.bridgeit.todo.service;
-
-public interface MailService {
-
-	public void sendMail(String from, String to, String subject, String mesg);
-
-}

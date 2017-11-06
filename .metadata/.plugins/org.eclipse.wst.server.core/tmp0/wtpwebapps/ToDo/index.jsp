@@ -24,6 +24,7 @@
 <script type="text/javascript" src="controller/registrationController.js"></script>
 <script type="text/javascript" src="controller/loginController.js"></script>
 <script type="text/javascript" src="controller/homeController.js"></script>
+<script type="text/javascript" src="controller/setPasswordController.js"></script>
 
 <script type="text/javascript" src="services/registrationService.js"></script>
 <script type="text/javascript" src="services/loginService.js"></script>
