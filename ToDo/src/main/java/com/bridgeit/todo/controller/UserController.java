@@ -151,7 +151,7 @@ public class UserController {
 	@RequestMapping(value = "/setPassword", method = RequestMethod.PUT)
 	public ResponseEntity<ErrorMessage> setPassword(@RequestBody User user, HttpSession session) {
 		System.out.println("inside set passwors");
-		String email = user.getEmail();
+		//String email = user.getEmail();
 		String password = user.getPassword();
 
 		user = userService.getUserByEmail(user.getEmail());
@@ -175,10 +175,10 @@ public class UserController {
 		}
 	}
 
-	/*@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
 	@ExceptionHandler(value = Exception.class)
 	public String exceptionHandler(Exception e) {
 		return "Exception";
 
-	}*/
+	}
 }

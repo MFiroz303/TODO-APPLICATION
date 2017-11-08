@@ -8,10 +8,14 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.bridgeit.todo.model.User;
+import com.bridgeit.util.Encryption;
 
 @Service("UserDao")
 public class UserDaoImpl implements UserDao {
 
+	@Autowired
+	Encryption encryption;
+	
 	@Autowired
 	private SessionFactory sessionFactory;
 
@@ -23,7 +27,7 @@ public class UserDaoImpl implements UserDao {
 		this.sessionFactory = sessionFactory;
 	}
 
-	public boolean saveUser(User user) {
+	/*public boolean saveUser(User user) {
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {
@@ -37,7 +41,30 @@ public class UserDaoImpl implements UserDao {
 			session.close();
 		}
 		return true;
+	}*/
+	
+	public boolean saveUser(User user) {
+		Session session = sessionFactory.openSession();
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			if (user.getPassword() != null) {
+				user.setPassword(encryption.encryptPassword(user.getPassword()));
+			}
+			boolean id =(boolean) session.save(user);
+			transaction.commit();
+			return id;
+		} catch (Exception e) {
+			if (transaction != null) {
+				transaction.rollback();
+				return false;
+			}
+		} finally {
+			session.close();
+		}
+		return false;
 	}
+	
 	
 	/*@Override
 	public boolean isActive(int id) {
@@ -61,15 +88,20 @@ public class UserDaoImpl implements UserDao {
 	
 	@SuppressWarnings("deprecation")
 	public User userLogin(String email, String password) {
+		User user =new User();
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(User.class);
 		criteria.add(Restrictions.eq("email", email));
-		criteria.add(Restrictions.eq("password", password));
-		User user = (User) criteria.uniqueResult();
-		session.close();
-		return user;
-
+		criteria.add(Restrictions.eq("password", encryption.encryptPassword(user.getPassword())));
+		 User finalUser = (User) criteria.uniqueResult();
+		 if (finalUser == null) {
+				session.close();
+				return null;
+			}
+			session.close();
+			return finalUser;
 	}
+	
 	@SuppressWarnings("deprecation")
 	@Override
 	public User getUserById(int id) {

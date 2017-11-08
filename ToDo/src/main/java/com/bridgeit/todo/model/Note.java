@@ -10,6 +10,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 @Table(name="note_ToDo")
 public class Note {
@@ -25,6 +27,7 @@ public class Note {
 	private Date createdDate;
 	private Date modifiedDate;
 
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="userId")
 	private User user;

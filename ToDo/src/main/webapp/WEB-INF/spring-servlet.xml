@@ -54,6 +54,7 @@
 	<bean id="validator" class="com.bridgeit.todo.validation.Validator" />
 	<bean id="noteService" class="com.bridgeit.todo.service.NoteServiceImpl" />
 	<bean id="tokenGenerate" class="com.bridgeit.todo.Token.TokenGenerate" />
+	<bean id="encryption" class="com.bridgeit.util.Encryption" />
 	
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="smtp.gmail.com" />

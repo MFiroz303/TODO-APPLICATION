@@ -72,11 +72,25 @@ public class NoteDaoImpl implements NoteDao {
 		criteria.add(Restrictions.eq("user", user));
 		criteria.addOrder(Order.desc("modifiedDate"));
 		List<Note> notes = criteria.list();
-		
 		System.out.println(notes);
 		return notes;
 	}
+	
 
+	/*@SuppressWarnings({ "unchecked", "deprecation" })
+	@Override
+	public List<Note> findAllNote(User user) {
+		Session session = sessionFactory.openSession();
+	    Criteria criteria = session.createCriteria(Note.class);
+		criteria.add(Restrictions.eq("user", user))
+		.addOrder(Order.desc("modifiedDate"))
+		.setResultTransformer(Transformers.aliasToBean(Note.class));
+		List<Note> notes = criteria.list();
+		System.out.println(notes);
+		return notes;
+	}*/
+
+	
 	public void updateNote(int id, Note note) {
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
