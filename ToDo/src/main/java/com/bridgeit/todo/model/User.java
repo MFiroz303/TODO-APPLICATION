@@ -34,8 +34,16 @@ public class User {
 
 	private String password;
 	
-	/*@Column(name="isActivated")
-	private boolean isActivated;*/
+	@Column(name="isActivated")
+	private boolean isActivated;
+	
+	public boolean isActivated() {
+		return isActivated;
+	}
+
+	public void setActivated(boolean isActivated) {
+		this.isActivated = isActivated;
+	}
 	
 	@OneToMany(mappedBy="user")
 	private Set<Note> note;

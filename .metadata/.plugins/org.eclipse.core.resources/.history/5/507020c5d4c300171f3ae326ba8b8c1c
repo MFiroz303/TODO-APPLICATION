@@ -1,0 +1,46 @@
+package com.bridgeit.todo.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import com.bridgeit.todo.dao.UserDao;
+import com.bridgeit.todo.model.User;
+
+public class UserServiceImpl implements UserService {
+
+	@Autowired
+	UserDao userDao;
+
+	public int saveUser(User user) {
+		    return userDao.saveUser(user);
+	}
+
+	public User userLogin(String email, String password) {
+		 return userDao.userLogin(email, password);
+		
+		
+	}
+
+	@Override
+	public User getUserByEmail(String email) {
+		// TODO Auto-generated method stub
+		return userDao.getUserByEmail(email);
+	}
+
+	@Override
+	public boolean setPassword(User user) {
+			// TODO Auto-generated method stub
+			return userDao.setPassword(user);
+		}
+
+	@Override
+	public User getUserById(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void updateUser(User user) {
+		// TODO Auto-generated method stub
+		userDao.updateUser(user);
+	}
+	
+}

@@ -43,7 +43,6 @@
 <fullyQualifiedTypeName name="io.jsonwebtoken.Jwts"/>
 <fullyQualifiedTypeName name="javax.xml.bind.DatatypeConverter"/>
 <fullyQualifiedTypeName name="java.security.Key"/>
-<fullyQualifiedTypeName name="java.lang.Integer"/>
 <fullyQualifiedTypeName name="com.bridgeit.todo.model.User"/>
 <fullyQualifiedTypeName name="io.jsonwebtoken.impl.crypto.MacProvider"/>
 <fullyQualifiedTypeName name="org.hibernate.annotations.GenericGenerator"/>
@@ -53,11 +52,12 @@
 <fullyQualifiedTypeName name="org.springframework.scheduling.annotation.Async"/>
 <fullyQualifiedTypeName name="org.springframework.web.servlet.HandlerInterceptor"/>
 <fullyQualifiedTypeName name="javax.persistence.Column"/>
-<fullyQualifiedTypeName name="java.lang.String"/>
 <fullyQualifiedTypeName name="com.sun.mail.imap.protocol.Status"/>
 <fullyQualifiedTypeName name="javax.servlet.http.HttpSession"/>
 <fullyQualifiedTypeName name="com.bridgeit.todo.Token.TokenGenerate"/>
 <fullyQualifiedTypeName name="com.bridgeit.todo.Token.TokenVerify"/>
 <fullyQualifiedTypeName name="org.springframework.beans.factory.annotation.Autowired"/>
 <fullyQualifiedTypeName name="javax.servlet.http.HttpServletRequest"/>
+<fullyQualifiedTypeName name="java.lang.Integer"/>
+<fullyQualifiedTypeName name="java.lang.String"/>
 </qualifiedTypeNameHistroy>

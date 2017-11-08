@@ -7,22 +7,29 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 public class TokenGenerate {
 
-	private String key = "secretKey";
-	String compactJwt = null;
-	
-	public String generate(int id) {
-		long times = 1000 * 60 * 60;
-		Date issueDate = new Date(times);
-		Date expDate = new Date(issueDate.getTime() + times);
-		
-		JwtBuilder builder = Jwts.builder().
-				setIssuedAt(issueDate)
-				.setExpiration(expDate)
-				.setIssuer(String.valueOf(id))
-				.signWith(SignatureAlgorithm.HS256, key);
-		         String compactJwt = builder.compact();
+	private static String key = "todoApp";
 
-		// Builds the JWT and serializes it to a compact, URL-safe string
+	public String generate(int id) {
+		
+		long times = 1000 * 60 * 60;
+		Date issueDate = new Date();
+		Date expDate = new Date(issueDate.getTime() + times);
+
+		JwtBuilder builder = Jwts.builder();
+
+		builder.setSubject("accessToken");
+		
+		builder.setIssuedAt(issueDate);
+		
+		builder.setExpiration(expDate);
+		
+		builder.setIssuer(String.valueOf(id));
+		System.out.println("print id is:"+ id);
+		
+		builder.signWith(SignatureAlgorithm.HS256, key);
+		
+		String compactJwt = builder.compact();
+
 		return compactJwt;
 	}
 }
