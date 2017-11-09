@@ -1,9 +1,0 @@
-@CHARSET "UTF-8";
-.body{
-    background-color:blue;
-     }
-#p{
-    height:200px;
-    width:300px;
-
-   }

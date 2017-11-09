@@ -6,7 +6,8 @@ public interface UserService {
 
 	boolean saveUser(User user);
 
-	User userLogin(String email, String password);
+	//User userLogin(String email, String password);
+	User userLogin(User user);
 
 	static void sendMail(String email) {
 	}

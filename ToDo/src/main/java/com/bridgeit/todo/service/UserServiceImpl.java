@@ -13,11 +13,15 @@ public class UserServiceImpl implements UserService {
 		return userDao.saveUser(user);
 	}
 
-	public User userLogin(String email, String password) {
+	/*public User userLogin(String email, String password) {
 		return userDao.userLogin(email, password);
+	}*/
+	
+	@Override
+	public User userLogin(User user) {
+		return userDao.userLogin(user);
 
 	}
-
 	@Override
 	public User getUserByEmail(String email) {
 		// TODO Auto-generated method stub

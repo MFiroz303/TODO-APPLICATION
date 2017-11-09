@@ -1,3 +1,0 @@
-var todoApp = angular.module('todoApp');
-todoApp.factory([ 'registrationService',
-	

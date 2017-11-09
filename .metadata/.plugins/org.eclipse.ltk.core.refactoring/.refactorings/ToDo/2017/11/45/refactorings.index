@@ -5,3 +5,6 @@
 1510121612529	Rename type 'TokenVerify'
 1510123064605	Rename type 'GenerateJwt'
 1510153340780	Rename type 'Encription'
+1510212687720	Rename type 'FBUtil'
+1510212770174	Rename compilation unit 'FBLogin.java'
+1510213372701	Rename package 'com.bridgeit.util'

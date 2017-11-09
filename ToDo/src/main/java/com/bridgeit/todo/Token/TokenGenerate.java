@@ -9,7 +9,7 @@ public class TokenGenerate {
 
 	private static String key = "todoApp";
 
-	public String generate(int id) {
+	public static String generate(int id) {
 		
 		long times = 1000 * 60 * 60;
 		Date issueDate = new Date();
