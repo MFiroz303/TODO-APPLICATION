@@ -14,11 +14,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.bridgeit.tod.util.FBConnection;
 import com.bridgeit.todo.Token.TokenGenerate;
 import com.bridgeit.todo.model.ErrorMessage;
 import com.bridgeit.todo.model.User;
 import com.bridgeit.todo.service.UserService;
+import com.bridgeit.todo.util.FBConnection;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @RestController
@@ -64,18 +64,21 @@ public class FBLoginController {
 			if (user == null) {
 				
 				User facebookUser = new User();	
-				facebookUser.setFirstName(email);
+				facebookUser.setEmail(email);
 				
 				String firstName = mapper.readTree(facebookProfInfo).get("first_name").asText();
 				facebookUser.setFirstName(firstName);
 			
 				String lastName = mapper.readTree(facebookProfInfo).get("last_name").asText();
-				facebookUser.setFirstName(lastName);
+				facebookUser.setLastName(lastName);
 				
+				/*String contact = mapper.readTree(facebookProfInfo).get("contact").asText();
+				facebookUser.setContact(contact);
+				*/
 				facebookUser.setActivated(true);
 				
-				int userId = userService.saveUser(user);
-				if (userId == 0) {
+				int userId = userService.saveUser(facebookUser);
+				if (userId == -1) {
 					response.sendRedirect("http://localhost:8080/ToDoApp/#!/login");
 				} else {
 					String accessToken = TokenGenerate.generate(userId);

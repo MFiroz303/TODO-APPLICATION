@@ -90,7 +90,7 @@ private  Logger logger = LoggerFactory.getLogger(UserController.class);
 		try {
 			user = userService.getUserById(id);
 			logger.debug("User verifing by id");
-			System.out.println("User details : " + user);
+
 		}catch (Exception e) {
 			logger.error("catching exception e");
 			e.printStackTrace();
@@ -112,7 +112,7 @@ private  Logger logger = LoggerFactory.getLogger(UserController.class);
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ResponseEntity<ErrorMessage> userLogin(@RequestBody User user, HttpSession session) {
 		
-		    // User userLogin = userService.userLogin(user.getEmail(), user.getPassword());
+		     //User userLogin = userService.userLogin(user.getEmail(), user.getPassword());
 		     User userLogin = userService.getUserByEmail(user.getEmail());
 		     logger.info("cheaking information is valid or not");
 		
@@ -162,7 +162,7 @@ private  Logger logger = LoggerFactory.getLogger(UserController.class);
 	public ResponseEntity<ErrorMessage> setPassword(@RequestBody User user, HttpSession session) {
 		  
 		     //String email = user.getEmail();
-		     String password = user.getPassword();
+		     //String password = user.getPassword();
 		     user = userService.getUserByEmail(user.getEmail());
 		    
 		if (user == null) {
@@ -172,7 +172,9 @@ private  Logger logger = LoggerFactory.getLogger(UserController.class);
 		}
 
 		else {
-			 user.setPassword(password);
+			 String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(10));
+			user.setPassword(hashedPassword);
+			// user.setPassword(password);
 			 logger.debug("set password");
 
 		if (userService.setPassword(user)) {

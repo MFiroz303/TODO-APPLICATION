@@ -1,8 +1,0 @@
-<nav class="navbar">
-		<div class="container-fluid" id="homeid">
-			<div class="navbar-header">
-				<a href="#"><h4>G<b>oogle</b> Keep</h4></a>
-			</div>
-		</div>
-	</nav>
-	 <div class="w3-panel w3-card" id="p"><p></p></div>

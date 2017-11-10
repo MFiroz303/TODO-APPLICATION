@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.bridgeit.todo.model.User;
 
+
 @Service("UserDao")
 public class UserDaoImpl implements UserDao {
 
@@ -26,10 +27,15 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	public int saveUser(User user) {
-		String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(10));
-		user.setPassword(hashedPassword);
+		String hashedPassword = null;
+		System.out.println("User is :"+user);
+		if (!(user.getPassword() == null)) {
+			System.out.println("User pass is: "+user.getPassword());
+			hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(10));
+			user.setPassword(hashedPassword);
+			System.out.println("hashed password: " + hashedPassword);
+		}
 		
-		System.out.println("hashed password: " + hashedPassword);
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {
@@ -44,55 +50,45 @@ public class UserDaoImpl implements UserDao {
 		}
 		return 1;
 	}
-	
-	/*@Override
-	public boolean isActive(int id) {
-		Session session = sessionFactory.openSession();
-		Transaction	transaction = session.beginTransaction();
-		Criteria criteria = session.createCriteria(User.class);
-		criteria.add(Restrictions.eq("id", id));
-		User user = (User) criteria.uniqueResult();
-		boolean isValid;
-		if(user==null) {
-			isValid= false;
-			return isValid;
-		}else {
-			isValid = true;
-			user.setActivated(true);
-			transaction.commit();
-			session.close();
-		}
-		return isValid;
-}*/
-	
+
+	/*
+	 * @Override public boolean isActive(int id) { Session session =
+	 * sessionFactory.openSession(); Transaction transaction =
+	 * session.beginTransaction(); Criteria criteria =
+	 * session.createCriteria(User.class); criteria.add(Restrictions.eq("id",
+	 * id)); User user = (User) criteria.uniqueResult(); boolean isValid;
+	 * if(user==null) { isValid= false; return isValid; }else { isValid = true;
+	 * user.setActivated(true); transaction.commit(); session.close(); } return
+	 * isValid; }
+	 */
+
 	@SuppressWarnings("deprecation")
 	public User userLogin(User user) {
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(User.class);
 		criteria.add(Restrictions.eq("email", user.getEmail()));
 		criteria.add(Restrictions.eq("password", user.getPassword()));
-	//	criteria.add(Restrictions.eq("isActivated", true));
-		 User finalUser = (User) criteria.uniqueResult();
-		 if (finalUser == null) {
-				session.close();
-				return null;
-			}
+		// criteria.add(Restrictions.eq("isActivated", true));
+		User finalUser = (User) criteria.uniqueResult();
+		if (finalUser == null) {
 			session.close();
-			return finalUser;
+			return null;
+		}
+		session.close();
+		return finalUser;
 	}
-	
+
 	@SuppressWarnings("deprecation")
 	@Override
 	public User getUserById(int id) {
 		Session session = sessionFactory.openSession();
-		//Transaction transaction = session.beginTransaction();
+		// Transaction transaction = session.beginTransaction();
 		Criteria criteria = session.createCriteria(User.class);
 		criteria.add(Restrictions.eq("id", id));
 		User user = (User) criteria.uniqueResult();
 		session.close();
 		return user;
 	}
-
 
 	@Override
 	@SuppressWarnings("deprecation")

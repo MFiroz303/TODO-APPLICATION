@@ -1,9 +1,0 @@
-var todoApp = angular.module("todoApp");
-todoApp.directive('top-Nav-Bar', function(){
-	
-	return{
-		//restrict:'E',
-		templateUrl : 'templates/TopNavBar.html'
-	}
-	
-});	

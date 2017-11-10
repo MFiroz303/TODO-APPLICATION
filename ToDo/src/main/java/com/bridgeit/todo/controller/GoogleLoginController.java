@@ -11,14 +11,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import com.bridgeit.tod.util.GoogleUtil;
 import com.bridgeit.todo.Token.TokenGenerate;
 import com.bridgeit.todo.model.ErrorMessage;
 import com.bridgeit.todo.model.User;
 import com.bridgeit.todo.service.UserService;
+import com.bridgeit.todo.util.GoogleUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+@RestController
 public class GoogleLoginController {
 
 	private Logger logger = (Logger) LoggerFactory.getLogger(GoogleLoginController.class);
@@ -60,16 +62,19 @@ public class GoogleLoginController {
 			if(user==null) {
 				
 				User googleUser = new User();
-				googleUser.setFirstName(email);
+				googleUser.setEmail(email);
 				
-				String firstName = objectMapper.readTree(googleProfileInfo).get("first_name").asText();
+				String firstName = objectMapper.readTree(googleProfileInfo).get("given_name").asText();
 				googleUser.setFirstName(firstName);
 			
-				String lastName = objectMapper.readTree(googleProfileInfo).get("last_name").asText();
-				googleUser.setFirstName(lastName);
+				String lastName = objectMapper.readTree(googleProfileInfo).get("family_name").asText();
+				googleUser.setLastName(lastName);
+				
+				/*String contact = objectMapper.readTree(googleProfileInfo).get("contact").asText();
+				googleUser.setContact(contact);*/
 				
 				googleUser.setActivated(true);
-				int  userId= userService.saveUser(user); 
+				int  userId= userService.saveUser(googleUser); 
 				
 				if(userId == 0){
 					response.sendRedirect("http://localhost:8080/ToDoApp/#!/login");

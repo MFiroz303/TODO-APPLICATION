@@ -1,8 +1,0 @@
-<nav class="navbar" >
-		<div class="container-fluid" id="homeid">
-			<div class="navbar-header">
-				<h3>Google Keep</h3>
-			</div>
-		</div>
-	</nav>
-	 <div class="w3-panel w3-card" id="p"><p></p></div>
