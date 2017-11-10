@@ -52,7 +52,7 @@ public class FBLoginController {
 		String accessFbToken = FBConnection.getAccessFbToken(facebookbCode);
 		logger.info("accessFbToken:-" + accessFbToken);
 		
-		String facebookProfInfo = FBConnection.getProfileInfoFromFb(accessFbToken);
+		String facebookProfInfo = FBConnection.getFacebookProfInfo(accessFbToken);
 		logger.info(facebookProfInfo);
 		ObjectMapper mapper = new ObjectMapper();
 		
@@ -63,36 +63,34 @@ public class FBLoginController {
 			
 			if (user == null) {
 				
-				User facebookUser = new User();
-				facebookUser.setEmail(mapper.readTree(facebookProfInfo).get("email").asText());
-				facebookUser.setFirstName(mapper.readTree(facebookProfInfo).get("first_name").asText());
-				facebookUser.setLastName(mapper.readTree(facebookProfInfo).get("last_name").asText());
-				response.sendRedirect("http://localhost:8080/todo/#!/homePage");
+				User facebookUser = new User();	
+				facebookUser.setFirstName(email);
 				
-			} else {
+				String firstName = mapper.readTree(facebookProfInfo).get("first_name").asText();
+				facebookUser.setFirstName(firstName);
+			
+				String lastName = mapper.readTree(facebookProfInfo).get("last_name").asText();
+				facebookUser.setFirstName(lastName);
 				
+				facebookUser.setActivated(true);
+				
+				int userId = userService.saveUser(user);
+				if (userId == 0) {
+					response.sendRedirect("http://localhost:8080/ToDoApp/#!/login");
+				} else {
+					String accessToken = TokenGenerate.generate(userId);
+					session.setAttribute("todoAppAccessToken", accessToken);
+				}
+			} else {	
 				String accessToken = TokenGenerate.generate(user.getId());
 				logger.info("token geneted by jwt" + accessToken);
 				session.setAttribute("AccessToken", accessToken);
-				response.sendRedirect("http://localhost:8080/todo/#!/dummyFbLogin");
 			}
 			
 		} catch (IOException e) {
-			e.printStackTrace();
-		} catch (Exception e) {
 			logger.info("exception occured during registering user from fb:");
 			e.printStackTrace();
 		}
 		return null;
-
 	}
-
-	@RequestMapping(value = "/tokenAftergFbLogin")
-	public ResponseEntity<ErrorMessage> getAccessTokenByglogin(HttpSession session) {
-		String acessToken = (String) session.getAttribute("accessToken");
-		errorMessage.setResponseMessage(acessToken);
-		return ResponseEntity.ok(errorMessage);
-
-	}
-
 }

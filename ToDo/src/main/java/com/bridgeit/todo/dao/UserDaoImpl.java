@@ -25,7 +25,7 @@ public class UserDaoImpl implements UserDao {
 		this.sessionFactory = sessionFactory;
 	}
 
-	public boolean saveUser(User user) {
+	public int saveUser(User user) {
 		String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(10));
 		user.setPassword(hashedPassword);
 		
@@ -42,7 +42,7 @@ public class UserDaoImpl implements UserDao {
 		} finally {
 			session.close();
 		}
-		return true;
+		return 1;
 	}
 	
 	/*@Override

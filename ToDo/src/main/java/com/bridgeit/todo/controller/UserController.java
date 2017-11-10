@@ -53,9 +53,9 @@ private  Logger logger = LoggerFactory.getLogger(UserController.class);
 		String isValid = validator.validateUserRegistration(user);
 
 		if (isValid.equals("true")) {
-			boolean isValidate = userService.saveUser(user);
+			int isValidate = userService.saveUser(user);
          
-		if (isValidate == true) {
+		if (isValidate !=0) {
 			
 			logger.info("cheaking information is valid or not");
 			String accessToken = TokenGenerate.generate(user.getId());

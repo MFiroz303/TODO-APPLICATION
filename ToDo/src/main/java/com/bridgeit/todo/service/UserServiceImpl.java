@@ -9,7 +9,8 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	UserDao userDao;
 
-	public boolean saveUser(User user) {
+	@Override
+	public int saveUser(User user) {
 		return userDao.saveUser(user);
 	}
 

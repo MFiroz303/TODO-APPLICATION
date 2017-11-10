@@ -4,7 +4,7 @@ import com.bridgeit.todo.model.User;
 
 public interface UserService {
 
-	boolean saveUser(User user);
+	int saveUser(User user);
 
 	//User userLogin(String email, String password);
 	User userLogin(User user);
