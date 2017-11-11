@@ -84,6 +84,7 @@ public class FBConnection {
 			}
 			return fbProfileInfo;
 		} catch (Exception e) {
+			logger.error("catching exception e");
 			logger.info("exception for url");
 		}
 		return null;

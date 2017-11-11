@@ -11,17 +11,14 @@
 			<item value="3"/>
 			<item value="1"/>
 			<item value="1"/>
-			<item value="1"/>
 		</list>
 		<list key="orderedElements">
 			<item value="org.eclipse.egit.ui.internal.preferences.WindowCachePreferencePage"/>
-			<item value="org.eclipse.wst.xml.ui.internal.tabletree.XMLMultiPageEditorPartToDo/src/main/webapp/WEB-INF/spring-servlet.xml"/>
 			<item value="org.eclipse.ant.ui.views.AntView"/>
 			<item value="org.eclipse.jdt.ui.PackageExplorer"/>
 		</list>
 		<list key="orderedProviders">
 			<item value="org.eclipse.ui.preferences"/>
-			<item value="org.eclipse.ui.editors"/>
 			<item value="org.eclipse.e4.ui.parts"/>
 			<item value="org.eclipse.e4.ui.parts"/>
 		</list>
@@ -29,7 +26,6 @@
 			<item value="window"/>
 			<item value="w"/>
 			<item value="wi"/>
-			<item value="app"/>
 			<item value="ant"/>
 			<item value="pack"/>
 		</list>
