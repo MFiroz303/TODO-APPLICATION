@@ -1,9 +1,0 @@
-var todoApp = angular.module("todoApp");
- 
-  todoApp.controller('homeController', function($scope, homeService, $location){
-	  
-	  $scope.card = function() {
-		  console.log("enter in home page");
-			var httpServiceUser1 = homeService.cardUser($scope.user);
-		}
-	});

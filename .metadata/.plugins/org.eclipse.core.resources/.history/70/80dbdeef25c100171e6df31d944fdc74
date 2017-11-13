@@ -1,5 +1,0 @@
-<div>
-<form  method="POST">
-Enter Your Email:<input type="email" value="email" name="email" />
-</form>
-</div>

@@ -10,4 +10,4 @@ public interface UserDao {
     public boolean setPassword(User user);
 	User getUserById(int id);
 	boolean updateUser(User user);
-}
+	}

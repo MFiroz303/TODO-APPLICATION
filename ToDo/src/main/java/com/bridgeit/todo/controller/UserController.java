@@ -66,7 +66,6 @@ private  Logger logger = LoggerFactory.getLogger(UserController.class);
             logger.info("sending the mail for registration verification");
 			errorMessage.setResponseMessage("registered Successfully....");
 			//logger.info("registration successful");
-			// return new ResponseEntity<String>(isValid, HttpStatus.OK);
 			return ResponseEntity.ok(errorMessage);
 
 			}
@@ -124,7 +123,7 @@ private  Logger logger = LoggerFactory.getLogger(UserController.class);
 		boolean match = BCrypt.checkpw(user.getPassword(), userLogin.getPassword());
 		if (!match) {
 			logger.warn("Wrong password");
-			 errorMessage.setResponseMessage("wrong password");
+			errorMessage.setResponseMessage("wrong password");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
 		} 
 		     session.setAttribute("user", userLogin);
@@ -138,10 +137,10 @@ private  Logger logger = LoggerFactory.getLogger(UserController.class);
 	public ResponseEntity<ErrorMessage> forgaotPassword(@RequestBody User user, HttpServletRequest request,
 			 HttpSession session) {
 
-		     String url = request.getRequestURL().toString();
-		     url = url.substring(0, url.lastIndexOf("/")) + "/" + "setPassword";
+		    
 		     logger.info("sending the mail for registration verification");
 		     User email = userService.getUserByEmail(user.getEmail());
+		     
 
 		if (email == null) {
 			 logger.info("user entered invalid email");
@@ -150,6 +149,8 @@ private  Logger logger = LoggerFactory.getLogger(UserController.class);
 
 		} else {
 			 String accessToken = TokenGenerate.generate(user.getId());
+			 String url = request.getRequestURL().toString();
+		     url = url.substring(0, url.lastIndexOf("/")) + "/" + "setPassword" + "/" +accessToken;
 			 System.out.println("token" + accessToken);
 			 // session.setAttribute("Token", token);
 			 mailservice.sendMail(user.getEmail(), "mdfirozahmad2222@gmail.com", "accessToken is :", url);
@@ -173,8 +174,8 @@ private  Logger logger = LoggerFactory.getLogger(UserController.class);
 
 		else {
 			 String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(10));
-			user.setPassword(hashedPassword);
-			// user.setPassword(password);
+			 user.setPassword(hashedPassword);
+			// user.setPassword(user.getPassword());
 			 logger.debug("set password");
 
 		if (userService.setPassword(user)) {
