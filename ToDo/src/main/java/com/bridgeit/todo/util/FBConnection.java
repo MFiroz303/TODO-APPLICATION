@@ -36,6 +36,7 @@ public class FBConnection {
 		
 	}
 	public static String getAccessFbToken(String code) {
+		@SuppressWarnings("deprecation")
 		String fbUrlParameters = "&redirect_uri=" + URLEncoder.encode(fbredirectUrl)
 		+ "&client_id=" + facebookId 
 		+ "&client_secret=" + facbooksecreateKey 

@@ -1,0 +1,28 @@
+body{
+    padding-top: 2px; 
+    background-color:#f2f2f2;
+	float: none; 
+	margin: 0 auto;
+	font-size: 19px;
+}
+
+p.dotted {
+	border-style: dotted;
+}
+
+test {
+	margin: 0 auto;
+}
+
+#registrationid {
+	top-margin: 0 auto;
+	float: none;
+	margin: 0 auto;
+	background-color: #ffffff;
+	;
+	 box-shadow: 1px 1px 1px 1px gray;
+}
+   input.ng.invalid {
+   border:1px solid red;	
+}
+   

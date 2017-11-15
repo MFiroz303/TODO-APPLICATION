@@ -1,9 +1,14 @@
 package com.bridgeit.todo.controller;
 
 import java.io.IOException;
+import java.util.Enumeration;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,14 +27,10 @@ import com.bridgeit.todo.service.MailService;
 import com.bridgeit.todo.service.UserService;
 import com.bridgeit.todo.validation.Validator;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-
 @RestController
 public class UserController {
 
-private  Logger logger = LoggerFactory.getLogger(UserController.class);
+	private Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	@Autowired
 	UserService userService;
@@ -45,28 +46,28 @@ private  Logger logger = LoggerFactory.getLogger(UserController.class);
 
 	@Autowired
 	TokenGenerate tokenGenerate;
-	
+
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public ResponseEntity<ErrorMessage> saveUser(@RequestBody User user, HttpSession session,
-		HttpServletRequest request) {
+			HttpServletRequest request) {
 
 		String isValid = validator.validateUserRegistration(user);
 
 		if (isValid.equals("true")) {
 			int isValidate = userService.saveUser(user);
-         
-		if (isValidate !=0) {
-			
-			logger.info("cheaking information is valid or not");
-			String accessToken = TokenGenerate.generate(user.getId());
-			String url = request.getRequestURL().toString();
-			url = url.substring(0, url.lastIndexOf("/")) + "/" + "verifyMail" + "/" + accessToken;
 
-			mailservice.sendMail(user.getEmail(), "mdfirozahmad2222@gmail.com", "emailVerification", url);
-            logger.info("sending the mail for registration verification");
-			errorMessage.setResponseMessage("registered Successfully....");
-			//logger.info("registration successful");
-			return ResponseEntity.ok(errorMessage);
+			if (isValidate != 0) {
+
+				logger.info("cheaking information is valid or not");
+				String accessToken = TokenGenerate.generate(user.getId());
+				String url = request.getRequestURL().toString();
+				url = url.substring(0, url.lastIndexOf("/")) + "/" + "verifyMail" + "/" + accessToken;
+
+				mailservice.sendMail(user.getEmail(), "mdfirozahmad2222@gmail.com", "emailVerification", url);
+				logger.info("sending the mail for registration verification");
+				errorMessage.setResponseMessage("registered Successfully....");
+				// logger.info("registration successful");
+				return ResponseEntity.ok(errorMessage);
 
 			}
 		} else {
@@ -74,28 +75,28 @@ private  Logger logger = LoggerFactory.getLogger(UserController.class);
 			logger.error(isValid);
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
 		}
-	        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
 	}
 
 	@RequestMapping(value = "/verifyMail/{accessToken:.+}", method = RequestMethod.GET)
-	public ResponseEntity<ErrorMessage> verifyUser(@PathVariable("accessToken") String accessToken, HttpServletResponse response)
-		    throws IOException {
-		
-		    User user = null;
-		    System.out.println(user);
-		    int id = VerifyJwt.verify(accessToken);
-		    logger.debug("verifying accessToken");
+	public ResponseEntity<ErrorMessage> verifyUser(@PathVariable("accessToken") String accessToken,
+			HttpServletResponse response) throws IOException {
+
+		User user = null;
+		System.out.println(user);
+		int id = VerifyJwt.verify(accessToken);
+		logger.debug("verifying accessToken");
 
 		try {
 			user = userService.getUserById(id);
 			logger.debug("User verifing by id");
 
-		}catch (Exception e) {
+		} catch (Exception e) {
 			logger.error("catching exception e");
 			e.printStackTrace();
 		}
-		    user.setActivated(true);
-		    logger.debug("accessToken Activated");
+		user.setActivated(true);
+		logger.debug("accessToken Activated");
 		try {
 			userService.updateUser(user);
 			logger.info("registration successful");
@@ -103,97 +104,101 @@ private  Logger logger = LoggerFactory.getLogger(UserController.class);
 			System.out.println(e);
 			e.printStackTrace();
 		}
-		    errorMessage.setResponseMessage("user Email verified successfully ");
-		    return new ResponseEntity<ErrorMessage>(errorMessage, HttpStatus.OK);
+		errorMessage.setResponseMessage("user Email verified successfully ");
+		return new ResponseEntity<ErrorMessage>(errorMessage, HttpStatus.OK);
 
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ResponseEntity<ErrorMessage> userLogin(@RequestBody User user, HttpSession session) {
-		
-		     //User userLogin = userService.userLogin(user.getEmail(), user.getPassword());
-		     User userLogin = userService.getUserByEmail(user.getEmail());
-		     logger.info("cheaking information is valid or not");
-		
+
+		// User userLogin = userService.userLogin(user.getEmail(),
+		// user.getPassword());
+		User userLogin = userService.getUserByEmail(user.getEmail());
+		logger.info("cheaking information is valid or not");
+
 		if (userLogin == null) {
-			 logger.info("user entering invalid information");
-			 errorMessage.setResponseMessage("user with this email not exist");
-			 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
+			logger.info("user entering invalid information");
+			errorMessage.setResponseMessage("user with this email not exist");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
 		}
-		boolean match = BCrypt.checkpw(user.getPassword(), userLogin.getPassword());
+		
+		  boolean match = BCrypt.checkpw(user.getPassword(),
+		  userLogin.getPassword());
+		 
+		/*boolean match = user.getPassword().equals(userLogin.getPassword());*/
 		if (!match) {
 			logger.warn("Wrong password");
 			errorMessage.setResponseMessage("wrong password");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
-		} 
-		     session.setAttribute("user", userLogin);
-		     //String accessToken = TokenGenerate.generate(userLogin.getId());
-		     logger.debug("user successfully login");
-		     errorMessage.setResponseMessage("Login Successfully....");
-		     return ResponseEntity.ok(errorMessage);
+		}
+		session.setAttribute("user", userLogin);
+		// String accessToken = TokenGenerate.generate(userLogin.getId());
+		logger.debug("user successfully login");
+		errorMessage.setResponseMessage("Login Successfully....");
+		return ResponseEntity.ok(errorMessage);
+
 	}
 
 	@RequestMapping(value = "/forgotPassword", method = RequestMethod.POST)
 	public ResponseEntity<ErrorMessage> forgaotPassword(@RequestBody User user, HttpServletRequest request,
-			 HttpSession session) {
+			HttpSession session) {
 
-		    
-		     logger.info("sending the mail for registration verification");
-		     User email = userService.getUserByEmail(user.getEmail());
-		     
+		logger.info("sending the mail to update password.");
+		User email = userService.getUserByEmail(user.getEmail());
+		// User id = userService.getUserById(user.getId());
 
 		if (email == null) {
-			 logger.info("user entered invalid email");
-			 errorMessage.setResponseMessage("Enter valid  email...");
-			 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
+			logger.info("user entered invalid email");
+			errorMessage.setResponseMessage("Enter valid  email...");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
 
 		} else {
-			 String accessToken = TokenGenerate.generate(user.getId());
-			 String url = request.getRequestURL().toString();
-		     url = url.substring(0, url.lastIndexOf("/")) + "/" + "setPassword" + "/" +accessToken;
-			 System.out.println("token" + accessToken);
-			 // session.setAttribute("Token", token);
-			 mailservice.sendMail(user.getEmail(), "mdfirozahmad2222@gmail.com", "accessToken is :", url);
-			 errorMessage.setResponseMessage("success");
-			 return ResponseEntity.ok(errorMessage);
+			String accessToken = TokenGenerate.generate(email.getId());
+			String url = request.getRequestURL().toString();
+			url = url.substring(0, url.lastIndexOf("/")) + "/" + "setPassword" + "/" + accessToken;
+			System.out.println("token" + accessToken);
+
+			mailservice.sendMail(user.getEmail(), "mdfirozahmad2222@gmail.com", "accessToken is :", url);
+			errorMessage.setResponseMessage("success");
+			return ResponseEntity.ok(errorMessage);
 		}
 	}
 
 	@RequestMapping(value = "/setPassword", method = RequestMethod.PUT)
-	public ResponseEntity<ErrorMessage> setPassword(@RequestBody User user, HttpSession session) {
-		  
-		     //String email = user.getEmail();
-		     //String password = user.getPassword();
-		     user = userService.getUserByEmail(user.getEmail());
-		    
-		if (user == null) {
-			 logger.info("No user Found at this email");
-			 errorMessage.setResponseMessage("No user Found at this email");
-			 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
-		}
+	public ResponseEntity<ErrorMessage> setPassword(@RequestBody User user1, HttpSession session,
+			HttpServletRequest request) {
+		String userToken = null;
 
-		else {
-			 String hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(10));
-			 user.setPassword(hashedPassword);
-			// user.setPassword(user.getPassword());
-			 logger.debug("set password");
-
-		if (userService.setPassword(user)) {
-			 logger.info("checking user is valid or not for update password");
-			 errorMessage.setResponseMessage("password updated");
-			 logger.debug("password updated successfully");;
-			 return ResponseEntity.ok(errorMessage);
+		Enumeration headerNames = request.getHeaderNames();
+		while (headerNames.hasMoreElements()) {
+			String key = headerNames.nextElement().toString();
+			if (key.equals("token")) {
+				userToken = request.getHeader(key);
 			}
-
-			 logger.info("password not updated");
-			 errorMessage.setResponseMessage("password not updated");
-			 return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
 		}
+		int id = VerifyJwt.verify(userToken);
+		User user = userService.getUserById(id);
+		System.out.println("User id is:  " + id);
+		if (user == null) {
+			logger.info("No user Found at this id");
+			errorMessage.setResponseMessage("No user Found at this id");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
+		}
+		/*
+		 * else{ user1.setPassword(user.getPassword()); }
+		 */
+		if (userService.setPassword(user1)) {
+			userService.setPassword(user1);
+			logger.info("check and set password for user");
+			errorMessage.setResponseMessage("password updated");
+			logger.debug("password updated successfully");
+			;
+			return ResponseEntity.ok(errorMessage);
+		}
+
+		logger.info("password not updated");
+		errorMessage.setResponseMessage("password not updated");
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
 	}
-/*
-	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-	@ExceptionHandler(value = Exception.class)
-	public String exceptionHandler(Exception e) {
-		return "Exception";
-		*/
 }

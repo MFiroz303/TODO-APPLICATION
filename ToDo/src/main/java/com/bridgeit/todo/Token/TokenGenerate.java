@@ -23,7 +23,7 @@ public class TokenGenerate {
 		
 		builder.setExpiration(expDate);
 		
-		builder.setIssuer(String.valueOf(id));
+		builder.setId(String.valueOf(id));
 		System.out.println("print id is:"+ id);
 		
 		builder.signWith(SignatureAlgorithm.HS256, key);

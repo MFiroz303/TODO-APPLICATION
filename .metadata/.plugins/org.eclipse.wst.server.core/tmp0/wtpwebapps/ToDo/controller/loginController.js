@@ -8,7 +8,6 @@ var todoApp = angular.module("todoApp");
 			httpServiceUser.then(function(response) {
 				console.log("this is to redirect after login");
 				$location.path('home');
-
 			});
 	  }
 	});

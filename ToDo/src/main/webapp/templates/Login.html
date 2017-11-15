@@ -18,12 +18,12 @@
 			<h4 class="text-center">Using your account</h4>
 			<br>
 			<div class="col-xs-6 col-sm-6 col-md-6 login-box">
-				<form  name="submit" onsubmit="return validate()"
+				<form  name="form" 
 					method="post" class="form-horizontal">
 					<div class="form-group">
 						<div class="col-sm-12">
 							<input type="email" class="form-control"
-								placeholder="Enter your Email" name="email" ng-model="user.email">
+								placeholder="Enter your Email" name="email" ng-model="user.email" required>
 						</div>
 					</div>
 					<div class="form-group">

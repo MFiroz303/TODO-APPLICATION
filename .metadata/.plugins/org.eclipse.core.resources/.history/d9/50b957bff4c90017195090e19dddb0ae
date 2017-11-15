@@ -1,0 +1,18 @@
+<nav class="navbar">
+	<div class="container-fluid" id="homeid">
+		<div class="nav-header">
+		<ul class="nav navbar-nav">
+		<li>
+			<button type="button" class="navbar-toggle-left"> <span
+				class="glyphicon glyphicon-menu-hamburger"></span></button></li>
+				<li><a><span> fundooNotes App </span></a></li>
+				<!-- <li><h4><span> fundooNotes App </span></h4></li> -->
+			</ul>	 
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="#" class="btn btn-lg"><span class="glyphicon glyphicon-th"></span> </a></li>  
+				<li><a href="#" class="btn btn-lg"><span class=""></span>Logout</a></li>			
+			</ul>
+		</div>
+	</div>
+</nav>
+

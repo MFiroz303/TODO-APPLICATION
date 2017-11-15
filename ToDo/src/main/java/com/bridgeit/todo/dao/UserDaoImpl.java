@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 
 import com.bridgeit.todo.model.User;
 
-
 @Service("UserDao")
 public class UserDaoImpl implements UserDao {
 
@@ -28,14 +27,14 @@ public class UserDaoImpl implements UserDao {
 
 	public int saveUser(User user) {
 		String hashedPassword = null;
-		System.out.println("User is :"+user);
+		System.out.println("User is :" + user);
 		if (!(user.getPassword() == null)) {
-			System.out.println("User pass is: "+user.getPassword());
+			System.out.println("User pass is: " + user.getPassword());
 			hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(10));
 			user.setPassword(hashedPassword);
 			System.out.println("hashed password: " + hashedPassword);
 		}
-		
+
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {
@@ -51,24 +50,13 @@ public class UserDaoImpl implements UserDao {
 		return 1;
 	}
 
-	/*
-	 * @Override public boolean isActive(int id) { Session session =
-	 * sessionFactory.openSession(); Transaction transaction =
-	 * session.beginTransaction(); Criteria criteria =
-	 * session.createCriteria(User.class); criteria.add(Restrictions.eq("id",
-	 * id)); User user = (User) criteria.uniqueResult(); boolean isValid;
-	 * if(user==null) { isValid= false; return isValid; }else { isValid = true;
-	 * user.setActivated(true); transaction.commit(); session.close(); } return
-	 * isValid; }
-	 */
-
 	@SuppressWarnings("deprecation")
 	public User userLogin(User user) {
 		Session session = sessionFactory.openSession();
 		Criteria criteria = session.createCriteria(User.class);
 		criteria.add(Restrictions.eq("email", user.getEmail()));
 		criteria.add(Restrictions.eq("password", user.getPassword()));
-		// criteria.add(Restrictions.eq("isActivated", true));
+		criteria.add(Restrictions.eq("isActivated", true));
 		User finalUser = (User) criteria.uniqueResult();
 		if (finalUser == null) {
 			session.close();
@@ -103,15 +91,22 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	@Override
-	public boolean setPassword(User user) {
-		// TODO Auto-generated method stub
+	public boolean setPassword(User user1) {
+		System.out.println("New Password: " + user1.getPassword());
+		String hashedPassword = BCrypt.hashpw(user1.getPassword(), BCrypt.gensalt(10));
+		user1.setPassword(hashedPassword);
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
-			session.saveOrUpdate(user);
+			
+			String pass1 = user1.getPassword();
+			session.update(user1);
 			transaction.commit();
-
+			System.out.println("after commit: Updated Password: " + user1.getPassword());
+			String pass2 = user1.getPassword();
+			if (!pass1.equalsIgnoreCase(pass2))
+				System.out.println("!!!!!!!*****!!!*!*!*!*!**!**");
 		} catch (Exception e) {
 			if (transaction != null) {
 				transaction.rollback();

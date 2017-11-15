@@ -1,0 +1,17 @@
+@CHARSET "UTF-8";
+/* #p{
+    height:200px;
+    width:300px;
+
+   }  */
+#homeid{
+	width:100%;
+	height:50px;
+	background-color:#FFC300;
+
+    }
+   .navbar{
+    position:relative;
+    margin-bottom:-1px;
+    border:1px solid transparenrt;
+    }

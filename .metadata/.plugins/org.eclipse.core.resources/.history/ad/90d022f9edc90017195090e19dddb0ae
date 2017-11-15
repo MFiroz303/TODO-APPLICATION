@@ -1,0 +1,18 @@
+ <div id="wrapper" class="act">  
+      <div id="sidebar-wrapper" >
+        <div class="sidebar-nav" id="sidebar">     
+          <a>Notes<span ></span></a>
+          <a>Reminder<span ></span></a>
+          <a>Archive<span ></span></a>
+          <a>Trash<span ></span></a>
+       
+      </div>    
+    </div>
+      <div class="card">
+        <div class="container">
+           <input type="text" name="card" placeholder="Take a note..."></input> 
+        <div class="card">
+      </div>   
+   </div>
+   </div>
+   </div>

@@ -1,0 +1,18 @@
+@CHARSET "UTF-8";
+/* #p{
+    height:200px;
+    width:300px;
+
+   }  */
+#homeid{
+	heigth:100%;
+	width:100%;
+	background-color:#FFC300;
+
+    }
+   .navbar{
+    position:relative;
+     padding: 20px;
+    margin-bottom:-1px;
+    border:1px solid transparenrt;
+    }

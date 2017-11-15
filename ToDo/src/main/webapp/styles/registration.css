@@ -1,6 +1,6 @@
 body{
     padding-top: 2px; 
-    background-color:#f2f2f2;
+    background-color:#E8E8E8;
 	float: none; 
 	margin: 0 auto;
 	font-size: 19px;
@@ -22,6 +22,7 @@ test {
 	;
 	 box-shadow: 1px 1px 1px 1px gray;
 }
-#rid{
-	/*  background-color:#f2f2f2;  */
-   }
+   #form-control{
+   border:1px solid red;	
+}
+   
