@@ -8,6 +8,7 @@
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="&lt;!--  &lt;ul class=&quot;sidebar-nav&quot; id=&quot;sidebar&quot;&gt; --&gt;"/>
 			<item value="getU"/>
 			<item value="&lt;!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support --&gt;&#x0A;&#x09;&#x09;&lt;dependency&gt;&#x0A;&#x09;&#x09;&#x09;&lt;groupId&gt;org.springframework&lt;/groupId&gt;&#x0A;&#x09;&#x09;&#x09;&lt;artifactId&gt;spring-context-support&lt;/artifactId&gt;&#x0A;&#x09;&#x09;&#x09;&lt;version&gt;4.3.8.RELEASE&lt;/version&gt;&#x0A;&#x09;&#x09;&lt;/dependency&gt;"/>
 		</list>

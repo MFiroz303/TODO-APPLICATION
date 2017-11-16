@@ -60,7 +60,6 @@ public class NoteController {
 		/*note.setTitle(note.getTitle());
 		note.setDescription(note.getDescription());*/
 		 
-		
 		noteService.updateNote(id,note);
 		errorMessage.setResponseMessage("Data Successfully updated ");
 		return ResponseEntity.ok(errorMessage);

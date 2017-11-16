@@ -3,13 +3,13 @@ todoApp.directive('topNavBar', function() {
 
 	return {
 		// restrict:'E',
-		templateUrl : 'templates/TopNavBar.html'
+		templateUrl : 'templates/directives/TopNavBar.html'
 	}
 })
 todoApp.directive('sideNavBar', function() {
 
 	return {
 		// restrict:'E',
-		templateUrl : 'templates/SideNavBar.html'
+		templateUrl : 'templates/directives/SideNavBar.html'
 	}
 });

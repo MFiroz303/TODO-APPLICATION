@@ -52,10 +52,9 @@ public class UserController {
 			HttpServletRequest request) {
 
 		String isValid = validator.validateUserRegistration(user);
-
 		if (isValid.equals("true")) {
-			int isValidate = userService.saveUser(user);
 
+			int isValidate = userService.saveUser(user);
 			if (isValidate != 0) {
 
 				logger.info("cheaking information is valid or not");
@@ -66,9 +65,7 @@ public class UserController {
 				mailservice.sendMail(user.getEmail(), "mdfirozahmad2222@gmail.com", "emailVerification", url);
 				logger.info("sending the mail for registration verification");
 				errorMessage.setResponseMessage("registered Successfully....");
-				// logger.info("registration successful");
 				return ResponseEntity.ok(errorMessage);
-
 			}
 		} else {
 			errorMessage.setResponseMessage(isValid);
@@ -122,18 +119,17 @@ public class UserController {
 			errorMessage.setResponseMessage("user with this email not exist");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
 		}
-		
-		  boolean match = BCrypt.checkpw(user.getPassword(),
-		  userLogin.getPassword());
-		 
-		/*boolean match = user.getPassword().equals(userLogin.getPassword());*/
+
+		boolean match = BCrypt.checkpw(user.getPassword(), userLogin.getPassword());
+		/*
+		 * boolean match = user.getPassword().equals(userLogin.getPassword());
+		 */
 		if (!match) {
 			logger.warn("Wrong password");
 			errorMessage.setResponseMessage("wrong password");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
 		}
 		session.setAttribute("user", userLogin);
-		// String accessToken = TokenGenerate.generate(userLogin.getId());
 		logger.debug("user successfully login");
 		errorMessage.setResponseMessage("Login Successfully....");
 		return ResponseEntity.ok(errorMessage);
@@ -188,12 +184,11 @@ public class UserController {
 		/*
 		 * else{ user1.setPassword(user.getPassword()); }
 		 */
+		user1.setId(id);
 		if (userService.setPassword(user1)) {
-			userService.setPassword(user1);
 			logger.info("check and set password for user");
 			errorMessage.setResponseMessage("password updated");
 			logger.debug("password updated successfully");
-			;
 			return ResponseEntity.ok(errorMessage);
 		}
 
