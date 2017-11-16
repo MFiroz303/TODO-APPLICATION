@@ -1,6 +1,7 @@
 package com.bridgeit.todo.dao;
 
 import org.hibernate.Criteria;
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -90,20 +91,16 @@ public class UserDaoImpl implements UserDao {
 		return user;
 	}
 
-	@Override
+	/*@Override
 	public boolean setPassword(User user1) {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
 		System.out.println("New Password: " + user1.getPassword());
-	
 		String hashedPassword = BCrypt.hashpw(user1.getPassword(), BCrypt.gensalt(10));
 		user1.setPassword(hashedPassword);
 		System.out.println("decrpt passwrd: " + user1.getPassword());
-		
-		System.out.println("FEKJHKJG");
-
 		try {
-			String pass1 = user1.getPassword();
+			//String pass1 = user1.getPassword();
 			session.update(user1);
 			System.out.println("after commit: Updated Password: " + user1.getPassword());
 			String pass2 = user1.getPassword();
@@ -118,7 +115,7 @@ public class UserDaoImpl implements UserDao {
 		
 		return true;
 	}
-
+*/
 	@Override
 	public boolean updateUser(User user) {
 		// TODO Auto-generated method stub
@@ -138,4 +135,35 @@ public class UserDaoImpl implements UserDao {
 		}
 		return true;
 	}
+	
+	public boolean setPassword(User user1) {
+		Session session=sessionFactory.openSession();
+		Transaction transaction=null;
+		try
+		{
+			
+		transaction=session.beginTransaction();
+		String hashedPassword = BCrypt.hashpw(user1.getPassword(), BCrypt.gensalt(10));
+		user1.setPassword(hashedPassword);
+		System.out.println(""+hashedPassword);
+		String hql="update User set password=:password where id=:id";
+		
+		Query query=session.createQuery(hql);
+		query.setParameter("password",hashedPassword);
+		query.setParameter("id", user1.getId());
+		query.executeUpdate();
+		
+		transaction.commit();
+		session.close();
+		return true;
+		}
+		
+		catch (Exception e) {
+		if(transaction!=null)
+		transaction.rollback();
+		e.printStackTrace();
+		}
+		return false;
+		}
+	
 }

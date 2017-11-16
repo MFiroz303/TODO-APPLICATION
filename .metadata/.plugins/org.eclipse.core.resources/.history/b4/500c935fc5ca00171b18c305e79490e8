@@ -1,0 +1,125 @@
+<div class="container" id="rid">
+	<div class="row">
+		<div class="col-lg-5 col-md-5 col-sm-5 col-xs-5" id="registrationid">
+			<br>
+			<form method="post" id="fileForm" name="form" novalidate>
+				<h3 class="text-center">
+					<u>Create an Account</u>
+				</h3>
+
+				<div class="form-group" >
+					<label>First Name</label>
+					 <input type="text" class="form-control" placeholder="First Name" name="firstName" ng-model="user.firstName"
+						required ng-minlength="2" />
+						 <span ng-show="form.firstName.$dirty && form.firstName.$error.required">required</span> 
+					     <span ng-show="form.firstName.$dirty && form.firstName.$error.minlength">First
+						       name is too short</span>
+				</div>
+				
+                <div class="form-group">
+				<label> Last Name</label>
+					<input type="text" class="form-control" name="lastName" placeholder="First Name" ng-model="user.lastName" 
+					required ng-minlength="3" />
+					 <span ng-show="form.lastName.$dirty && form.lastName.$error.required">required</span> 
+					     <span ng-show="form.lastName.$dirty && form.lastName.$error.minlength">Last
+						       name is too short</span>
+				</div>
+
+				<div class="form-group">
+					<label for="email">Email</label> <input class="form-control"
+						type="text" id="email" placeholder="Enter Email" name="email"
+						ng-model="user.email" required="ng.email" />
+						<span ng-show="form.email.$dirty && form.email.$error.required">Please enter a valid email</span>
+						<span ng-show="form.email.$dirty && form.email.$error.email">Please fill a proper format </span>
+				</div>
+
+
+				<div class="form-group">
+					<label>Password</label> <input type="password" class="form-control"
+						placeholder="Enter Password" id="pass1" name="password" ng-model="user.password" required ng-minlength="8">
+						<span ng-show="form.password.$dirty && form.password.$error.required">required</span>
+						<span ng-show="form.password.$dirty && form.password.$error.minlength">Password is too short </span>
+				</div>
+
+				<div class="form-group">
+					<label for="number">Contact</label>
+					 <input class="form-control" type="text" id="contact" placeholder="(xxx)-xxx-xxxx"
+						name="contact" ng-model="user.contact" required ng-minlength="10" />
+						<span ng-show="form.contact.$dirty && form.contact.$error.required">required</span>
+						<span ng-show="form.contact.$dirty && form.contact.$error.minlength">Enter 10 digit phone Numbers </span>
+						</div>
+						
+					<div class="form-group">
+						<p class="dotted">
+							By Clicking on the create an account button bellow, you certified
+							that you have read and agree to our terms
+								of use and conditions</a>
+						</p>
+					</div>
+				<div class="form-group">
+					<div class="btn-group btn-group-justified">
+						<div class="btn-group">
+							<button type="button" class="btn btn-success"
+								ng-click="registerUser()">Create an account</button>
+						</div>
+					</div>
+				</div>
+				<p>
+					create an account?<a href="#!/login">Sign in.</a>
+			</form>
+		</div>
+	</div>
+</div>
+
+
+
+<div class="container white z-depth-2">
+	<ul class="tabs teal">
+		<li class="tab col s3"><a class="white-text active" href="#!/login">login</a></li>
+		<li class="tab col s3"><a class="white-text" href="#!/register">register</a></li>
+	</ul>
+	<div id="register" class="col s12">
+		<form class="col s12">
+			<div class="form-container">
+				<h3 class="teal-text">Welcome</h3>
+				<div class="row">
+					<div class="input-field col s6">
+						<input id="last_name" name="firstName" type="text" class="validate" ng-model="user.firstName">
+						<label for="last_name">First Name</label>
+					</div>
+					<div class="input-field col s6">
+						<input id="last_name" type="text" class="validate" name="lastName" ng-model="user.lastName">
+						<label for="last_name">Last Name</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s12">
+						<input id="email" type="email" class="validate" name="email" ng-model="user.email">
+						<label for="email">Email</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s12">
+						<input id="password" type="password" class="validate" name="password" ng-model="user.password">
+						<label for="password">Password</label>
+					</div>
+				</div>
+				<div class="row">
+					<div class="input-field col s12">
+						<input id="password-confirm" type="number" class="validate" name="contact" ng-model="user.contact">
+						<label for="password-confirm">Contact</label>
+					</div>
+				</div>
+				<center>
+					<button class="btn waves-effect waves-light teal" type="button" name="action" ng-click="registerUser()">Submit</button>
+				</center>
+			</div>
+		</form>
+	</div>
+</div>
+
+
+
+
+
+

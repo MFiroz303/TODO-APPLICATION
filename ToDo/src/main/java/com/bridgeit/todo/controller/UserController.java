@@ -176,15 +176,13 @@ public class UserController {
 		int id = VerifyJwt.verify(userToken);
 		User user = userService.getUserById(id);
 		System.out.println("User id is:  " + id);
+		
 		if (user == null) {
 			logger.info("No user Found at this id");
 			errorMessage.setResponseMessage("No user Found at this id");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
 		}
-		/*
-		 * else{ user1.setPassword(user.getPassword()); }
-		 */
-		user1.setId(id);
+		    user1.setId(id);
 		if (userService.setPassword(user1)) {
 			logger.info("check and set password for user");
 			errorMessage.setResponseMessage("password updated");
