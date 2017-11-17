@@ -1,0 +1,33 @@
+<!-- <nav class="navbar">
+	<div class="container-fluid" id="homeid">
+		<div class="nav-header" ng-non-bindable>
+		<ul class="nav navbar-nav">
+		<li>
+			<button type="button" class="navbar-toggle-left" ng-click="SideNavbar()"> <span
+				class="glyphicon glyphicon-menu-hamburger"></span></button></li>
+				<li><span> fundooNotes App </span></li>
+				<li><h4><span> fundooNotes App </span></h4></li>
+			</ul>	 
+			<ul class="nav navbar-nav navbar-right">
+				<li><a href="#" class="btn btn-lg"><span class="glyphicon glyphicon-th"></span> </a></li>  
+				<li><a href="#" class="btn btn-lg"><span class="glyphicon glyphicon-eye-open"></span></a></li>			
+			</ul>
+		</div>
+	</div>
+</nav>
+ -->
+
+<!--  <md-toolbar>
+ <h1>TopNavBar</h1>
+ </md-toolbar> -->
+
+<md-content> 
+<md-toolbar class="md-hue-2">
+<div class="md-toolbar-tools">
+
+	<md-button class="md-icon-button" aria-label="Settings"
+		ng-disabled="true"> <md-icon
+		md-svg-icon="img/icons/menu.svg"></md-icon> 
+    </md-button>
+</div>
+</md-toolbar> </md-content>

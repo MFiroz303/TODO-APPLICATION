@@ -1,4 +1,4 @@
-var todoApp = angular.module('todoApp', [ 'ui.router' ]);
+var todoApp = angular.module('todoApp', [ 'ui.router','ngMaterial', 'ngAnimate', 'ngAria']);
 
 todoApp.config([ '$stateProvider', '$urlRouterProvider',
 		function($stateProvider, $urlRouterProvider) {

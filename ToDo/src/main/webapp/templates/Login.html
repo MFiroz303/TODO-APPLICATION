@@ -1,60 +1,28 @@
-<div class="container" id="lid">
-	<div class="row">
-		<div class="col-xs-12 col-sm-12 col-md-6" id="loginid">
-			<div class="panel-heading">
+<md-content flex layout="row" layout-align="space-around" layout-padding="layout-padding">
+   <md-card flex-gt-sm="66" flex-gt-md="33" style= "max-height:540px"> 
+    <md-card-content>
+      <form name="Form">
+      
+	      <md-input-container class="md-block"> <label>Email</label>
+	       <input type="text" name="email" ng-model="user.email" /> 
+	      </md-input-container>
 
-				<h3>Sign In.</h3>
-				<hr color="green">
-			</div>
-
-			<div class="col-xs-6 col-sm-6 col-md-6 separator social-login-box">
-				<h4>use other account</h4>
-				<p>
-					You can also sing in using facbook account and google account<br>
-					<br> <a href="" class="btn facebook btn-block">Log in
-						using Facebook</a> <br /> <a href="" class="btn google btn-block">Log
-						in using google</a>
-			</div>
-			<h4 class="text-center">Using your account</h4>
-			<br>
-			<div class="col-xs-6 col-sm-6 col-md-6 login-box">
-				<form  name="form" 
-					method="post" class="form-horizontal">
-					<div class="form-group">
-						<div class="col-sm-12">
-							<input type="email" class="form-control"
-								placeholder="Enter your Email" name="email" ng-model="user.email" required>
-						</div>
-					</div>
-					<div class="form-group">
-						<div class="col-sm-12">
-							<input type="password" class="form-control"
-								placeholder="Enter your password" name="password" ng-model="user.password">
-
-						</div>
-					</div>
+	      <md-input-container class="md-block"> <label>Password</label>
+	       <input type="password" name="password" ng-model="user.password" /> 
+	      </md-input-container>
+	      
+          <md-button  ng-click="log()"  flex="110" class="md-primary md-raised">&nbsp Sign In &nbsp</md-button>
+           <a ui-sref="register">Create an account? </a>
+          <br>
+            <a ui-sref="forgotPassword">Forgot Password?</a>
+             <div layout="row">
+            <a flex href="facebookLogin"><md-button style="min-width: 176px;"  class="md-raised md-primary">&nbsp Facebook  &nbsp</md-button></a>
+            <a  flex href="googleLogin"><md-button style="min-width: 176px;" class="md-raised md-warn">&nbsp Google &nbsp</md-button></a>
+            </div>
+        </form>
+      </md-card-content>
+   </md-card> 
+</md-content>
 
 
-					<div class="form-group">
-						<div class="col-sm-12">
-							<div class="btn-group btn-group-justified">
-								<div class="btn-group">
-									<button type="button" class="btn btn-success" ng-click="log()">Login</button>
-								</div>
-							</div>
-						</div>
-					</div>
-					<div class="center">
-						<a href="#!/register">New Registration?
-						</a>
-						</div>
-						<div class="center">
-						<a href="#!/forgotPassword">Forgot Password?
-						</a>
-						</div>
-				</form>
-			</div>
-
-		</div>
-	</div>
-</div>
+ <!-- style="min-width: 356px;" -->

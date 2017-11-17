@@ -82,12 +82,15 @@ public class GoogleLoginController {
 				else {
 					String myaccessToken = TokenGenerate.generate(userId);
 					session.setAttribute("todoAppAccessToken", myaccessToken);
+					response.sendRedirect("http://localhost:8080/ToDoApp/#!/home");
 				}
 					
 			} else {	
 				String myaccessToken = TokenGenerate.generate(user.getId());
 				logger.info("token geneted by jwt" + myaccessToken);
 				session.setAttribute("AccessToken", myaccessToken);
+				response.sendRedirect("http://localhost:8080/ToDoApp/#!/home");
+
 			}
 			
 		} catch (IOException e) {

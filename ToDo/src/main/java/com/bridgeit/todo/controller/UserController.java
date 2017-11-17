@@ -68,11 +68,11 @@ public class UserController {
 				return ResponseEntity.ok(errorMessage);
 			}
 		} else {
-			errorMessage.setResponseMessage(isValid);
-			logger.error(isValid);
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
+			    errorMessage.setResponseMessage(isValid);
+			    logger.error(isValid);
+			    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
 		}
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
+		        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
 	}
 
 	@RequestMapping(value = "/verifyMail/{accessToken:.+}", method = RequestMethod.GET)
@@ -109,10 +109,8 @@ public class UserController {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ResponseEntity<ErrorMessage> userLogin(@RequestBody User user, HttpSession session) {
 
-		// User userLogin = userService.userLogin(user.getEmail(),
-		// user.getPassword());
 		User userLogin = userService.getUserByEmail(user.getEmail());
-		logger.info("cheaking information is valid or not");
+		logger.info("verifying User by Email");
 
 		if (userLogin == null) {
 			logger.info("user entering invalid information");
@@ -121,18 +119,15 @@ public class UserController {
 		}
 
 		boolean match = BCrypt.checkpw(user.getPassword(), userLogin.getPassword());
-		/*
-		 * boolean match = user.getPassword().equals(userLogin.getPassword());
-		 */
 		if (!match) {
 			logger.warn("Wrong password");
 			errorMessage.setResponseMessage("wrong password");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
 		}
-		session.setAttribute("user", userLogin);
-		logger.debug("user successfully login");
-		errorMessage.setResponseMessage("Login Successfully....");
-		return ResponseEntity.ok(errorMessage);
+		    session.setAttribute("user", userLogin);
+		    logger.debug("user successfully login");
+		    errorMessage.setResponseMessage("Login Successfully....");
+		    return ResponseEntity.ok(errorMessage);
 
 	}
 
@@ -164,25 +159,27 @@ public class UserController {
 	@RequestMapping(value = "/setPassword", method = RequestMethod.PUT)
 	public ResponseEntity<ErrorMessage> setPassword(@RequestBody User user1, HttpSession session,
 			HttpServletRequest request) {
-		String userToken = null;
-
-		Enumeration headerNames = request.getHeaderNames();
-		while (headerNames.hasMoreElements()) {
-			String key = headerNames.nextElement().toString();
-			if (key.equals("token")) {
-				userToken = request.getHeader(key);
+		
+		    String userToken = null;
+		    Enumeration headerNames = request.getHeaderNames();
+		    
+		 while (headerNames.hasMoreElements()) {
+			 String key = headerNames.nextElement().toString();
+			 if (key.equals("token")) {
+			 userToken = request.getHeader(key);
 			}
 		}
 		int id = VerifyJwt.verify(userToken);
 		User user = userService.getUserById(id);
 		System.out.println("User id is:  " + id);
+		user1.setId(id);
 		
 		if (user == null) {
 			logger.info("No user Found at this id");
 			errorMessage.setResponseMessage("No user Found at this id");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
 		}
-		    user1.setId(id);
+		    
 		if (userService.setPassword(user1)) {
 			logger.info("check and set password for user");
 			errorMessage.setResponseMessage("password updated");

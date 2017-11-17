@@ -1,0 +1,54 @@
+ <!-- <div id="wrapper" class="act">  
+      <div id="sidebar-wrapper">
+        <ul class="sidebar-nav" id="sidebar">     
+          <li><a>Notes</a></li>
+          <li><a>Reminder</a></li>
+          <li><a>Archive</a></li>
+          <li><a>Trash</a></li>
+        </ul>
+      </div>    
+     
+      <div class="card">
+        <div class="container">
+           <input type="text" name="card" placeholder="Take a note..."></input> 
+        <div class="card">
+      </div>   
+   </div>
+   </div>
+   </div> -->
+   
+<!--    <div class="container" layout="row" flex>
+   <md-sidenav md-is-locked-open="true"  class="green">sidenav</md-sidenav>
+   </div> -->
+   
+   r-tools">Disabled Backdrop</h1>
+      </md-toolbar>
+
+      <md-content layout-margin>
+        <p>
+          This sidenav is not showing any backdrop, where users can click on it, to close the sidenav.
+        </p>
+        <md-button ng-click="toggleLeft()" class="md-accent">
+          Close this Sidenav
+        </md-button>
+      </md-content>
+
+    </md-sidenav>
+
+    <md-content flex layout-padding>
+
+      <div layout="column" layout-align="top center">
+        <p>
+          Developers can also disable the backdrop of the sidenav.<br/>
+          This will disable the functionality to click outside to close the sidenav.
+        </p>
+
+        <div>
+          <md-button ng-click="toggleLeft()" class="md-raised">
+            Toggle Sidenav
+          </md-button>
+        </div>
+
+      </div>
+
+    </md-content>

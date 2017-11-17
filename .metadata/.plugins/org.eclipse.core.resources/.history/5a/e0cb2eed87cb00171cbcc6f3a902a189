@@ -1,0 +1,28 @@
+<md-content flex layout="row" layout-align="space-around" layout-padding="layout-padding">
+   <md-card flex="flex" flex-gt-sm="66" flex-gt-md="33" > 
+    <md-card-content>
+    <div layout="row">
+    <a flex href="facebookLogin"><md-button style="min-width: 176px;"  class="md-raised md-primary">&nbsp Facebook  &nbsp</md-button></a>
+            <a  flex href="googleLogin"><md-button style="min-width: 176px;" class="md-raised md-warn">&nbsp Google &nbsp</md-button></a>
+            </div>
+      <form name="Form">
+      
+	      <md-input-container class="md-block"> <label>Email</label>
+	       <input type="text" name="email" ng-model="user.email" /> 
+	      </md-input-container>
+
+	      <md-input-container class="md-block"> <label>Password</label>
+	       <input type="password" name="password" ng-model="user.password" /> 
+	      </md-input-container>
+	      
+          <md-button <!-- style="min-width: 356px;" -->  ng-click="log()" class="md-raised md-primary">&nbsp Sign In &nbsp</md-button>
+          <br>
+            <a ui-sref="register"> &nbsp Create an account? &nbsp </a>
+            <a ui-sref="forgotPassword"> &nbsp Forgot Password? &nbsp </a>
+            
+        </form>
+      </md-card-content>
+   </md-card> 
+</md-content>
+
+

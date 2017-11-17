@@ -83,11 +83,13 @@ public class FBLoginController {
 				} else {
 					String accessToken = TokenGenerate.generate(userId);
 					session.setAttribute("todoAppAccessToken", accessToken);
+					response.sendRedirect("http://localhost:8080/ToDoApp/#!/Home");
 				}
 			} else {	
 				String accessToken = TokenGenerate.generate(user.getId());
 				logger.info("token geneted by jwt" + accessToken);
 				session.setAttribute("AccessToken", accessToken);
+				response.sendRedirect("http://localhost:8080/ToDoApp/#!/Home");
 			}
 			
 		} catch (IOException e) {
