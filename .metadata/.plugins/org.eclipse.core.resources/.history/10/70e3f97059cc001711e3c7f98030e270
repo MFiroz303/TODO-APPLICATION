@@ -1,0 +1,21 @@
+<md-sidenav class="md-sidenav-left" md-component-id="left" md-whiteframe="4" md-is-locked-open="$mdMedia('gt-md')">>
+  <md-content>
+    <md-list>
+      <md-list-item class="md-2-line" ng-click="null" ui-sref="notes">
+        <div class="md-list-item-text">
+          <h3>Notes</h3>
+        </div>
+      </md-list-item>
+      <md-list-item class="md-2-line" ng-click="null" ui-sref="remainder">
+        <div class="md-list-item-text">
+          <h3>Reminders</h3>
+        </div>
+      </md-list-item>
+      <md-list-item class="md-2-line" ng-click="null" ui-sref="trash">
+        <div class="md-list-item-text">
+          <h3>Trash</h3>
+        </div>
+      </md-list-item>
+    </md-list>
+  </md-content>
+</md-sidenav>

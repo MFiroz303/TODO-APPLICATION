@@ -1,0 +1,26 @@
+<md-sidenav class="md-sidenav-left" md-is-locked-open="$mdMedia('gt-md')">
+  <md-content>
+    <md-list>
+      <md-list-item  ng-click="" ui-sref="notes">
+        <div class="md-list-item-text">
+          <span>Notes</span>
+        </div>
+      </md-list-item>
+      <md-list-item  ng-click="" ui-sref="remainder">
+        <div class="md-list-item-text">
+          <p>Reminders</p>
+        </div>
+      </md-list-item>
+      <md-list-item  ng-click="" ui-sref="notes">
+        <div class="md-list-item-text">
+          <span>Archieves</span>
+        </div>
+        </md-list-item>
+      <md-list-item  ng-click="" ui-sref="trash">
+        <div class="md-list-item-text">
+          <p>Trash</p>
+        </div>
+      </md-list-item>
+    </md-list>
+  </md-content>
+</md-sidenav>

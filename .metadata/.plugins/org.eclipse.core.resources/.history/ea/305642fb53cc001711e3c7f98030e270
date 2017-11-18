@@ -1,0 +1,38 @@
+<!-- <md-sidenav
+        class="md-sidenav-left"
+        md-component-id="left">
+
+      <md-toolbar class="md-theme-indigo">
+        <h1 class="md-toolbar-tools">Sidenav Left</h1>
+      </md-toolbar>
+      <md-content layout-padding >
+        <md-button ng-click="close()" class="md-primary" hide-gt-md>
+          Close Sidenav Left
+        </md-button>
+        <p hide show-gt-md>
+          This sidenav is locked open on your device. To go back to the default behavior,
+          narrow your display.
+        </p>
+      </md-content>
+
+    </md-sidenav>
+    
+    
+ -->
+ 
+ <md-sidenav-container class="example-container">
+  <md-sidenav #sidenav class="example-sidenav">
+    <ul>
+    <li>Jolly good!</li>
+    <li>abc</li>
+    <li>bcd</li>
+    </ul>
+  </md-sidenav>
+
+  <div class="example-sidenav-content">
+    <button type="button" mat-button (click)="sidenav.open()">
+      Open sidenav
+    </button>
+  </div>
+
+</mat-sidenav-container>

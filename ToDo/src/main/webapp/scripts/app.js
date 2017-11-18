@@ -20,9 +20,10 @@ todoApp.config([ '$stateProvider', '$urlRouterProvider',
 				templateUrl : 'templates/Home.html',
 				controller : 'homeController'
 					
-			}).state('forgotPassword',{
+			}).state('forgotPassword', {
+			
 				url:'/forgotPassword',
-				templateUrl : 'templates/forgptPassword.html',
+				templateUrl : 'templates/forgotPassword.html',
 				controller : 'setController'
 					
 			}).state('setPassword',{

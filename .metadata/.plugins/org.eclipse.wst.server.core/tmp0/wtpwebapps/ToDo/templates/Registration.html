@@ -14,7 +14,7 @@
 	  <md-input-container class="md-block">
 	   <label>Last Name</label> 
 	    <input type="text" name="lastName" ng-model="user.lastName" required="">
-	     <div ng-messages="form.lastName.$error" ng-if="form.$submitted || form.lastName.$touched">
+	     <div ng-messages="form.lastName.$error" >
             <div ng-message="required" class="my-message">Please enter your Last Name.</div>
           </div>
 	  </md-input-container>
@@ -22,7 +22,7 @@
 	  <md-input-container class="md-block">
 	   <label>Email</label>
 	    <input type="email" name="email" ng-model="user.email" required="">
-	     <div ng-messages="form.email.$error" ng-if="form.$submitted || form.email.$touched">
+	     <div ng-messages="form.email.$error">
             <div ng-message="required" class="my-message">Please enter your Email.</div>
           </div>
       </md-input-container>
@@ -30,7 +30,7 @@
 	  <md-input-container class="md-block"> 
 	   <label>Password</label>
 	    <input type="password" name="password" ng-model="user.password" required="">
-	     <div ng-messages="form.password.$error" ng-if="form.$submitted || form.password.$touched">
+	     <div ng-messages="form.password.$error" >
             <div ng-message="required" class="my-message">Please enter your Password.</div>
           </div>
 	  </md-input-container>
@@ -38,7 +38,7 @@
 	  <md-input-container class="md-block"> 
 	   <label>Contact</label>
 	    <input type="contact" name="contact" ng-model="user.contact" required=""> 
-	     <div ng-messages="form.contact.$error" ng-if="form.$submitted || form.contact.$touched">
+	     <div ng-messages="form.contact.$error">
             <div ng-message="required" class="my-message">Please enter your Contact.</div>
           </div>
 	  </md-input-container>

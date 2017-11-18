@@ -1,16 +1,18 @@
 <!doctype>
-<html ng-app="todoApp">
+<html >
 <head>
 
 	
    <link rel="stylesheet"
-   href="bower_components/angular-material/angular-material.css">
+   href="bower_components/angular-material/angular-material.css" >
+   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
 </head>
 
-<body layout>
-	<!-- <div layout="row" ui-view></div> -->
-	 <div layout flex ui-view></div>
+<body ng-app="todoApp">
+<div ui-view></div>
+	<!-- <div layout="column" ui-view></div> -->
+	<!--  <div layout flex ui-view></div> -->
 </body>
 <script src="bower_components/angular/angular.js"></script>
 <script src="bower_components/angular-animate/angular-animate.js"></script>
@@ -18,6 +20,7 @@
 <script src="bower_components/angular-material/angular-material.js"></script>
 <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 <script type="bower_components/angular-messages/angular-messages.js"></script>
+<!-- <script type="bower_components/material-design-icons/gulpfile.babel.js"></script> -->
 
 <script type="text/javascript" src="scripts/app.js"></script>
 <script type="text/javascript" src="controller/registrationController.js"></script>

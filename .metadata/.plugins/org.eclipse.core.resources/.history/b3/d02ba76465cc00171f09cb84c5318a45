@@ -1,0 +1,39 @@
+
+ <!--  <md-toolbar class="md-hue-2" style="background-color:rgba(236, 173, 26, 0.89);">
+      <div class="md-toolbar-tools">
+        <md-button class="md-icon-button" aria-label="Settings" ng-disabled="true">
+          <md-icon md-svg-icon="img/icons/menu.svg"></md-icon>
+        </md-button>
+
+        <h2 flex md-truncate>Toolbar with Disabled/Enabled Icon Buttons</h2>
+
+        <md-button class="md-icon-button" aria-label="Favorite">
+          <md-icon md-svg-icon="img/icons/favorite.svg" style="color: greenyellow;"></md-icon>
+        </md-button>
+
+        <md-button class="md-icon-button" aria-label="More">
+          <md-icon md-svg-icon="img/icons/more_vert.svg"></md-icon>
+        </md-button>
+      </div>
+    </md-toolbar>
+     -->
+    
+  <md-toolbar style="background-color:rgba(236, 173, 26, 0.89);">
+       <md-button class="md-icon-button"  style="margin:10px;">
+           <md-icon md-svg-src="./images/ic_dehaze_black_48px.svg"></md-icon>
+        </md-button>
+         <md-button class="md-icon-button" aria-label="Search" data-ng-click="showMobileMainHeader = false">
+          <md-tooltip>Search</md-tooltip>
+          <md-icon  md-svg-icon="./images/ic_search_black_48px.svg" class="material-icons">&#xE8B6;</md-icon>
+        </md-button>
+        
+  </md-toolbar>
+  
+  
+  
+  
+ 
+  
+ 
+  
+  
