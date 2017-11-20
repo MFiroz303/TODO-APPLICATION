@@ -1,0 +1,16 @@
+ <md-content flex layout="row" layout-align="space-around">
+   <md-card flex="flex" flex-gt-sm="66" flex-gt-md="33" style= "max-height:450"> 
+    <md-card-content>
+      <form name="form">
+      
+	      <md-input-container class="md-block"> <label>Email</label>
+	       <input type="email" name="email" ng-model="user.email" /> 
+	      </md-input-container>
+	       <md-button  ng-click="#" class="md-raised md-primary">&nbsp Reset &nbsp</md-button>
+	       
+	   </form>
+	 </md-card-content>
+	</md-card>
+</md-content>
+	      
+ 

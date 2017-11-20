@@ -1,8 +1,11 @@
 var todoApp = angular.module("todoApp");
  
-  todoApp.controller('homeController', function($scope, homeService, $location){
-	  
-	  $scope.card = function() {
-			var httpServiceUser1 = homeService.cardUser($scope.user);
-		}
+  todoApp.controller('homeController', function ($scope, $timeout, $mdSidenav) {
+		    $scope.toggleLeft = buildToggler('left');
+
+		    function buildToggler(componentId) {
+		      return function() {
+		        $mdSidenav(componentId).toggle();
+		      };
+		    }
 	});

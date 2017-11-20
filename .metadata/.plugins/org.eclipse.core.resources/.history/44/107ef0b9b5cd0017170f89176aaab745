@@ -1,0 +1,16 @@
+<top-nav-bar></top-nav-bar>
+<side-nav-bar></side-nav-bar>
+
+
+  <md-content class="md-padding" layout-xs="column" layout="row">
+      <md-card >
+        <md-card-title>
+            <span class="md-headline">Card with image</span>
+            <md-card-actions layout="row" layout-align="end center">
+             </md-card-title-text></md-card-title>
+             <md-button>Done</md-button>
+  
+      </md-card>
+      </div>
+      </div>
+  </md-content>

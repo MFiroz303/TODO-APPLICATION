@@ -5,8 +5,8 @@
 	
    <link rel="stylesheet"
    href="bower_components/angular-material/angular-material.css" >
-   <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 
+ 
 </head>
 
 <body ng-app="todoApp">
@@ -19,7 +19,7 @@
 <script src="bower_components/angular-aria/angular-aria.js"></script>
 <script src="bower_components/angular-material/angular-material.js"></script>
 <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-<script type="bower_components/angular-messages/angular-messages.js"></script>
+<script src="bower_components/angular-messages/angular-messages.js"></script>
 <!-- <script type="bower_components/material-design-icons/gulpfile.babel.js"></script> -->
 
 <script type="text/javascript" src="scripts/app.js"></script>

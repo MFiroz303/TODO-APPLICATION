@@ -1,0 +1,42 @@
+<top-nav-bar></top-nav-bar>
+<div flex-xs layout="row">
+<side-nav-bar></side-nav-bar>
+
+ <md-content class="md-padding" layout-xs="column" layout="row">
+    
+   <md-card >
+   <md-card-title>
+   <md-card-title-text>
+          <md-input-container >
+          
+           <span class="md-headline" data-placeholder="title"></span>
+          
+          
+          
+          
+          
+          
+          
+          
+          
+        <!-- <input ng-click="">
+      </md-input-container>
+      
+          <input  ><br>
+          <input >
+       
+        <md-card-actions layout="row" layout-align="end center">
+          <md-button>Done</md-button>
+        </md-card-actions>
+      </md-card> -->
+      
+      </md-input-container>
+      </md-card-title-text>
+      </md-card-title>
+      </md-card>
+      </md-content>
+      </div>
+      
+      
+      
+  

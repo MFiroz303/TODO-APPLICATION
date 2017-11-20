@@ -12,4 +12,5 @@ todoApp.directive('sideNavBar', function() {
 		 restrict:'E',
 		templateUrl : './templates/SideNavBar.html'
 	}
+
 });

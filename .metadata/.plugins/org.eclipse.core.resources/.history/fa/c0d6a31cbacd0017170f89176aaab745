@@ -1,0 +1,16 @@
+<top-nav-bar></top-nav-bar>
+<side-nav-bar></side-nav-bar>
+
+ <md-content class="md-padding" layout-xs="column" layout="row">
+    <div flex-xs flex-gt-xs="50" layout="column">
+      <md-card >
+     <!--   <md-input-container>
+        <input ng-click=""><br><br><br>
+      </md-input-container> -->
+       </md-input-container>
+          <input ng-model=""><br>
+          <input ng-model="">
+        <md-card-actions layout="row" layout-align="end center">
+          <md-button>Done</md-button>
+        </md-card-actions>
+      </md-card>

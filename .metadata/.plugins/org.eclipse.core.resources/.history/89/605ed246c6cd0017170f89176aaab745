@@ -1,0 +1,30 @@
+<top-nav-bar></top-nav-bar>
+<div flex-xs layout="row">
+<side-nav-bar></side-nav-bar>
+
+ <md-content class="md-padding" layout-xs="column" layout="row" style="width:50%">
+    
+   <md-card >
+   <md-card-title>
+   <md-card-title-text>
+          <md-input-container>
+      
+       
+          <input placeholder="Title">
+          
+       </md-input-container>
+        <md-card-actions layout="row" layout-align="end center">
+          <md-button>Done</md-button>
+        </md-card-actions>
+      </md-card> 
+      
+      </md-input-container>
+      </md-card-title-text>
+      </md-card-title>
+      </md-card>
+      </md-content>
+      </div>
+      
+      
+      
+  

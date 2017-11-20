@@ -1,0 +1,51 @@
+<top-nav-bar></top-nav-bar>
+<div flex-xs layout="row">
+<side-nav-bar></side-nav-bar>
+
+<!--  <md-content class="md-padding" layout-xs="column" layout="row" style="width:50%">
+    
+   <md-card >
+   <md-card-title>
+   <md-card-title-text>
+          <md-input-container>
+      
+          <input placeholder="Title">
+          <div></div>
+       </md-input-container>
+        <md-card-actions layout="row" layout-align="end center">
+          <md-button>Done</md-button>
+        </md-card-actions>
+      </md-card> 
+      
+      </md-input-container>
+      </md-card-title-text>
+      </md-card-title>
+      </md-card>
+      </md-content>
+      </div> -->
+   
+  <md-content flex ng-hide="searchNote">
+      <md-card  style="margin-left:20%; margin-right:20%;" >
+       
+        <md-card-title ng-show="click" >
+          <md-card-title-text>
+              <md-input-container class="md-block">
+                <div ng-model="title" contenteditable="true" contenteditabledata  aria-multiline="true" style="background-color: rgb(250, 250, 250); outline:none" data-placeholder="Title" ></div>
+              </md-input-container>
+          </md-card-title-text>
+        </md-card-title>
+        
+        <md-card-title style="padding-top:0px;padding-right:10px;padding-bottom:0px;padding-left:10px">
+          <md-card-title-text>
+            <span class="md-headline">
+              <md-input-container class="md-block">
+          <div ng-model="body" ng-focus="click=true" contenteditable="true" contenteditabledata aria-multiline="true" role="textbox" style="background-color: rgb(250, 250, 250); outline:none" data-placeholder="Take a note"></div>
+         
+        </md-input-container>
+            </span>
+          </md-card-title-text>
+        </md-card-title>
+        <md-card-actions layout="row" layout-align="end center" ng-show="click">
+          <md-button ng-click="abc()"><b>Done</b></md-button>
+        </md-card-actions>
+      </md-card>
