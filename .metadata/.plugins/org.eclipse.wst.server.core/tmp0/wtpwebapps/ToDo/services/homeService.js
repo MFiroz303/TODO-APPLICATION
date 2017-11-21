@@ -1,15 +1,31 @@
 var todoApp = angular.module("todoApp");
 todoApp.factory('homeService', function($http, $location){
 	
-	var card = {};
-	 
-	card.cardUser = function() {
+	var notes={};
+	notes.getNotes=function(token){
+	return $http({
+	    method: 'GET',
+	    url: 'noteList',
+	    headers: {
+	        'Authorization': token
+	    }
+	   });
+	}
+	
+	notes.addNote=function(token,note){
+		console.log(note);
+
 		return $http({
-			method : "GET",
-			url : 'noteList',
-			data : note
+		    method: 'POST',
+		    url: 'addNote',
+		    data:note,
+		    headers: {
+		        'Authorization': token
+		    }
 		});
 	}
-	return card;
+	
+	return notes;
 });
 
+	

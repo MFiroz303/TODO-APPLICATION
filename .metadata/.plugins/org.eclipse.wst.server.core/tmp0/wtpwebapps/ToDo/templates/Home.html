@@ -1,6 +1,6 @@
 <top-nav-bar></top-nav-bar>
 <div flex-xs layout="row">
-	<side-nav-bar></side-nav-bar>
+<side-nav-bar></side-nav-bar>
 
 	<!--  <md-content class="md-padding" layout-xs="column" layout="row" style="width:50%">
     
@@ -32,7 +32,7 @@
 		<md-card-title-text>
 		  <md-input-container
 			   class="md-block" style=" padding: 0px; margin: 5px 0; ">
-		    <div ng-model="title" contenteditable="true" contenteditabledata
+		    <div id="title" ng-bind-html="note.title" contenteditable="true" contenteditabledata
 			   aria-multiline="true"
 			   style="background-color: rgb(250, 250, 250); outline: none"
 			   placeholder="Title">
@@ -46,10 +46,11 @@
 		<md-card-title-text> 
 		  <span class="md-headline">
 		   <md-input-container class="md-block">
-			<div ng-model="body" ng-focus="click=true" contenteditable="true"
+			<div ng-model="description" id="description" ng-bind-html="note.description" ng-focus="click=true" contenteditable="true"
 				contenteditabledata aria-multiline="true" role="textbox"
 				style="background-color: rgb(250, 250, 250); outline: none"
 				data-placeholder="Take a note...."></div>
+		    
 		   </md-input-container>
 		  </span> 
 		</md-card-title-text>
@@ -57,10 +58,28 @@
 	   
 	   <md-card-actions layout="row" layout-align="end center"
 			  ng-show="click" style="margin: 3px;">
-		   <md-button ng-click="abc()">
+		   <md-button  ng-click="createNote()">
 		      <b>Done</b>
 	       </md-button> 
        </md-card-actions>
        </span>
 </md-card>
+
+<md-content flex  >
+ <div layout="row" layout-wrap flex >
+ <div ng-repeat="note in notes" flex="30" >
+       <md-card flex>
+        <md-card-content >
+        <b><div >{{note.title}}</div></b>
+					<div >{{note.description}}</div>
+         </md-card-content>
+        
+       </md-card>
+       </div>
+       </div>
+      </md-content> 
 </md-content>
+</div>
+
+
+	

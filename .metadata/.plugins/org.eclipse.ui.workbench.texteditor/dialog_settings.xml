@@ -1,13 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <section name="Workbench">
+	<section name="org.eclipse.ui.texteditor.GotoLineAction$GotoLineDialog_dialogBounds">
+		<item value="380" key="DIALOG_X_ORIGIN"/>
+		<item value="243" key="DIALOG_Y_ORIGIN"/>
+	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="" key="selection"/>
+		<item value="&lt;!--   &lt;span&gt;&lt;md-autocomplete flex " key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="&lt;!--   &lt;span&gt;&lt;md-autocomplete flex "/>
+			<item value="&lt;input type=text id=txtSe&gt;"/>
+			<item value=" ng-disabled=&quot;&quot;"/>
 			<item value="&lt;!--  &lt;ul class=&quot;sidebar-nav&quot; id=&quot;sidebar&quot;&gt; --&gt;"/>
 			<item value="getU"/>
 			<item value="&lt;!-- https://mvnrepository.com/artifact/org.springframework/spring-context-support --&gt;&#x0A;&#x09;&#x09;&lt;dependency&gt;&#x0A;&#x09;&#x09;&#x09;&lt;groupId&gt;org.springframework&lt;/groupId&gt;&#x0A;&#x09;&#x09;&#x09;&lt;artifactId&gt;spring-context-support&lt;/artifactId&gt;&#x0A;&#x09;&#x09;&#x09;&lt;version&gt;4.3.8.RELEASE&lt;/version&gt;&#x0A;&#x09;&#x09;&lt;/dependency&gt;"/>

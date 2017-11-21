@@ -1,0 +1,9 @@
+/**
+ * 
+ */
+var todoApp = angular.module('todoApp');
+
+todoApp.controller('passwordController', function($scope, forgotPasswordService,
+		$location) {
+	
+});

@@ -37,6 +37,7 @@ public class NoteController {
 		Date date = new Date();
 		note.setCreatedDate(date);
 		note.setModifiedDate(date);
+		
 		note.setUser(user);
 		int userId=noteService.saveNotes(note);
 

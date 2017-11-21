@@ -1,0 +1,55 @@
+var todoApp = angular.module("todoApp");
+ 
+  todoApp.controller('homeController', function ($scope, homeService, loginService, $timeout, $mdSidenav) {
+		   
+	 /* $scope.addNote = function(){
+			var message=loginService.loginUser($scope.note,$scope.error);
+			message.then(function(response) {
+					console.log(response.data);
+				},function(response){
+					$scope.error=response.data.message;
+				});
+		}*/
+	        $scope.toggleLeft = buildToggler('left');
+
+		    function buildToggler(componentId) {
+		      return function() {
+		        $mdSidenav(componentId).toggle();
+		      }
+		 
+		    }
+		    var getNotes=function(){
+				var token=localStorage.getItem('token');
+					
+				var notes=homeService.getNotes(token);
+				console.log(notes);
+				notes.then(function(response) {
+					console.log(response.data);
+					$scope.notes=response.data;
+				},function(response){
+					$scope.error=response.data.message;
+				});
+				$scope.notes=notes;
+			}
+		    
+			 $scope.createNote = function() {
+
+				 $scope.note = {};
+					var token = localStorage.getItem('token');
+					$scope.note.title= document.getElementById("title").innerHTML=null;
+					$scope.note.description= document.getElementById("description").innerHTML=null;
+				
+					console.log(token);
+					var notes = homeService.addNote(token, $scope.note);
+					notes.then(function(response) {
+						getNotes();
+
+					}, function(response) {
+						getNotes();
+						$scope.error = response.data.message;
+
+					});
+		    
+			 }
+		    getNotes();
+	});
