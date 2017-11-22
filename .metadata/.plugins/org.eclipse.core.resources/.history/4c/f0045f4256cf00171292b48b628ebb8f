@@ -1,0 +1,15 @@
+.homeCard{
+	     margin-left:20%; 
+	     margin-right:20%;"
+}
+
+.md-headline{
+         font-size:19px; 
+         line-height: 23px;
+
+}
+
+.md-block{
+	    padding: 0px;
+	     margin: 5px 0;
+}

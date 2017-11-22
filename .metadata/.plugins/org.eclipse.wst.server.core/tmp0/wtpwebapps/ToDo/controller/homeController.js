@@ -1,23 +1,15 @@
 var todoApp = angular.module("todoApp");
  
-  todoApp.controller('homeController', function ($scope, homeService, loginService, $timeout, $mdSidenav) {
-		   
-	 /* $scope.addNote = function(){
-			var message=loginService.loginUser($scope.note,$scope.error);
-			message.then(function(response) {
-					console.log(response.data);
-				},function(response){
-					$scope.error=response.data.message;
-				});
-		}*/
-	        $scope.toggleLeft = buildToggler('left');
+  todoApp.controller('homeController', function ($scope, homeService, $mdSidenav) {
+	  
+	    $scope.toggleLeft = buildToggler('left');
+	    $scope.toggleRight = buildToggler('right');
 
-		    function buildToggler(componentId) {
-		      return function() {
-		        $mdSidenav(componentId).toggle();
-		      }
-		 
-		    }
+	    function buildToggler(componentId) {
+	      return function() {
+	        $mdSidenav(componentId).toggle();
+	      };
+	    }
 		    var getNotes=function(){
 				var token=localStorage.getItem('token');
 					

@@ -1,0 +1,18 @@
+/**
+ * 
+ */
+var todoApp = angular.module('todoApp');
+
+todoApp.controller('passwordController', function($scope, passwordService,
+		$state) {
+	$scope.forgotPassword = function(){
+		
+		var app = passworService.forgotPassword($scope.user,$scope.error);
+		app.then(function (response) {
+			localStorage.setItem('token')
+			
+		})
+		
+	}
+	
+});

@@ -34,15 +34,26 @@
         </md-button> -->
   <!-- </md-toolbar> -->
   
- <md-toolbar style="background-color:rgba(236, 173, 26, 0.89);"  >
+  <!-- <md-button class="md-icon-button" aria-label="Search" data-ng-click="showMobileMainHeader = false">
+          <md-tooltip>Search</md-tooltip>
+          <md-icon  md-svg-icon="./images/ic_search_black_48px.svg" class="material-icons">&#xE8B6;</md-icon>
+        </md-button> 
+        <input type=text id=txtSe placeholder="Search">
+        -->
+         <!-- <md-button class="md-icon-button"  style="margin:10px; margin:right" >
+           <md-icon md-svg-src="./images/ic_account_circle_black_24px.svg"></md-icon>
+        </md-button> -->
+        
  
- <div >
- <md-button class="md-icon-button"  style="margin:10px;" ng-click="toggleLeft()" aria-label="setting">
+ <md-toolbar style="background-color:rgba(236, 173, 26, 0.89);">
+  <div >
+ <md-button class="md-icon-button"  style="margin:10px;" ng-click="toggleLeft()" class="md-raised" aria-label="setting">
            <md-icon md-svg-src="./images/ic_dehaze_black_48px.svg" ></md-icon>
         </md-button>
+        
+        
         <span style="color:black;"> Fundoo Keep </span>
       
-       <!--  
          <md-autocomplete class="autoSearch"  
           ng-disabled=""
           md-selected-item=""
@@ -50,20 +61,17 @@
           md-items=""
           md-item-text=""
           md-min-length="0"
-          >
+          placeholder="Search"
+          ><md-autocomplete-wrap class="autoSearch1" >
+          </md-autocomplete-wrap>
         </md-autocomplete>
-        </div> -->
-         <md-button class="md-icon-button" aria-label="Search" data-ng-click="showMobileMainHeader = false">
-          <md-tooltip>Search</md-tooltip>
-          <md-icon  md-svg-icon="./images/ic_search_black_48px.svg" class="material-icons">&#xE8B6;</md-icon>
-        </md-button> 
-        <input type=text id=txtSe placeholder="Search">
-       
-         <!-- <md-button class="md-icon-button"  style="margin:10px; margin:right" >
+        <!-- <md-button class="md-icon-button"  style="margin:10px; margin:right" >
            <md-icon md-svg-src="./images/ic_account_circle_black_24px.svg"></md-icon>
         </md-button> -->
-        
         </div>
+          
+       
+       
  </md-toolbar>
   
  

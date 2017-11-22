@@ -1,0 +1,5 @@
+.autoSearch{
+	width:600px;
+	margin-left:200px;
+	margin-top:-48px;
+}

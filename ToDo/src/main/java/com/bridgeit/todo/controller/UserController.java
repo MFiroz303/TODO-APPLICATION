@@ -156,6 +156,19 @@ public class UserController {
 		}
 	}
 
+	
+        @RequestMapping(value="/resetPassword/{Token:.+}", method = RequestMethod.GET)
+          public ResponseEntity<String> setPassword(@PathVariable("Token") String token, HttpServletResponse response) throws Exception
+            {
+        	int id = VerifyJwt.verify(token);
+                  if(id>0)
+                    {
+                   response.sendRedirect("http://localhost:8080/ToDo/#!/setPassword");
+                   return ResponseEntity.status(HttpStatus.OK).body("Set new Password");
+                    }
+                   return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid token");
+                    }
+
 	@RequestMapping(value = "/setPassword", method = RequestMethod.PUT)
 	public ResponseEntity<ErrorMessage> setPassword(@RequestBody User user1, HttpSession session,
 			HttpServletRequest request) {

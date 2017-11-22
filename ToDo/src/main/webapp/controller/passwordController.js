@@ -1,16 +1,17 @@
-/**
- * 
- */
 var todoApp = angular.module('todoApp');
 
 todoApp.controller('passwordController', function($scope, passwordService,
 		$state) {
-	$scope.forgotPassword = function(){
+	$scope.sendEmail = function(){
 		
-		var app = passworService.forgotPassword($scope.user,$scope.error);
+		var app = passwordService.sendEmail($scope.user,$scope.error);
 		app.then(function (response) {
-			localStorage.setItem('token')
 			
+			$state.go('login');
+		},
+		function (error) {
+			$scope.errorMessage = error.data.message;
+			$state.go('/');	
 		})
 		
 	}

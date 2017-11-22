@@ -24,12 +24,12 @@ todoApp.config([ '$stateProvider', '$urlRouterProvider',
 			
 				url:'/forgotPassword',
 				templateUrl : 'templates/ForgotPassword.html',
-				controller : 'setController'
+				controller : 'passwordController'
 					
 			}).state('setPassword',{
 				url:'/setPassword',
 				templateUrl : 'templates/setPassword.html',
-				controller : 'setController'
+				controller : 'setPasswordController'
 			});
 			$urlRouterProvider.otherwise('login');
 		} ]);

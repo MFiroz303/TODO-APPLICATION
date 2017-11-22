@@ -25,31 +25,30 @@
       </div> -->
 
 	<md-content flex ng-hide="searchNote"> 
-	 <md-card style="margin-left:20%; margin-right:20%;">
-	  <span class="md-headline" style=" font-size:19px; line-height: 23px;">
+	 <md-card class="homeCard">
+	  <span class="md-headline">
 	 
 	   <md-card-title ng-show="click">
 		<md-card-title-text>
 		  <md-input-container
-			   class="md-block" style=" padding: 0px; margin: 5px 0; ">
+			   class="md-block" >
 		    <div id="title" ng-bind-html="note.title" contenteditable="true" contenteditabledata
-			   aria-multiline="true"
-			   style="background-color: rgb(250, 250, 250); outline: none"
-			   placeholder="Title">
+			   aria-multiline="true"  placeholder="Title" class="homeInput">
 	        </div>
 		  </md-input-container>
 		 </md-card-title-text>
 	   </md-card-title> 
-	   
+
 	   <md-card-title
-			  style="padding-top:0px;padding-right:10px;padding-bottom:0px;padding-left:10px">
+			  class="homeTitle">
 		<md-card-title-text> 
 		  <span class="md-headline">
-		   <md-input-container class="md-block">
-			<div ng-model="description" id="description" ng-bind-html="note.description" ng-focus="click=true" contenteditable="true"
-				contenteditabledata aria-multiline="true" role="textbox"
-				style="background-color: rgb(250, 250, 250); outline: none"
-				data-placeholder="Take a note...."></div>
+		   <md-input-container class="md-block" >
+		   
+			<div ng-model="description" id="description"  ng-bind-html="note.description" ng-focus="click=true" contenteditable="true"
+				contenteditabledata aria-multiline="true" role="textbox" class="createNote"
+				data-placeholder="Take a note....">
+		    </div>
 		    
 		   </md-input-container>
 		  </span> 
@@ -65,18 +64,49 @@
        </span>
 </md-card>
 
-<md-content flex  >
+
+<md-content flex  style="margin-top: 30;" ng-mouseover="inline">
  <div layout="row" layout-wrap flex >
- <div ng-repeat="note in notes" flex="30" >
-       <md-card flex>
-        <md-card-content >
-        <b><div >{{note.title}}</div></b>
-					<div >{{note.description}}</div>
+  <div ng-repeat="note in notes" flex="30" width: 90%;>
+       <md-card flex style="word-break: break-all;">
+        <md-card-content style="width: 230;">
+        <div  style="width: 230;">
+        <b>{{note.title}}</b></div>
+		<div style="width: 230;">{{note.description}}</div>
          </md-card-content>
         
+        
+        <md-card-action layout="row" style="margin: 2px;">
+        
+            <md-button ng-click="abc()"    class="mdButton">
+              <md-icon md-svg-src="./images/remindMe.svg"></md-icon>
+            </md-button>
+            
+            <md-button ng-click="abc()" class="mdButton">
+              <md-icon md-svg-src="./images/collabarator.svg"></md-icon>
+            </md-button>
+            
+            <md-button ng-click="abc()" class="mdButton">
+              <md-icon md-svg-src="./images/color_icons.svg"></md-icon>
+            </md-button>
+            
+           <md-button ng-click="abc()" class="mdButton">
+              <md-icon md-svg-src="./images/picture.svg"></md-icon>
+            </md-button>
+            
+             <md-button ng-click="abc()" class="mdButton">
+              <md-icon md-svg-src="./images/archives.svg"></md-icon>
+            </md-button>
+            
+            <md-button ng-click="abc()" class="mdButton">
+              <md-icon md-svg-src="./images/vert.svg"></md-icon>
+            </md-button>
+            
+        </md-card-action>
+
        </md-card>
        </div>
-       </div>
+      </div>
       </md-content> 
 </md-content>
 </div>
