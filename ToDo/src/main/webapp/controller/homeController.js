@@ -1,15 +1,15 @@
 var todoApp = angular.module("todoApp");
  
-  todoApp.controller('homeController', function ($scope, homeService, $mdSidenav) {
+  todoApp.controller('homeController', function ($scope, homeService, $mdSidenav, $window) {
 	  
-	    $scope.toggleLeft = buildToggler('left');
+	   /* $scope.toggleLeft = buildToggler('left');
 	    $scope.toggleRight = buildToggler('right');
 
 	    function buildToggler(componentId) {
 	      return function() {
 	        $mdSidenav(componentId).toggle();
 	      };
-	    }
+	    }*/
 		    var getNotes=function(){
 				var token=localStorage.getItem('token');
 					
@@ -35,13 +35,60 @@ var todoApp = angular.module("todoApp");
 					var notes = homeService.addNote(token, $scope.note);
 					notes.then(function(response) {
 						getNotes();
+						document.getElementById("title").innerHTML = "";
+						document.getElementById("description").innerHTML = "";						
 
 					}, function(response) {
 						getNotes();
 						$scope.error = response.data.message;
 
 					});
-		    
 			 }
+			 
+			 $scope.deleteNote = function(note) {
+
+				 $scope.note = {};
+					var token = localStorage.getItem('token');
+					var notes = homeService.deleteNotes(token, note);
+					notes.then(function(response) {
+			        getNotes();
+
+					}, function(response) {
+						$scope.error = response.data.message;
+					});
+			 }
+			 
+			/* 
+			 $scope.showModal = function(note) {
+					$scope.note = {};
+					modalInstance = $uibModal.open({
+						templateUrl : 'templates/Home.html',
+						scope : $scope,
+						size : 'md'
+					});
+				};
+
+				$scope.updateNote = function(note) {
+					$scope.note = {};
+					var token = localStorage.getItem('token');
+					var notes = homeService.deleteNotes(token, note);
+					notes.then(function(response) {
+			        getNotes();
+					
+					}, function(response) {
+						getNotes();
+						$scope.error = response.data.message;
+
+					});
+				}
+				$scope.newnote = false;
+				$scope.show = function() {
+					$scope.newnote = true;
+				}
+
+				$scope.hide = function() {
+					$scope.newnote = false;
+				}*/
+
 		    getNotes();
 	});

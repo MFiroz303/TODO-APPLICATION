@@ -157,7 +157,7 @@ public class UserController {
 	}
 
 	
-        @RequestMapping(value="/resetPassword/{Token:.+}", method = RequestMethod.GET)
+      /*  @RequestMapping(value="/resetPassword/{Token:.+}", method = RequestMethod.GET)
           public ResponseEntity<String> setPassword(@PathVariable("Token") String token, HttpServletResponse response) throws Exception
             {
         	int id = VerifyJwt.verify(token);
@@ -168,10 +168,10 @@ public class UserController {
                     }
                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid token");
                     }
-
-	@RequestMapping(value = "/setPassword", method = RequestMethod.PUT)
-	public ResponseEntity<ErrorMessage> setPassword(@RequestBody User user1, HttpSession session,
-			HttpServletRequest request) {
+*/
+	@RequestMapping(value = "/setPassword/{Token:.+}", method = RequestMethod.PUT)
+	public ResponseEntity<String> setPassword(@RequestBody User user1, HttpSession session,
+			HttpServletRequest request, HttpServletResponse response) throws IOException {
 		
 		    String userToken = null;
 		    Enumeration headerNames = request.getHeaderNames();
@@ -190,18 +190,20 @@ public class UserController {
 		if (user == null) {
 			logger.info("No user Found at this id");
 			errorMessage.setResponseMessage("No user Found at this id");
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
+			return ResponseEntity.status(HttpStatus.OK).body("user empty");
 		}
-		    
+			response.sendRedirect("http://localhost:8080/ToDo/#!/setPassword");
+          
 		if (userService.setPassword(user1)) {
 			logger.info("check and set password for user");
 			errorMessage.setResponseMessage("password updated");
 			logger.debug("password updated successfully");
-			return ResponseEntity.ok(errorMessage);
+			return ResponseEntity.ok("password updated");
 		}
 
 		logger.info("password not updated");
 		errorMessage.setResponseMessage("password not updated");
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
+		//return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
+		return ResponseEntity.status(HttpStatus.OK).body("password not updated");
 	}
 }

@@ -17,12 +17,14 @@
 	     margin: 5px 0;
 }
 
-.homeInput{
+.homeInput{  
 	     width: 500px;
          background-color: rgb(250, 250, 250); 
          outline: none
-        
+      
+    
 }
+
 .homeTitle{
          padding-top:0px;
          padding-right:10px;
@@ -41,4 +43,13 @@
 .mdButton{
 	    min-width: 10px;
 }
+.iconHome{
+    width: 0;
+    min-width: 20px;
+}
+ 
+/* [contenteditable=true]:empty:before{
+  content: attr(placeholder);
+  display: block; For Firefox
+} */
 

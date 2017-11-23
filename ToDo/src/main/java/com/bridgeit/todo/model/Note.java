@@ -32,6 +32,12 @@ public class Note {
 	@JoinColumn(name="userId")
 	private User user;
 	
+	private int archieve;
+	private int trace;
+	private int pinned;
+	
+	
+	
 	
 	public User getUser() {
 		return user;
