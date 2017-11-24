@@ -31,14 +31,59 @@ public class Note {
 	@ManyToOne
 	@JoinColumn(name="userId")
 	private User user;
+
+	private boolean archive;
 	
-	private int archieve;
-	private int trace;
-	private int pinned;
+	private boolean trash;
+	
+	private boolean pinned;
+	
+	private boolean reminder;
+	
+	private String noteColor; 
 	
 	
 	
-	
+	public boolean isArchive() {
+		return archive;
+	}
+
+	public void setArchive(boolean archive) {
+		this.archive = archive;
+	}
+
+	public boolean isTrash() {
+		return trash;
+	}
+
+	public void setTrash(boolean trash) {
+		this.trash = trash;
+	}
+
+	public boolean isPinned() {
+		return pinned;
+	}
+
+	public void setPinned(boolean pinned) {
+		this.pinned = pinned;
+	}
+
+	public boolean isReminder() {
+		return reminder;
+	}
+
+	public void setReminder(boolean reminder) {
+		this.reminder = reminder;
+	}
+
+	public String getNoteColor() {
+		return noteColor;
+	}
+
+	public void setNoteColor(String noteColor) {
+		this.noteColor = noteColor;
+	}
+
 	public User getUser() {
 		return user;
 	}

@@ -35,5 +35,8 @@ public class NoteServiceImpl implements NoteService {
 		noteDao.updateNote(id,note);
 		
 	}
-
+	@Override
+	public Note getNoteById(int id) {
+		return noteDao.getNoteById(id);
+	}
 }

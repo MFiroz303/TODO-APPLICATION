@@ -1,0 +1,6 @@
+
+  <div role="button" ng-click="updateNote(note)"
+				class="btn btn-done pull-right inline" data-dismiss="modal">DONE</div>
+		
+			</div>
+        </div>

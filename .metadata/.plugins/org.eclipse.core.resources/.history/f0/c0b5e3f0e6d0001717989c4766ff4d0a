@@ -1,0 +1,130 @@
+<top-nav-bar></top-nav-bar>
+<div flex-xs layout="row">
+<side-nav-bar></side-nav-bar>
+
+	<!--  <md-content class="md-padding" layout-xs="column" layout="row" style="width:50%">
+    
+   <md-card >
+   <md-card-title>
+   <md-card-title-text>
+          <md-input-container>
+      
+          <input placeholder="Title">
+          <div></div>
+       </md-input-container>
+        <md-card-actions layout="row" layout-align="end center">
+          <md-button>Done</md-button>
+        </md-card-actions>
+      </md-card> 
+      
+      </md-input-container>
+      </md-card-title-text>
+      </md-card-title>
+      </md-card>
+      </md-content>
+      </div> -->
+
+	<md-content flex ng-hide="searchNote"> 
+	 <md-card class="homeCard">
+	  <span class="md-headline" >
+	 
+	   <md-card-title ng-show="click">
+		<md-card-title-text>
+		  <md-input-container
+			   class="md-block" >
+		    <div id="title" ng-bind-html="note.title" contenteditable="true" contenteditabledata
+			   aria-multiline="true"  placeholder="Title" class="homeInput">
+	        </div>
+		  </md-input-container>
+		 </md-card-title-text>
+	   </md-card-title> 
+
+	   <md-card-title
+			  class="homeTitle">
+		<md-card-title-text> 
+		  <span class="md-headline">
+		   <md-input-container class="md-block" >
+		   
+			<div ng-model="description" id="description"  ng-bind-html="note.description" ng-focus="click=true" contenteditable="true"
+				contenteditabledata aria-multiline="true" role="textbox" class="createNote"
+				data-placeholder="Take a note....">
+		    </div>
+		    
+		   </md-input-container>
+		  </span> 
+		    </md-card-title-text>
+	         </md-card-title> 
+	 
+	          <md-card-actions layout="row" layout-align="end center"
+			  ng-show="click" style="margin: 1px;">
+		       <md-button  ng-click="createNote()">
+		        <b>Done</b>
+	         </md-button> 
+           </md-card-actions>
+         </span>
+     </md-card>
+
+  <md-content flex  style="margin-top: 30;" ng-mouseover="inline">
+     <div layout="row" layout-wrap flex >
+      <div ng-repeat="note in notes" flex="30" width: 90%;>
+       <md-card flex style="word-break: break-all;">
+        <md-card-content style="width: 230;">
+        <div  style="width: 230;">
+        <b>{{note.title}}</b></div>
+		<div style="width: 230;">{{note.description}}</div>
+         </md-card-content>
+       
+        <md-card-action layout="row" style="margin: 2px;" aria-label="setting">
+        
+            <md-button    class="mdButton" aria-label="setting">
+              <md-icon md-svg-src="./images/remindMe.svg" class=iconHome></md-icon>
+            </md-button>
+            
+            <md-button  class="mdButton" aria-label="setting">
+              <md-icon md-svg-src="./images/collabarator.svg" class=iconHome></md-icon>
+            </md-button>
+            
+            <md-button  class="mdButton" aria-label="setting">
+              <md-icon md-svg-src="./images/color_icons.svg" class=iconHome></md-icon>
+            </md-button>
+            
+           <md-button  class="mdButton" aria-label="setting">
+              <md-icon md-svg-src="./images/picture.svg" class=iconHome></md-icon>
+            </md-button>
+            
+             <md-button  class="mdButton" aria-label="setting">
+              <md-icon md-svg-src="./images/archives.svg" class=iconHome></md-icon>
+            </md-button>
+            
+            <md-menu >
+             <md-button  class="mdButton" ng-click="$mdMenu.open()" aria-label="setting">
+              <md-icon md-svg-src="./images/vert.svg" class=iconHome></md-icon>
+             </md-button>
+            
+              <md-menu-content style="min-width: 180px;">
+               <md-menu-item>
+                <md-button ng-click="deleteNote(note)" style="height:5%;" aria-label="setting">delete</md-button>
+               </md-menu-item> 
+                <md-menu-item>
+                <md-button  style="height:5%;" aria-label="setting">label...</md-button>
+                </md-menu-item> 
+                <md-menu-item>
+                <md-button  style="height:5%;" aria-label="setting">add label</md-button>
+                </md-menu-item>  
+              </md-menu-content>
+            
+             </md-menu>
+          </md-card-action>
+
+       </md-card>
+       </div>
+      </div>
+      </md-content> 
+      <md-button ng-click="updateNote(note)"
+				area-label="setting" data-dismiss="modal">DONE</md-button>
+	
+</md-content>
+</div>
+
+
+	

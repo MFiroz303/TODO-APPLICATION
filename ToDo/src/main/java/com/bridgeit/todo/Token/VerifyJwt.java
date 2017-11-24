@@ -9,7 +9,7 @@ public class VerifyJwt {
 	
 	//Sample method to validate and read the JWT
 	public static int verify(String token) {
-	 
+	 System.out.println("token verify   "+token);
 	    //This line will throw an exception if it is not a signed JWS (as expected)
 	   try {
 		   Claims claims = Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody();  

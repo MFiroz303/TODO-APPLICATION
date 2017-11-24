@@ -97,12 +97,13 @@ public class NoteDaoImpl implements NoteDao {
 		try {
 
 			transaction = session.beginTransaction();
-			Note note1 = session.byId(Note.class).load(id);
+			/*Note note1 = session.byId(Note.class).load(id);
 			note1.setTitle(note.getTitle());
 			note1.setDescription(note.getDescription());
 			note1.setModifiedDate(note.getModifiedDate());
-
-			session.update(note1);
+			session.update(note1);*/
+			
+			session.saveOrUpdate(note);
 			transaction.commit();
 		} catch (Exception e) {
 			if (transaction != null) {
@@ -112,4 +113,12 @@ public class NoteDaoImpl implements NoteDao {
 			session.close();
 		}
 	}
+	
+	public Note getNoteById(int id) {
+		Session session = sessionFactory.openSession();
+		Note note=session.get(Note.class, id);
+		session.close();
+		return note;
+	}
+	
 }

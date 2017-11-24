@@ -23,7 +23,7 @@ public class MailServiceImpl implements MailService {
 		message.setSubject(mess);
 		message.setText(text);
 		mailSender.send(message);
-
+		System.out.println("mail send");
 	}
 
 }

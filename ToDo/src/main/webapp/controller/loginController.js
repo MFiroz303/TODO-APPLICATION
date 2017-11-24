@@ -7,7 +7,8 @@ var todoApp = angular.module("todoApp");
 			var httpServiceUser= loginService.loginUser($scope.user);
 			httpServiceUser.then(function(response) {
 				console.log("this is to redirect after login");
-				localStorage.setItem('token',response.data.message)
+				localStorage.setItem('token',response.data.responseMessage)
+				console.log("login controller"+localStorage.getItem('token'))
 				$location.path('home');
 			});
 	  }

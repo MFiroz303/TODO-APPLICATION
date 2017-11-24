@@ -30,6 +30,20 @@ todoApp.config([ '$stateProvider', '$urlRouterProvider',
 				url:'/setPassword',
 				templateUrl : 'templates/setPassword.html',
 				controller : 'setPasswordController'
+			})
+			
+			.state('trash',{
+				url : '/trash',
+				templateUrl : 'templates/Trash.html',
+				controller : 'homeController'
+			})
+			
+			.state('archive',{
+				url : '/archive',
+				templateUrl : 'template/Archieve.html',
+				controller : 'homeController'
 			});
+			
+			
 			$urlRouterProvider.otherwise('login');
 		} ]);

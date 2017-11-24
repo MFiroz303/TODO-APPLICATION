@@ -47,9 +47,10 @@
     width: 0;
     min-width: 20px;
 }
- 
-/* [contenteditable=true]:empty:before{
+/*  
+[contenteditable=true]:empty:before{
   content: attr(placeholder);
   display: block; For Firefox
-} */
+}
 
+ */

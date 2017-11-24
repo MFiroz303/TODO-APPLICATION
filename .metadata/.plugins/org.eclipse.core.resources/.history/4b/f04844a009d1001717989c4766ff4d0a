@@ -1,0 +1,117 @@
+package com.bridgeit.todo.controller;
+
+import java.util.Date;
+import java.util.Enumeration;
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.bridgeit.todo.Token.TokenGenerate;
+import com.bridgeit.todo.Token.VerifyJwt;
+import com.bridgeit.todo.model.ErrorMessage;
+import com.bridgeit.todo.model.Note;
+import com.bridgeit.todo.model.User;
+import com.bridgeit.todo.service.NoteService;
+
+@RestController
+public class NoteController {
+
+	@Autowired
+	NoteService noteService;
+
+	@Autowired
+	ErrorMessage errorMessage;
+	
+
+	@Autowired
+	TokenGenerate tokenGenerate;
+
+	@RequestMapping(value = "/addNote", method = RequestMethod.POST)
+	public ResponseEntity<ErrorMessage> saveNotes(@RequestBody Note note, HttpSession session) {
+
+		User user = (User) session.getAttribute("user");
+		
+		Date date = new Date();
+		note.setCreatedDate(date);
+		note.setModifiedDate(date);
+		
+		note.setUser(user);
+		int userId=noteService.saveNotes(note);
+
+		if(userId!=0){
+		errorMessage.setResponseMessage("Data Successfully inserted ");
+		return ResponseEntity.status(HttpStatus.CREATED).body(errorMessage);
+		
+		}
+		errorMessage.setResponseMessage("Note could not be added");
+
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+	    //return ResponseEntity.ok(errorMessage);
+	}
+
+	@RequestMapping(value = "/update/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<ErrorMessage> updateNote(@PathVariable("id") int id, @RequestBody Note note, HttpServletRequest request) {
+		
+		    String userToken = null;
+		    Enumeration headerNames = request.getHeaderNames();
+		    
+		 while (headerNames.hasMoreElements()) {
+			 String key = headerNames.nextElement().toString();
+			 if (key.equals("token")) {
+			 userToken = request.getHeader(key);
+			}
+		 }
+			 int id1 = VerifyJwt.verify(userToken);
+			 if(id1==0){
+				 errorMessage.setResponseMessage("Data Successfully updated ");
+			 }
+		
+		Date date = new Date();
+		note.setCreatedDate(date);
+		note.setModifiedDate(date);
+	
+		noteService.updateNote(id,note);
+		System.out.println("updated"+id);
+		errorMessage.setResponseMessage("Data Successfully updated ");
+		return ResponseEntity.ok(errorMessage);
+
+	}
+
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<ErrorMessage> deleteNoteById(@PathVariable("id") int id) {
+
+		noteService.deleteNoteById(id);
+		errorMessage.setResponseMessage("Successfully deleted");
+		return ResponseEntity.ok(errorMessage);
+
+	}
+
+	@RequestMapping(value = "/noteList", method = RequestMethod.GET)
+	public List<Note> findAllNote(HttpSession session) {
+		
+		User user = (User) session.getAttribute("user");
+		List<Note> notes = noteService.findAllNote(user);
+		//List<Note> notes = noteService.getAllNotes(user);
+		return notes;
+
+	}
+
+	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
+	@ExceptionHandler(value = Exception.class)
+	public String exceptionHandler(Exception e) {
+		return "Exception";
+
+	}
+}

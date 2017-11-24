@@ -1,9 +1,11 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:rabbit="http://www.springframework.org/schema/rabbit"
 	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
     http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
-    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd
+    http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit.xsd ">
 
 	<context:component-scan base-package="com.bridgeit.todo" />
 	<mvc:annotation-driven />
@@ -56,6 +58,10 @@
 	<bean id="validator" class="com.bridgeit.todo.validation.Validator" />
 	<bean id="noteService" class="com.bridgeit.todo.service.NoteServiceImpl" />
 	<bean id="tokenGenerate" class="com.bridgeit.todo.Token.TokenGenerate" />
+	
+	<!-- <bean id="producer" class="com.bridgeit.todo.service.ProducerImpl"></bean>
+	<bean id ="consumer" class="com.bridgeit.todo.service.ConsumerImpl"></bean> -->
+	
 
 	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
 		<property name="host" value="smtp.gmail.com" />
@@ -70,6 +76,16 @@
 			</props>
 		</property>
 	</bean>
+<!-- <rabbit:connection-factory id="connectionFactory"/>
+   <rabbit:template id="amqpTemplate" connection-factory="connectionFactory"/>
+
+     <rabbit:admin connection-factory="connectionFactory"/>
+
+    <rabbit:queue name="myqueue"/>
+				 <rabbit:listener-container
+        connection-factory="connectionFactory">
+        <rabbit:listener ref="consumer" queue-names="myqueue" />
+    </rabbit:listener-container> -->
 
 	<bean id="mailService" class="com.bridgeit.todo.service.MailServiceImpl">
 		<property name="mailSender" ref="mailSender" />

@@ -1,8 +1,9 @@
 /*package com.bridgeit.todo.service;
 
 import java.util.HashMap;
-import java.util.Queue;
 
+import org.springframework.amqp.core.Queue;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 
 public class ProducerImpl implements Producer {
@@ -17,12 +18,8 @@ public class ProducerImpl implements Producer {
 
   
     public void send(HashMap map) {
-        this.template.convertAndSend(queue.getName(), map);
+        this.template.convertAndSend( queue.getName(), map);
         System.out.println(" [x] Sent '" + map + "'");
     }
-
-
-}
-	
 }
 */

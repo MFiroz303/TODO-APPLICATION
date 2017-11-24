@@ -2,6 +2,7 @@ package com.bridgeit.todo.controller;
 
 import java.io.IOException;
 import java.util.Enumeration;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,6 +25,7 @@ import com.bridgeit.todo.Token.VerifyJwt;
 import com.bridgeit.todo.model.ErrorMessage;
 import com.bridgeit.todo.model.User;
 import com.bridgeit.todo.service.MailService;
+
 import com.bridgeit.todo.service.UserService;
 import com.bridgeit.todo.validation.Validator;
 
@@ -35,6 +37,9 @@ public class UserController {
 	@Autowired
 	UserService userService;
 
+	/*@Autowired
+	ProducerImpl mailservice;*/
+	
 	@Autowired
 	MailService mailservice;
 
@@ -61,8 +66,13 @@ public class UserController {
 				String accessToken = TokenGenerate.generate(user.getId());
 				String url = request.getRequestURL().toString();
 				url = url.substring(0, url.lastIndexOf("/")) + "/" + "verifyMail" + "/" + accessToken;
-
 				mailservice.sendMail(user.getEmail(), "mdfirozahmad2222@gmail.com", "emailVerification", url);
+				/*
+				HashMap<String, String> map=new HashMap<>();
+				map.put("to", user.getEmail());
+				map.put("message", url);
+				mailservice.send(map);*/
+				
 				logger.info("sending the mail for registration verification");
 				errorMessage.setResponseMessage("registered Successfully....");
 				return ResponseEntity.ok(errorMessage);
@@ -83,6 +93,7 @@ public class UserController {
 		System.out.println(user);
 		int id = VerifyJwt.verify(accessToken);
 		logger.debug("verifying accessToken");
+		System.out.println("");
 
 		try {
 			user = userService.getUserById(id);
@@ -124,11 +135,15 @@ public class UserController {
 			errorMessage.setResponseMessage("wrong password");
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
 		}
+		else if(userLogin.isActivated()){
 		    session.setAttribute("user", userLogin);
+		    String accessToken = TokenGenerate.generate(userLogin.getId());
 		    logger.debug("user successfully login");
-		    errorMessage.setResponseMessage("Login Successfully....");
+		    System.out.println("Token  "+accessToken);
+		    errorMessage.setResponseMessage(accessToken);}
 		    return ResponseEntity.ok(errorMessage);
-
+		
+		
 	}
 
 	@RequestMapping(value = "/forgotPassword", method = RequestMethod.POST)
@@ -149,26 +164,17 @@ public class UserController {
 			String url = request.getRequestURL().toString();
 			url = url.substring(0, url.lastIndexOf("/")) + "/" + "setPassword" + "/" + accessToken;
 			System.out.println("token" + accessToken);
-
 			mailservice.sendMail(user.getEmail(), "mdfirozahmad2222@gmail.com", "accessToken is :", url);
+			
+			/*HashMap<String, String> map=new HashMap<>();
+			map.put("to", user.getEmail());
+			map.put("message", url);
+			mailservice.send(map);*/
+			
 			errorMessage.setResponseMessage("success");
 			return ResponseEntity.ok(errorMessage);
 		}
 	}
-
-	
-      /*  @RequestMapping(value="/resetPassword/{Token:.+}", method = RequestMethod.GET)
-          public ResponseEntity<String> setPassword(@PathVariable("Token") String token, HttpServletResponse response) throws Exception
-            {
-        	int id = VerifyJwt.verify(token);
-                  if(id>0)
-                    {
-                   response.sendRedirect("http://localhost:8080/ToDo/#!/setPassword");
-                   return ResponseEntity.status(HttpStatus.OK).body("Set new Password");
-                    }
-                   return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid token");
-                    }
-*/
 	@RequestMapping(value = "/setPassword/{Token:.+}", method = RequestMethod.PUT)
 	public ResponseEntity<String> setPassword(@RequestBody User user1, HttpSession session,
 			HttpServletRequest request, HttpServletResponse response) throws IOException {
