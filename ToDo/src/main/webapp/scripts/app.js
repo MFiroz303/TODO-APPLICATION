@@ -40,10 +40,15 @@ todoApp.config([ '$stateProvider', '$urlRouterProvider',
 			
 			.state('archive',{
 				url : '/archive',
-				templateUrl : 'template/Archieve.html',
+				templateUrl : 'templates/Archive.html',
+				controller : 'homeController'
+			})
+			
+			.state('update',{
+				url : '/update',
+				templateUrl : 'templates/UpdateNote.html',
 				controller : 'homeController'
 			});
-			
 			
 			$urlRouterProvider.otherwise('login');
 		} ]);

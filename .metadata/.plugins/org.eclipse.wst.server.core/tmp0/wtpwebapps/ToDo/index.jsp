@@ -39,5 +39,6 @@
 
 <link rel="stylesheet"  href="styles/topNavBar.css">
 <link rel="stylesheet"  href="styles/home.css">
+<link rel="stylesheet"  href="styles/archive.css">
 
 </html>

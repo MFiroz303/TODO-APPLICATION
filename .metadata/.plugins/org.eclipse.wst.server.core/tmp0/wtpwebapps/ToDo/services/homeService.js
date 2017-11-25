@@ -1,8 +1,7 @@
 var todoApp = angular.module("todoApp");
 todoApp.factory('homeService', function($http, $location){
 	
-	var notes={};
-	
+	var notes={};	
 	notes.service=function(url,method,note){
 		console.log("in service");
 		console.log(note);

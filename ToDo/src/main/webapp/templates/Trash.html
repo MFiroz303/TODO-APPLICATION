@@ -4,13 +4,13 @@
 	<md-content  flex  style="margin-top: 30;" > 
 	<!-- <div flex="85" layout="row" layout-wrap> -->
 	
-	<div ng-repeat="note in notes | filter:{trash:true}" id="note-scope" flex="30">
+	<div ng-repeat="note in notes | filter:{trash:true}" id="note-scope" flex="30" >
 
 	<md-card style="word-break: break-all;" >
 	        <md-card-title>
 		          <md-card-title-text>
 		           	<div>
-		            	<div ng-bind-html="note.title" ng-show="true" id="title" >{{note.title}}</div>
+		            	<div ng-bind-html="note.title" ng-show="true" id="title" ><b>{{note.title}}</b></div>
 		            </div>
 		            <br>
 		            <div>
@@ -29,7 +29,7 @@
                        
                 <md-menu-content style="min-width: 180px;">
                <md-menu-item>
-                <md-button ng-click="deleteNoteForever(note)" style="height:5%;" aria-label="setting">delete</md-button>
+                <md-button ng-click="deleteForever(note)" style="height:5%;" aria-label="setting">delete</md-button>
                </md-menu-item> 
                 <md-menu-item>
                 <md-button  style="height:5%;" aria-label="setting" ng-click="restoreNote(note)">Restore</md-button>

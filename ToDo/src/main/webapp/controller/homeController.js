@@ -1,18 +1,31 @@
 var todoApp = angular.module("todoApp");
  
-  todoApp.controller('homeController', function ($scope, homeService, $mdSidenav, $window, $location) {
+  todoApp.controller('homeController', function ($scope,$state, homeService, $timeout,  $mdSidenav, $mdDialog) {
 	  
-	   /* $scope.toggleLeft = buildToggler('left');
-	    $scope.toggleRight = buildToggler('right');
-
-	    function buildToggler(componentId) {
-	      return function() {
-	        $mdSidenav(componentId).toggle();
-	      };
-	    }*/
+	  $scope.mouse=false;
+	  
+	  
+	  /******************** Top Navigation bar heading        *******/
+	/*  if($state.current.name=="Home"){
+	  $scope.navBarColor= "#ffbb33";
+	  $scope.navBarHeading="Fundoo Keep";
+	  }
+	  else if($state.current.name=="reminder"){
+	  $scope.navBarColor="#607D8B"
+	  $scope.navBarHeading="Reminder";
+	  }
+	  else if($state.current.name=="Trash"){
+	  $scope.navBarHeading="Trash";
+	  $scope.navBarColor="#636363"
+	  }
+	  else if($state.current.name=="Archive"){
+	  $scope.navBarColor= "#607D8B";
+	  $scope.navBarHeading="Archive";
+	  }*/
+	  
+	/*********logic for get the notes **************/
 	  
 	  var getNotes=function(){
-	    	
 	    	var url = 'noteList';
 	    	var notes=homeService.service(url,'GET',notes);
 	    	notes.then(function(response){
@@ -25,6 +38,8 @@ var todoApp = angular.module("todoApp");
 			$scope.notes=notes;
 
 	    }
+	  
+	  /*********logic for create notes **************/
 	 
 	  $scope.createNote = function() {
 			 $scope.note = {};
@@ -45,10 +60,11 @@ var todoApp = angular.module("todoApp");
 				});
 	  }
 	
-			 $scope.deleteNote = function(note) {
-
+	  /*********logic for delete the notes from homepage **************/
+	   $scope.deleteNote = function(note) {
 				 console.log($scope.note);
 				 note.trash=true;
+				 note.archive=false;
 				 var url='update';
 				 var notes = homeService.service(url,'PUT',note);
 					notes.then(function(response) {
@@ -59,45 +75,75 @@ var todoApp = angular.module("todoApp");
 					});
 			 }
 
-				/* -delete note from trash -------------
-				$scope.deleteNoteForever=function(note){
-				    	
-				    	console.log("inside delete forever")
-				   
-				    	var url='delete/'+note.id;
-				    	var notes = homeService.service(url,'DELETE',note);
-				    	notes.then(function(response) {
+	   /*********logic permanently delete the notes from trash**************/
+       $scope.deleteForever=function(note){
+				 var url='delete/'+note.id;
+				 var notes = homeService.service(url,'DELETE',note);
+				 notes.then(function(response) {
+				 getNotes();
 
-							getNotes();
-
-						}, function(response) {
-
-							getNotes();
-
-							$scope.error = response.data.message;
-
+				  }, function(response) {
+					getNotes();
+				    $scope.error = response.data.message;
 						});
-				    	
 				    }
-				    
-				    	$scope.restoreNote=function(note){
-				    		note.isTrash=0;
-				    		var url='update';
-				    		var notes = homeService.service(url,'POST',note);
-				    		notes.then(function(response) {
-
-				    			getNotes();
-
-				    		}, function(response) {
-
-				    			getNotes();
-
-				    			$scope.error = response.data.message;
-
-				    		});
-				    	}
-							
-		*/
-
+       
+      /*********logic for  get the notes **************/
+	  $scope.restoreNote=function(note){
+	    		note.trash=0;
+	    		var url='update';
+	    		var notes = homeService.service(url,'PUT',note);
+	    		notes.then(function(response) {
+	    			getNotes();
+	    		}, function(response) {
+	    			getNotes();
+	    			$scope.error = response.data.message;
+	    		});
+	    	}
+	  /*********logic for popup the page for update **************/
+		
+	 $scope.popUp = function(note, event) {
+			    $mdDialog.show({
+				locals: {
+				data: note 
+				  },
+				templateUrl: 'templates/UpdateNote.html',
+				 parent: angular.element(document.description),
+				 targetEvent: event,
+				 clickOutsideToClose: true,
+				 controllerAs: 'controller',
+				 controller: mdDialogController
+			 });
+		   
+	 }		    	
+	  /*********logic for update the notes **************/
+			
+			function mdDialogController($scope,$state,data) { 
+				    $scope.mdDialogData = data;
+			      	$scope.updateNote = function() {
+			    	var url = 'update';
+			    	data.title= document.getElementById("getTitle").innerHTML;
+			    	data.description= document.getElementById("getDescription").innerHTML;
+			  		var notes = homeService.service(url,'PUT',data);
+			  		
+			  		notes.then(function(response){
+			  			$mdDialog.cancel();
+					},function(response){
+						$scope.error=response.data.responseMessage;
+					});
+			      	}
+			    	}
+	/*********logic for archives **************/
+			 $scope.archive=function(note){
+			    	note.archive=true;
+			    	var url = 'update';
+					var notes = homeService.service(url,'PUT',note)
+					notes.then(function(response){
+					getNotes();
+					},function(response){
+						$scope.error=response.data.responseMessage;
+					});
+			    }
+				
 		    getNotes();
 	});

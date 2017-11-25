@@ -1,0 +1,63 @@
+ <top-nav-bar></top-nav-bar>
+   <div layout="row">	
+<side-nav-bar></side-nav-bar>
+
+	<div ng-repeat="note in notes | filter:{archive:true}" id="note-scope" flex="30">
+
+	<md-card   ng-click="showConfirm($event)" >
+	        <md-card-title>
+		          <md-card-title-text>
+		           	<div>
+		            	<div ng-bind-html="note.title" ng-show="true" id="title">{{note.title}}</div>
+		            </div>
+		            <br>
+		            <div>
+		            	<div ng-bind-html="note.body" ng-show="true" id="body" >{{note.description}}</div>
+		            </div>
+		           
+		          </md-card-title-text>
+		          </md-card-title>
+	        <md-card-action layout="row" style="margin: 2px;" aria-label="setting">
+        
+            <md-button    class="mdButton" aria-label="setting">
+              <md-icon md-svg-src="./images/remindMe.svg" class=iconHome ng-show="mouse"></md-icon>
+            </md-button>
+            
+            <md-button  class="mdButton" aria-label="setting">
+              <md-icon md-svg-src="./images/collabarator.svg" class=iconHome ng-show="mouse"></md-icon>
+            </md-button>
+            
+            <md-button  class="mdButton" aria-label="setting">
+              <md-icon md-svg-src="./images/color_icons.svg" class=iconHome ng-show="mouse"></md-icon>
+            </md-button>
+            
+           <md-button  class="mdButton" aria-label="setting">
+              <md-icon md-svg-src="./images/picture.svg" class=iconHome ng-show="mouse"></md-icon>
+            </md-button>
+            
+             <md-button  class="mdButton" aria-label="setting">
+              <md-icon md-svg-src="./images/archives.svg" class=iconHome ng-show="mouse"></md-icon>
+            </md-button>
+            
+            <md-menu >
+             <md-button  class="mdButton" ng-click="$mdMenu.open()" aria-label="setting">
+              <md-icon md-svg-src="./images/vert.svg" class=iconHome ng-show="mouse"></md-icon>
+             </md-button>
+            
+              <md-menu-content style="min-width: 180px;">
+               <md-menu-item>
+                <md-button ng-click="deleteNote(note)" style="height:5%;" aria-label="setting">delete</md-button>
+               </md-menu-item> 
+                <md-menu-item>
+                <md-button  style="height:5%;" aria-label="setting">label...</md-button>
+                </md-menu-item> 
+              </md-menu-content>
+             </md-menu>
+          </md-card-action>
+		     
+	        </md-card-actions>
+      	</md-card>
+      	</div>
+      	</div>
+      	
+  
