@@ -3,18 +3,23 @@
 <side-nav-bar></side-nav-bar>
 <md-content  flex  style="margin-top: 30;" >
 	<div ng-repeat="note in notes | filter:{archive:true}" id="note-scope" flex="30"  ng-mouseover="mouse=true" ng-mouseleave="mouse=false">
-
-	<md-card   ng-click="showConfirm($event)" >
+	<md-card   ng-click="showConfirm($event)" style="word-break: break-all;" ng-style="{'background-color' : note.color}">
+	<div style=" margin-top: 1px; margin-right: 1px;">
+       <img ng-src="images/pushpin-icon-63850.png" style="width:21px;float:right" ng-show="mouse"  ng-click="pinned(note,true)"/></div>
 	        <md-card-title>
 		          <md-card-title-text>
 		           	<div>
-		            	<div ng-bind-html="note.title" ng-show="true" id="title">{{note.title}}</div>
+		            	<!-- <div ng-bind-html="note.title" ng-show="true" id="title">{{note.title}}</div>
 		            </div>
-		            <br>
+		            <br><br>
 		            <div>
 		            	<div ng-bind-html="note.body" ng-show="true" id="body" >{{note.description}}</div>
-		            </div>
-		           
+		            </div> -->
+		             <md-card-content style="width: 230;" ng-click="popUp(note,$event)">
+                     <div  style="width: 230;"> 
+                     <b>{{note.title}}</b></div><br>
+		             <div style="width: 230;">{{note.description}}</div>
+                     </md-card-content></div>
 		          </md-card-title-text>
 		          </md-card-title>
 	        <md-card-action layout="row" style="margin: 2px;" aria-label="setting">
@@ -27,9 +32,10 @@
               <md-icon md-svg-src="./images/collabarator.svg" class=iconHome ng-show="mouse"></md-icon>
             </md-button>
             
-            <md-button  class="mdButton" aria-label="setting">
+           <!--  <md-button  class="mdButton" aria-label="setting">
               <md-icon md-svg-src="./images/color_icons.svg" class=iconHome ng-show="mouse"></md-icon>
-            </md-button>
+            </md-button> -->
+               <color-picker class ="colorIcon" value ="cardColor" ng-show="mouse" color="color" options="colors" on-color-changed="colorChanged(newColor, oldColor,note)"></color-picker>	 
             
            <md-button  class="mdButton" aria-label="setting">
               <md-icon md-svg-src="./images/picture.svg" class=iconHome ng-show="mouse"></md-icon>

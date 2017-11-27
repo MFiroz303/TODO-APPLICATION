@@ -1,121 +1,91 @@
 var todoApp = angular.module("todoApp");
- 
   todoApp.controller('homeController', function ($scope,$state, homeService, $timeout,  $mdSidenav, $mdDialog) {
 	  
 	  $scope.mouse=false;
-	  
-	  
-	  /******************** Top Navigation bar heading        *******/
-	/*  if($state.current.name=="Home"){
-	  $scope.navBarColor= "#ffbb33";
-	  $scope.navBarHeading="Fundoo Keep";
-	  }
-	  else if($state.current.name=="reminder"){
-	  $scope.navBarColor="#607D8B"
-	  $scope.navBarHeading="Reminder";
-	  }
-	  else if($state.current.name=="Trash"){
-	  $scope.navBarHeading="Trash";
-	  $scope.navBarColor="#636363"
-	  }
-	  else if($state.current.name=="Archive"){
-	  $scope.navBarColor= "#607D8B";
-	  $scope.navBarHeading="Archive";
-	  }*/
-	  
 	/*********logic for get the notes **************/
 	  
 	  var getNotes=function(){
-	    	var url = 'noteList';
-	    	var notes=homeService.service(url,'GET',notes);
-	    	notes.then(function(response){
-	    		$scope.notes=response.data;
-	    		console.log("$scope.notes::",$scope.notes);
-	    	},function(response){
-	    		$scope.error=response.data.responseMessage;
-	    		$location.path('login');
-	    	});
-			$scope.notes=notes;
-
-	    }
-	  
+	    	  var url = 'noteList';
+	    	  var notes=homeService.service(url,'GET',notes);
+	    	  notes.then(function(response){
+	    	  $scope.notes=response.data;
+	    	  console.log("$scope.notes::",$scope.notes);
+	    	 },function(response){
+	    	   $scope.error=response.data.responseMessage;
+	    	   $location.path('login');
+	    	 });
+			   $scope.notes=notes;
+	        }
 	  /*********logic for create notes **************/
-	 
-	  $scope.createNote = function() {
-			 $scope.note = {};
-			 var url = 'addNote'
+	      $scope.createNote = function() {
+			    $scope.note = {};
+			    var url = 'addNote'
 				$scope.note.title= document.getElementById("title").innerHTML;
 				$scope.note.description= document.getElementById("description").innerHTML;
-			
+				
 				var notes = homeService.service(url,'POST',$scope.note);
 				notes.then(function(response) {
 					getNotes();
 					document.getElementById("title").innerHTML = "";
 					document.getElementById("description").innerHTML = "";						
 
-				}, function(response) {
+				},function(response) {
 					getNotes();
 					$scope.error = response.data.message;
-
 				});
-	  }
+	          }
 	
 	  /*********logic for delete the notes from homepage **************/
-	   $scope.deleteNote = function(note) {
-				 console.log($scope.note);
-				 note.trash=true;
-				 note.archive=false;
-				 var url='update';
-				 var notes = homeService.service(url,'PUT',note);
-					notes.then(function(response) {
-			        getNotes();
-
-					}, function(response) {
-						$scope.error = response.data.message;
+	        $scope.deleteNote = function(note) {
+				  console.log($scope.note);
+				  note.trash=true;
+				  note.archive=false;
+				  var url='update';
+				  var notes = homeService.service(url,'PUT',note);
+				  notes.then(function(response) {
+			      getNotes();
+				 },function(response) {
+					  $scope.error = response.data.message;
 					});
-			 }
-
+	             }
 	   /*********logic permanently delete the notes from trash**************/
-       $scope.deleteForever=function(note){
-				 var url='delete/'+note.id;
-				 var notes = homeService.service(url,'DELETE',note);
-				 notes.then(function(response) {
-				 getNotes();
-
-				  }, function(response) {
+             $scope.deleteForever=function(note){
+				   var url='delete/'+note.id;
+				   var notes = homeService.service(url,'DELETE',note);
+				   notes.then(function(response) {
+				   getNotes();
+				  },function(response) {
 					getNotes();
 				    $scope.error = response.data.message;
-						});
-				    }
-       
+					});
+				  }
       /*********logic for  get the notes **************/
-	  $scope.restoreNote=function(note){
-	    		note.trash=0;
-	    		var url='update';
-	    		var notes = homeService.service(url,'PUT',note);
-	    		notes.then(function(response) {
-	    			getNotes();
-	    		}, function(response) {
+	        $scope.restoreNote=function(note){
+	    		   note.trash=0;
+	    		   var url='update';
+	    		   var notes = homeService.service(url,'PUT',note);
+	    		   notes.then(function(response) {
+	    		   getNotes();
+	    		  },function(response) {
 	    			getNotes();
 	    			$scope.error = response.data.message;
-	    		});
-	    	}
+	    		  });
+	    	   }
 	  /*********logic for popup the page for update **************/
 		
-	 $scope.popUp = function(note, event) {
-			    $mdDialog.show({
-				locals: {
-				data: note 
-				  },
-				templateUrl: 'templates/UpdateNote.html',
-				 parent: angular.element(document.description),
-				 targetEvent: event,
-				 clickOutsideToClose: true,
-				 controllerAs: 'controller',
-				 controller: mdDialogController
-			 });
-		   
-	 }		    	
+	         $scope.popUp = function(note, event) {
+			        $mdDialog.show({
+				    locals: {
+				      data: note 
+				    },
+				    templateUrl: 'templates/UpdateNote.html',
+				    parent: angular.element(document.description),
+				    targetEvent: event,
+				    clickOutsideToClose: true,
+				    controllerAs: 'controller',
+				    controller: mdDialogController
+			      });
+	           }		    	
 	  /*********logic for update the notes **************/
 			
 			function mdDialogController($scope,$state,data) { 
@@ -134,8 +104,9 @@ var todoApp = angular.module("todoApp");
 			      	}
 			    	}
 	/*********logic for archives **************/
-			 $scope.archive=function(note){
-			    	note.archive=true;
+			 $scope.archive=function(note,archive){
+			    	note.archive = archive;
+			    	note.pinned = false;
 			    	var url = 'update';
 					var notes = homeService.service(url,'PUT',note)
 					notes.then(function(response){
@@ -143,7 +114,37 @@ var todoApp = angular.module("todoApp");
 					},function(response){
 						$scope.error=response.data.responseMessage;
 					});
+			    }	
+			 
+			 $scope.pinned = function(note,pinned) {
+					note.pinned=pinned;
+					note.archive=false;
+					var url = 'update';
+					var notes = homeService.service(url,'PUT',note)
+					notes.then(function(response){
+					getNotes();
+					},function(response){
+						$scope.error=response.data.responseMessage;
+					});
+			    }	
+     /********* Set color of a created note **************/
+
+				$scope.colors = [ '#fff', '#ff8a80', '#ffd180', '#ffff8d','#ccff90','#a7ffeb','#80d8ff','#82b1ff','#b388ff','#f8bbd0','#d7ccc8','#cfd8dc'];
+				 $scope.noteColor=function(newColor, oldColor)
+				 {
+					 console.log(newColor);
+					 $scope.color = newColor;
+				 }
+				$scope.colorChanged = function(newColor, oldColor, note) {
+			        note.noteColor=newColor; 
+			        var url='update';
+					var notes = homeService.service(url,'PUT',note);
+					notes.then(function(response) {
+						getNotes();
+					}, function(response) {
+						getNotes();
+						$scope.error = response.data.message;
+					});
 			    }
-				
 		    getNotes();
 	});

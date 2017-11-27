@@ -1,0 +1,28 @@
+var todoApp = angular.module("todoApp");
+ 
+  todoApp.controller('homeController', function ($scope,$state, homeService, $timeout,  $mdSidenav, $mdDialog) {
+	  
+var socialToken=loginService.getToken();
+socialToken.then(function(response){
+console.log(response.data.message);
+localStorage.setItem('token',response.data.message);
+console.log("login Success");
+$state.go('home');
+},function(error){
+$scope.errorMessage=error.data.message;
+$state.go('/');
+});
+});
+var toDoApp=angular.module('toDoApp');
+
+toDoApp.factory('socialLoginService',function($http,$location){
+var x={};
+
+x.getToken=function(){
+return $http({
+method:"get",
+url:'getToken'
+});
+}
+return x;
+});

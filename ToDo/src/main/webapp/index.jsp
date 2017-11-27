@@ -22,6 +22,7 @@
 <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 <script src="bower_components/angular-messages/angular-messages.js"></script>
 <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+<script src="bower_components/colorpicker-master/dist/colorPicker.js"></script>
 
 <script type="text/javascript" src="scripts/app.js"></script>
 <script type="text/javascript" src="controller/registrationController.js"></script>
@@ -29,6 +30,7 @@
 <script type="text/javascript" src="controller/homeController.js"></script>
 <script type="text/javascript" src="controller/setPasswordController.js"></script>
 <script type="text/javascript" src="controller/passwordController.js"></script>
+<script type="text/javascript" src="controller/dummyController.js"></script>
 
 <script type="text/javascript" src="services/registrationService.js"></script>
 <script type="text/javascript" src="services/loginService.js"></script>
@@ -40,5 +42,7 @@
 <link rel="stylesheet"  href="styles/topNavBar.css">
 <link rel="stylesheet"  href="styles/home.css">
 <link rel="stylesheet"  href="styles/archive.css">
+<link rel="stylesheet"  href="bower_components/colorpicker-master/dist/colorPickerStyle.css">
+
 
 </html>

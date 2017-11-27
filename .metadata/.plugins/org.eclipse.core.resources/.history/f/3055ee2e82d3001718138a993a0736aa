@@ -1,0 +1,180 @@
+<top-nav-bar></top-nav-bar>
+<div flex-xs layout="row">
+<side-nav-bar></side-nav-bar>
+
+	<md-content flex ng-hide="searchNote"> 
+	 <md-card class="homeCard">
+	  <span class="md-headline" >
+	 
+	   <md-card-title ng-show="click">
+		<md-card-title-text>
+		  <md-input-container
+			   class="md-block" >
+		    <div id="title" ng-bind-html="note.title" contenteditable="true" contenteditabledata
+			   aria-multiline="true"  placeholder="Title" class="homeInput">
+	        </div>
+		  </md-input-container>
+		 </md-card-title-text>
+	   </md-card-title> 
+
+	   <md-card-title
+			  class="homeTitle">
+		<md-card-title-text> 
+		  <span class="md-headline">
+		   <md-input-container class="md-block" >
+		   
+			<div ng-model="description" id="description"  ng-bind-html="note.description" ng-focus="click=true" contenteditable="true"
+				contenteditabledata aria-multiline="true" role="textbox" class="createNote"
+				data-placeholder="Take a note....">
+		    </div>
+		    
+		   </md-input-container>
+		  </span> 
+		    </md-card-title-text>
+	         </md-card-title> 
+	 
+	          <md-card-actions layout="row" layout-align="end center"
+			  ng-show="click" style="margin: 1px;">
+		       <md-button  ng-click="createNote()">
+		        <b>Done</b>
+	         </md-button> 
+           </md-card-actions>
+         </span>
+     </md-card>
+  
+ <!--##################################################################PiNnEd###########################################################-->
+     <div>
+		<h4>Pinned</h4>
+	
+	<md-content flex  style="margin-top: 30;">
+     <div layout="row" layout-wrap flex >
+      <div ng-repeat="note in notes "  ng-if="note.pinned" flex="30" width: 90%; ng-mouseover="mouse=true" ng-mouseleave="mouse=false">
+       
+       <md-card flex style="word-break: break-all;" ng-style="{'background-color' : note.noteColor}">
+      <div style=" margin-top: 1px; margin-right: 1px;">
+       <img ng-src="images/pushpin-icon-63850.png" style="width:21px;float:right" ng-show="mouse"  ng-click="pinned(note,false)"/></div>
+      
+       <!-- <md-button    class="mdButton" aria-label="setting" > 
+       <img ng-src="images/pin.svg" style="width:21px;float:right" ng-show="mouse"  ng-click="pinned(note,false)"/>
+          </md-button> 
+       </div> -->
+       <div>
+        <md-card-content style="width: 230;" ng-click="popUp(note,$event)">
+        <div  style="width: 230;"> 
+        <b>{{note.title}}</b></div>
+		<div style="width: 230;"><h2 style="font-weight: 1;">{{note.description}}</h2></div>
+         </md-card-content></div>
+        <md-card-action layout="row" style="margin: 2px;" aria-label="setting">
+        
+            <md-button    class="mdButton" aria-label="setting">
+              <md-icon md-svg-src="./images/remindMe.svg" class=iconHome ng-show="mouse"></md-icon>
+            </md-button>
+            
+            <md-button  class="mdButton" aria-label="setting">
+              <md-icon md-svg-src="./images/collabarator.svg" class=iconHome ng-show="mouse"></md-icon>
+            </md-button>
+            
+            <!-- <md-button  class="mdButton" aria-label="setting">
+              <md-icon md-svg-src="./images/color_icons.svg" class=iconHome ng-show="mouse" ng-click=""></md-icon>
+            </md-button> -->
+            
+            <color-picker class ="colorIcon" value ="cardColor" color="color" ng-show="mouse" options="colors" on-color-changed="colorChanged(nwColor, oldColor,note)"></color-picker>	 
+           
+           <md-button  class="mdButton" aria-label="setting">
+              <md-icon md-svg-src="./images/picture.svg" class=iconHome ng-show="mouse"></md-icon>
+            </md-button>
+            
+             <md-button  class="mdButton" ng-click="archive(note,true)" aria-label="setting">
+              <md-icon md-svg-src="./images/archives.svg" class=iconHome ng-show="mouse"></md-icon>
+            </md-button>
+            
+            <md-menu >
+             <md-button  class="mdButton" ng-click="$mdMenu.open()" aria-label="setting">
+              <md-icon md-svg-src="./images/vert.svg" class=iconHome ng-show="mouse"></md-icon>
+             </md-button>
+            
+              <md-menu-content style="min-width: 180px;">
+               <md-menu-item>
+                <md-button ng-click="deleteNote(note)" style="height:5%;" aria-label="setting">delete</md-button>
+               </md-menu-item> 
+                <md-menu-item>
+                <md-button  style="height:5%;" aria-label="setting">label...</md-button>
+                </md-menu-item> 
+              </md-menu-content>
+             </md-menu>
+          </md-card-action>
+
+       </md-card>
+       </div>
+      </div>
+      </md-content> 
+	</div>
+	
+  <!--##############################################################OThErS#################################################################-->
+   <h4>Others</h4>
+     <md-content flex  style="margin-top: 30;">
+     <div layout="row" layout-wrap flex >
+      <div ng-repeat="note in notes | filter:{trash:false,archive:false,pinned:false}" flex="30" width: 90%; ng-mouseover="mouse=true" ng-mouseleave="mouse=false">
+       <md-card flex style="word-break: break-all;" ng-style="{'background-color' : note.noteColor}">
+      
+      <div style=" margin-top: 1px; margin-right: 1px;">
+       <img ng-src="images/pushpin-icon-63850.png" style="width:21px;float:right" ng-show="mouse"  ng-click="pinned(note,true)"/></div>
+     <div>
+       <!-- <md-button    class="mdButton" aria-label="setting" style=" margin-top: 1px; margin-right: 1px;">
+       <md-icon md-svg-src="./images/pin.svg" style="width:21px;float:right"  class="ng-show" ng-click="pinned(note,false)"/>
+         </md-button> -->
+        
+        <md-card-content style="width: 230;" ng-click="popUp(note,$event)">
+        <div  style="width: 230;"> 
+        <b>{{note.title}}</b></div>
+		<div style="width: 230;"><h2 style="font-weight:lighter;">{{note.description}}</h2></div>
+         </md-card-content></div>
+        <md-card-action layout="row" style="margin: 2px;" aria-label="setting">
+        
+            <md-button    class="mdButton" aria-label="setting">
+              <md-icon md-svg-src="./images/remindMe.svg" class=iconHome ng-show="mouse"></md-icon>
+            </md-button>
+            
+            <md-button  class="mdButton" aria-label="setting">
+              <md-icon md-svg-src="./images/collabarator.svg" class=iconHome ng-show="mouse"></md-icon>
+            </md-button>
+            
+            <!-- <md-button  class="mdButton" aria-label="setting">
+              <md-icon md-svg-src="./images/color_icons.svg" class=iconHome ng-show="mouse" ng-click=""></md-icon>
+            </md-button> -->
+            
+              <color-picker style="border:none;display:inline-block;vertical-align:middle;" class ="colorIcon" value ="cardColor" ng-show="mouse" color="color" options="colors" on-color-changed="colorChanged(newColor, oldColor,note)"></color-picker>	 
+            
+           <md-button  class="mdButton" aria-label="setting">
+              <md-icon md-svg-src="./images/picture.svg" class=iconHome ng-show="mouse"></md-icon>
+            </md-button>
+            
+             <md-button  class="mdButton" ng-click="archive(note,true)" aria-label="setting">
+              <md-icon md-svg-src="./images/archives.svg" class=iconHome ng-show="mouse"></md-icon>
+            </md-button>
+            
+            <md-menu >
+             <md-button  class="mdButton" ng-click="$mdMenu.open()" aria-label="setting">
+              <md-icon md-svg-src="./images/vert.svg" class=iconHome ng-show="mouse"></md-icon>
+             </md-button>
+            
+              <md-menu-content style="min-width: 180px;">
+               <md-menu-item>
+                <md-button ng-click="deleteNote(note)" style="height:5%;" aria-label="setting">delete</md-button>
+               </md-menu-item> 
+                <md-menu-item>
+                <md-button  style="height:5%;" aria-label="setting">label...</md-button>
+                </md-menu-item> 
+              </md-menu-content>
+             </md-menu>
+          </md-card-action>
+
+       </md-card>
+       </div>
+      </div>
+      </md-content> 
+</md-content>
+</div>
+
+
+	

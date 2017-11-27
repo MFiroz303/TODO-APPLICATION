@@ -1,4 +1,4 @@
-var todoApp = angular.module('todoApp', [ 'ui.router','ngMaterial', 'ngAnimate', 'ngAria','ngSanitize']);
+var todoApp = angular.module('todoApp', [ 'ui.router','ngMaterial', 'ngAnimate', 'ngAria','ngSanitize','tb-color-picker']);
 
 todoApp.config([ '$stateProvider', '$urlRouterProvider',
 		function($stateProvider, $urlRouterProvider) {
@@ -48,6 +48,18 @@ todoApp.config([ '$stateProvider', '$urlRouterProvider',
 				url : '/update',
 				templateUrl : 'templates/UpdateNote.html',
 				controller : 'homeController'
+			})
+			
+			.state('fb',{
+				url : '/facebookLogin',
+				templateUrl : 'templates/DummyLogin.html',
+		/*		controller : 'dummyController'
+			})
+			
+			.state('',{
+				url : '/archive',
+				templateUrl : 'templates/DummyLogin.html',
+				controller : 'dummyController'*/
 			});
 			
 			$urlRouterProvider.otherwise('login');
