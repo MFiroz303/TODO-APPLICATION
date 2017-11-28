@@ -79,17 +79,17 @@ public class FBLoginController {
 				
 				int userId = userService.saveUser(facebookUser);
 				if (userId == -1) {
-					response.sendRedirect("http://localhost:8080/ToDoApp/#!/login");
+					response.sendRedirect("http://localhost:8080/ToDoApp/#!/DummyLogin");
 				} else {
 					String accessToken = TokenGenerate.generate(userId);
 					session.setAttribute("todoAppAccessToken", accessToken);
-					response.sendRedirect("http://localhost:8080/ToDoApp/#!/Home");
+					response.sendRedirect("http://localhost:8080/ToDo/#!/home");
 				}
 			} else {	
 				String accessToken = TokenGenerate.generate(user.getId());
 				logger.info("token geneted by jwt" + accessToken);
 				session.setAttribute("AccessToken", accessToken);
-				response.sendRedirect("http://localhost:8080/ToDoApp/#!/Home");
+				response.sendRedirect("http://localhost:8080/ToDo/#!/home");
 			}
 			
 		} catch (IOException e) {

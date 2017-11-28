@@ -66,6 +66,30 @@ todoApp.factory('homeService', function($http, $location){
 		    }
 		});
 	}*/
+	
+	/*$scope.deleteRemender=function(note){
+		
+		note.reminder=null;
+		update(note);
+	}
+
+	var cancel=function(){
+	var url='cancel';
+	var user = homeService.service(url,'GET');
+
+	user.then(function(response) {
+		var User=response.data;
+		if(User.profileUrl==null){
+			User.profileUrl="images/user-icon.svg";
+			$scope.user=User
+		}
+		$scope.user=User;
+		
+	}, function(response) {
+
+	});
+	
+	}*/
 
 	   return notes;
 });

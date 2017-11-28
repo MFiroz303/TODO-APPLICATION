@@ -1,0 +1,31 @@
+<md-toolbar style="background-color:rgba(236, 173, 26, 0.89);">
+  <div >
+ <md-button class="md-icon-button"  style="margin:10px;" ng-click="toggleLeft()" class="md-raised" aria-label="setting">
+           <md-icon md-svg-src="./images/ic_dehaze_black_48px.svg" ></md-icon>
+        </md-button>
+        <span style="color:black;"> Fundoo Keep </span>
+      
+         <md-autocomplete class="autoSearch"  
+          ng-disabled=""
+          md-selected-item=""
+          md-search-text-change=""
+          md-items=""
+          md-item-text=""
+          md-min-length="0"
+          placeholder="Search"
+          >
+        </md-autocomplete>
+        <div style=" margin-top: 1px; margin-right: 1px;">
+       <img ng-src="images/pushpin-icon-63850.png" style="width:21px;float:right" ng-show="mouse"  ng-click="pinned(note,false)"/></div>
+       <!--  <md-button class="md-icon-button"   >
+           <md-icon md-svg-src="./images/listview.svg"></md-icon>
+        </md-button>
+        <md-button class="md-icon-button"  style="margin:10px; margin:right" >
+           <md-icon md-svg-src="./images/profile.svg"></md-icon>
+        </md-button> -->
+        </div>
+ </md-toolbar>
+  
+ 
+  
+  

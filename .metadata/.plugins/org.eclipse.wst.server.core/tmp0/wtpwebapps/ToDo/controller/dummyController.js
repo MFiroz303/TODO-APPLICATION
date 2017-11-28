@@ -1,9 +1,9 @@
-/*var todoApp = angular.module("todoApp");
+var todoApp = angular.module("todoApp");
 
 todoApp.controller('homeController', function($scope, $state, homeService,
 		$timeout, $mdSidenav, $mdDialog) {
 	
-	var fb =function(){
+	var facebook =function(){
 	url : 'facebookLogin'
 	var notes = homeService.getToken(url,'GET',notes);
       notes.then(function(response) {
@@ -14,4 +14,16 @@ todoApp.controller('homeController', function($scope, $state, homeService,
 		$state.go('/');
 	});
 	}
-});*/
+
+   var google =function(){
+   url : 'googleLogin'
+	var notes = homeService.getToken(url,'GET',notes);
+      notes.then(function(response) {
+		console.log("login Success");
+		$state.go('home');
+	}, function(error) {
+		$scope.errorMessage = error.data.message;
+		$state.go('/');
+	});
+	}
+});

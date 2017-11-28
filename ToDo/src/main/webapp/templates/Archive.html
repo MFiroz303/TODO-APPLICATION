@@ -2,7 +2,7 @@
    <div layout="row">	
 <side-nav-bar></side-nav-bar>
 <md-content  flex  style="margin-top: 30;" >
-	<div ng-repeat="note in notes | filter:{archive:true}" id="note-scope" flex="30"  ng-mouseover="mouse=true" ng-mouseleave="mouse=false">
+	<div ng-repeat="note in notes | filter:{archive:true }" id="note-scope" flex="30"  ng-mouseover="mouse=true" ng-mouseleave="mouse=false">
 	<md-card   ng-click="showConfirm($event)" style="word-break: break-all;" ng-style="{'background-color' : note.color}">
 	<div style=" margin-top: 1px; margin-right: 1px;">
        <img ng-src="images/pushpin-icon-63850.png" style="width:21px;float:right" ng-show="mouse"  ng-click="pinned(note,true)"/></div>

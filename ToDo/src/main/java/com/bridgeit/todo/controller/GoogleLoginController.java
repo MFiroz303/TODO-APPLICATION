@@ -77,19 +77,19 @@ public class GoogleLoginController {
 				int  userId= userService.saveUser(googleUser); 
 				
 				if(userId == 0){
-					response.sendRedirect("http://localhost:8080/ToDoApp/#!/login");
+					response.sendRedirect("http://localhost:8080/ToDoApp/#!/DummyLogin");
 				}
 				else {
 					String myaccessToken = TokenGenerate.generate(userId);
 					session.setAttribute("todoAppAccessToken", myaccessToken);
-					response.sendRedirect("http://localhost:8080/ToDoApp/#!/home");
+					response.sendRedirect("http://localhost:8080/ToDo/#!/home");
 				}
 					
 			} else {	
 				String myaccessToken = TokenGenerate.generate(user.getId());
 				logger.info("token geneted by jwt" + myaccessToken);
 				session.setAttribute("AccessToken", myaccessToken);
-				response.sendRedirect("http://localhost:8080/ToDoApp/#!/home");
+				response.sendRedirect("http://localhost:8080/ToDo/#!/home");
 
 			}
 			

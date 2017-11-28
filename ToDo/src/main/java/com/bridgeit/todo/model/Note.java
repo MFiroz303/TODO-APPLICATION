@@ -38,7 +38,7 @@ public class Note {
 	
 	private boolean pinned;
 	
-	private boolean reminder;
+	private Date reminder;
 	
 	private String noteColor; 
 	
@@ -68,11 +68,11 @@ public class Note {
 		this.pinned = pinned;
 	}
 
-	public boolean isReminder() {
+	public Date getReminder() {
 		return reminder;
 	}
 
-	public void setReminder(boolean reminder) {
+	public void setReminder(Date reminder) {
 		this.reminder = reminder;
 	}
 

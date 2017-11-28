@@ -1,5 +1,5 @@
 var todoApp = angular.module("todoApp");
-  todoApp.controller('homeController', function ($scope,$state, homeService, $timeout,  $mdSidenav, $mdDialog) {
+  todoApp.controller('homeController', function ($scope,$state, homeService, $timeout, $filter, $mdSidenav,  $mdDialog, mdcDateTimeDialog, toastr, $interval, $http) {
 	  
 	  $scope.mouse=false;
 	/*********logic for get the notes **************/
@@ -7,15 +7,31 @@ var todoApp = angular.module("todoApp");
 	  var getNotes=function(){
 	    	  var url = 'noteList';
 	    	  var notes=homeService.service(url,'GET',notes);
-	    	  notes.then(function(response){
+	    	  notes.then(function(response){ 
 	    	  $scope.notes=response.data;
-	    	  console.log("$scope.notes::",$scope.notes);
+	    	/*  console.log("$scope.notes::",$scope.notes);
 	    	 },function(response){
 	    	   $scope.error=response.data.responseMessage;
 	    	   $location.path('login');
 	    	 });
 			   $scope.notes=notes;
-	        }
+	        }*/
+	    	   //reminder checker
+			   $interval(function () {   
+		        for (var i = 0; i < response.data.length; i++) {
+		         if(response.data[i].reminder) {
+		           var date=new Date(response.data[i].reminder);
+		           if ($filter('date')(date)== $filter('date')(new Date())) {
+		               toastr.success(response.data[i].body, response.data[i].title);
+		            }
+		            }
+		            }
+		            },60000);
+	              },function(response){
+		           $scope.error=response.data.responseMessage;
+		           $location.path('login');
+	            });
+	           }
 	  /*********logic for create notes **************/
 	      $scope.createNote = function() {
 			    $scope.note = {};
@@ -40,6 +56,7 @@ var todoApp = angular.module("todoApp");
 				  console.log($scope.note);
 				  note.trash=true;
 				  note.archive=false;
+				  note.pinned=false;
 				  var url='update';
 				  var notes = homeService.service(url,'PUT',note);
 				  notes.then(function(response) {
@@ -115,20 +132,20 @@ var todoApp = angular.module("todoApp");
 						$scope.error=response.data.responseMessage;
 					});
 			    }	
-			 
+			 //pinned
 			 $scope.pinned = function(note,pinned) {
 					note.pinned=pinned;
 					note.archive=false;
 					var url = 'update';
 					var notes = homeService.service(url,'PUT',note)
 					notes.then(function(response){
-					getNotes();
+					
 					},function(response){
 						$scope.error=response.data.responseMessage;
 					});
 			    }	
+			 
      /********* Set color of a created note **************/
-
 				$scope.colors = [ '#fff', '#ff8a80', '#ffd180', '#ffff8d','#ccff90','#a7ffeb','#80d8ff','#82b1ff','#b388ff','#f8bbd0','#d7ccc8','#cfd8dc'];
 				 $scope.noteColor=function(newColor, oldColor)
 				 {
@@ -146,5 +163,39 @@ var todoApp = angular.module("todoApp");
 						$scope.error = response.data.message;
 					});
 			    }
+		 /********* Make copy of a note **************/
+				$scope.copy=function(note){
+					note.pinned = "false";
+					note.archive= "false";
+					var url = 'addNote'
+					var notes=homeService.service(url,'POST',note);
+					notes.then(function(response){
+					getNotes();
+					},function(response){
+					getNotes();
+					$scope.error=response.data;
+					});
+					}
+				
+				/********* Reminder **************/
+			    $scope.displayDialog = function (note) {
+			        mdcDateTimeDialog.show({
+			        time: true,
+			        shortTime : true
+			      })
+			       .then(function (date) {
+			         $scope.selectedDateTime = date;
+			         note.reminder=date;
+			         console.log('New Date / Time selected:', date);
+			         var url='update';
+				  	 var notes = homeService.service(url,'PUT',note);
+				  	 notes.then(function(response) {
+				  		getNotes();
+				   },function(response) {
+				  		getNotes();
+				  	 $scope.error = response.data.message;
+				  	});
+			        });
+			     };
 		    getNotes();
 	});

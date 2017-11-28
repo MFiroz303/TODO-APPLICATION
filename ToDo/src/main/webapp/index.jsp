@@ -44,5 +44,13 @@
 <link rel="stylesheet"  href="styles/archive.css">
 <link rel="stylesheet"  href="bower_components/colorpicker-master/dist/colorPickerStyle.css">
 
+<!-- -================================================================================================= -->
+	 <script src="bower_components/angular-material-datetimepicker/dist/angular-material-datetimepicker.min.js"></script>
+ 	<script src="bower_components/angular-material-datetimepicker/dist/angular-material-datetimepicker.min.js.map"></script>
+ 	 <link rel="stylesheet" href="bower_components/angular-material-datetimepicker/dist/material-datetimepicker.min.css">
+	<script src="bower_components/moment/min/moment.min.js"></script>
+		
+	<link rel="stylesheet" href="bower_components/angular-toastr/dist/angular-toastr.css">
+	<script src="bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script>
 
 </html>

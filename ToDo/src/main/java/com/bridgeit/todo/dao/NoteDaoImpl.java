@@ -32,7 +32,7 @@ public class NoteDaoImpl implements NoteDao {
 		 Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
-			session.persist(note);
+			session.save(note);
 			transaction.commit();
 
 		} catch (Exception e) {
