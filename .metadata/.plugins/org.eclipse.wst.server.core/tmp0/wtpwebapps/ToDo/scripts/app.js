@@ -1,5 +1,5 @@
-var todoApp=angular.module('todoApp',[ 'ui.router','ngMaterial', 'ngAnimate', 'ngAria','ngSanitize','tb-color-picker', 'ngMaterialDatePicker','toastr']);
-
+var todoApp=angular.module('todoApp',[ 'ui.router','ngMaterial', 'ngAnimate', 'ngAria','ngSanitize','tb-color-picker', 'ngMaterialDatePicker','toastr' ,'base64' ,'ngFileUpload']);
+/*,'ngFileUpload','base64'*/
 todoApp.config([ '$stateProvider', '$urlRouterProvider',
 		function($stateProvider, $urlRouterProvider) {
 	

@@ -1,9 +1,9 @@
 var todoApp = angular.module("todoApp");
-  todoApp.controller('homeController', function ($scope,$state, homeService, $timeout, $filter, $mdSidenav,  $mdDialog, mdcDateTimeDialog, toastr, $interval, $http, $location) {
+  todoApp.controller('homeController', function ($scope,$state, homeService, $timeout, $filter, $mdSidenav, $mdDialog, mdcDateTimeDialog, toastr, $interval, $http, $location ,fileReader ,Upload, $base64) {
 	  console.log('hello');
 	  $scope.mouse=false;
 	  
-	/********* get the notes **************/
+	/********* get the notes   ,fileReader,Upload, $base64**************/
 	  var getNotes=function(){
 	    	  var url = 'noteList';
 	    	  var notes=homeService.service(url,'GET',notes);
@@ -139,7 +139,7 @@ var todoApp = angular.module("todoApp");
 						$scope.error=response.data.responseMessage;
 					});
 			    }	
-			 //pinned
+		/*********pinned notes **************/
 			 $scope.pinned = function(note,pinned) {
 					note.pinned=pinned;
 					note.archive=false;
@@ -152,7 +152,7 @@ var todoApp = angular.module("todoApp");
 					});
 			    }	
 			 
-     /********* Set color of a created note **************/
+          /********* Set color of a created note **************/
 				$scope.colors = [ '#fff', '#ff8a80', '#ffd180', '#ffff8d','#ccff90','#a7ffeb','#80d8ff','#82b1ff','#b388ff','#f8bbd0','#d7ccc8','#cfd8dc'];
 				 $scope.noteColor=function(newColor, oldColor)
 				 {
@@ -257,7 +257,7 @@ var todoApp = angular.module("todoApp");
 			     });
 			     };
 
-			    /* //search notes by titles
+			    /* 
 			      $scope.selectedItemChange = function() {
 			         var array = [];
 			        var j = -1;
@@ -285,7 +285,7 @@ var todoApp = angular.module("todoApp");
 			     //list and grid 
 			     /*
 			        $scope.listViewToggle = function() {
-			              var notes=homeService.service(url,'GET',notes)
+			              var notes=homeService.service()
 			             notes.then(function(responseMessage) {
 			             if(responseMessage.data.status == 'change to listView') {
 			               $state.reload();
@@ -293,32 +293,58 @@ var todoApp = angular.module("todoApp");
 			           })
 			           }
 			         $scope.gridViewToggle = function() {
-			        	   var notes=homeService.service(url,'GET',notes)
+			        	   var notes=homeService.service()
 				             notes.then(function(responseMessage) {
 			            if(responseMessage.data.status == 'change to gridView') {
 			              $state.reload();
 			           }
 			          })
 			          }*/
-			     
-			     //Image uploading.................
-					$scope.openImageUploader = function(type) {
+			    
+                 /*$scope.listView = true; 
+			     $scope.listViewToggle = function() {
+			     if ($scope.listView == true) {
+			     $scope.listView = false;
+			     console.log("inside true @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+
+			     var element = document.getElementsByClassName('card');
+			     for (var i = 0; i < element.length; i++) {
+			     element[i].style.width = "900px";
+			     }
+			     }
+			     else {
+				     console.log("else true @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+
+			     $scope.listView = true;
+			     var element = document.getElementsByClassName('card');
+			     for (var i = 0; i < element.length; i++) {
+				     console.log("for loop true @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
+
+			     element[i].style.width = "300px";
+			     }
+			     }
+			     }*/
+
+		       //Image uploading.........@@@@@@@@@@@@@@@@@@@@@@@@@@@@@........
+					$scope.imageUploader = function(type) {
 						$scope.type = type;
+						console.log("image uploader............")
 						$('#image').trigger('click');
+						console.log("Trigger............")
 						return false;
 					}
 					
 					$scope.stepsModel = [];
-
 					$scope.imageUpload = function(element){
+						console.log("image uploadergggggggggggggg............")
 					    var reader = new FileReader();
-					    console.log("ele"+element);
-					    reader.onload = $scope.imageIsLoaded;
+					    console.log("element" +element);
+					    reader.onload = $scope.imageUpload;
 					    reader.readAsDataURL(element.files[0]);
 					    console.log(element.files[0]);
 					}
 				
-					$scope.imageIsLoaded = function(e){
+					$scope.imageUpload = function(e){
 					    $scope.$apply(function() {
 					        $scope.stepsModel.push(e.target.result);
 					        console.log(e.target.result);
@@ -330,31 +356,12 @@ var todoApp = angular.module("todoApp");
 					    });
 					};
 					
-					
-
 					$scope.$on("fileProgress", function(e, progress) {
 						$scope.progress = progress.loaded / progress.total;
 					});
 					
 					$scope.type = {};
 					$scope.type.image = ''; 
-					
-					 /*$scope.$watch('file', function () {
-						 console.log($scope.file);
-					        if ($scope.file != null) {
-					        	 $scope.files = [$scope.file]; 
-						            console.log($scope.files);
-						            console.log("note"+' '+$scope.type.image);
-						            $scope.type.image=$scope.file;
-						            
-					        	if ($scope.type === 'input') {
-									$scope.addimg = $scope.files;
-								} else{
-									console.log("upload:"+imageSrc);
-								}
-					        }
-					    });*/
-					
 					 
 			     /*********logout**************/
 			     $scope.logout = function(){

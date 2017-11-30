@@ -2,13 +2,9 @@
 <html >
 <head>
 
-	
-  
  <link rel="stylesheet"
    href="bower_components/angular-material/angular-material.css" >
- 
 </head>
-
 <body ng-app="todoApp">
 <div ui-view></div>
 	<!-- <div layout="column" ui-view></div> -->
@@ -24,7 +20,7 @@
 <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
 <script src="bower_components/colorpicker-master/dist/colorPicker.js"></script>
 <script src="https://connect.facebook.net/enUS/all.js"></script>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <!-- -================================================================================================= -->
 <script type="text/javascript" src="scripts/app.js"></script>
 <script type="text/javascript" src="controller/registrationController.js"></script>
@@ -61,5 +57,7 @@
 		
 	<link rel="stylesheet" href="bower_components/angular-toastr/dist/angular-toastr.css">
 	<script src="bower_components/angular-toastr/dist/angular-toastr.tpls.js"></script>
-
+<!--==================================================================================================== -->	
+	<script src="bower_components/ng-file-upload/ng-file-upload-shim.min.js"></script>
+	<script src="bower_components/ng-file-upload/ng-file-upload.min.js"></script>
 </html>
