@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -72,24 +73,24 @@ public class FBLoginController {
 				String lastName = mapper.readTree(facebookProfInfo).get("last_name").asText();
 				facebookUser.setLastName(lastName);
 				
-				/*String contact = mapper.readTree(facebookProfInfo).get("contact").asText();
-				facebookUser.setContact(contact);
-				*/
+				String profilePic = mapper.readTree(facebookProfInfo).get("picture").asText();
+				facebookUser.setProfilePic(profilePic);
+				
 				facebookUser.setActivated(true);
 				
 				int userId = userService.saveUser(facebookUser);
-				if (userId == -1) {
-					response.sendRedirect("http://localhost:8080/ToDoApp/#!/DummyLogin");
-				} else {
-					String accessToken = TokenGenerate.generate(userId);
-					session.setAttribute("todoAppAccessToken", accessToken);
-					response.sendRedirect("http://localhost:8080/ToDo/#!/home");
-				}
+				/*if (userId == -1) {
+					response.sendRedirect("http://localhost:8080/ToDo/#!/login");
+				} else {*/
+					String myaccessToken = TokenGenerate.generate(userId);
+					session.setAttribute("todoAppAccessToken", myaccessToken);
+					response.sendRedirect("http://localhost:8080/ToDo/#!/dummy");
+				
 			} else {	
-				String accessToken = TokenGenerate.generate(user.getId());
-				logger.info("token geneted by jwt" + accessToken);
-				session.setAttribute("AccessToken", accessToken);
-				response.sendRedirect("http://localhost:8080/ToDo/#!/home");
+				String myaccessToken = TokenGenerate.generate(user.getId());
+				logger.info("token geneted by jwt" + myaccessToken);
+				session.setAttribute("todoAppAccessToken", myaccessToken);
+				response.sendRedirect("http://localhost:8080/ToDo/#!/dummy");
 			}
 			
 		} catch (IOException e) {

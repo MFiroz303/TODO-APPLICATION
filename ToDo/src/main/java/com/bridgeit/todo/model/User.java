@@ -20,8 +20,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Table(name = "user_ToDo")
 public class User {
 
-	
-	
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY, generator="mygen")
@@ -38,6 +36,18 @@ public class User {
 
 	private String password;
 	
+	/*@Lob
+	@Column(columnDefinition="LONGBLOB")*/
+	private String profilePic;
+	
+	public String getProfilePic() {
+		return profilePic;
+	}
+
+	public void setProfilePic(String profilePic) {
+		this.profilePic = profilePic;
+	}
+
 	@Column(name="isActivated")
 	private boolean isActivated;
 	

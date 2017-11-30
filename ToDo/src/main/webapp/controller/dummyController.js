@@ -1,21 +1,19 @@
 var todoApp = angular.module("todoApp");
 
-todoApp.controller('homeController', function($scope, $state, homeService,
-		$timeout, $mdSidenav, $mdDialog) {
+todoApp.controller('dummyController', function($scope, $state, dummyService, $location) {
 	
-	var facebook =function(){
-	url : 'facebookLogin'
-	var notes = homeService.getToken(url,'GET',notes);
+	var notes = dummyService.dummyLoging();
       notes.then(function(response) {
-		console.log("login Success");
-		$state.go('home');
-	}, function(error) {
-		$scope.errorMessage = error.data.message;
-		$state.go('/');
-	});
-	}
+    	  console.log("this is to redirect after login");
+			localStorage.setItem('token',response.data.responseMessage)
+			console.log("login controller"+localStorage.getItem('token'))
+			$location.path('home');
+	    }, function(error) {
+		$scope.errorMessage = error.data.responseMessage;
+	})
+	
 
-   var google =function(){
+ /*  var google =function(){
    url : 'googleLogin'
 	var notes = homeService.getToken(url,'GET',notes);
       notes.then(function(response) {
@@ -25,5 +23,5 @@ todoApp.controller('homeController', function($scope, $state, homeService,
 		$scope.errorMessage = error.data.message;
 		$state.go('/');
 	});
-	}
+	}*/
 });

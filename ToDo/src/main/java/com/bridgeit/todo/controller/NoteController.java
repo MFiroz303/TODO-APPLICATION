@@ -1,12 +1,10 @@
 package com.bridgeit.todo.controller;
 
 import java.util.Date;
-import java.util.Enumeration;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,6 +25,7 @@ import com.bridgeit.todo.model.User;
 import com.bridgeit.todo.service.NoteService;
 import com.bridgeit.todo.service.UserService;
 
+
 @RestController
 public class NoteController {
 
@@ -43,15 +42,21 @@ public class NoteController {
 	TokenGenerate tokenGenerate;
 
 	@RequestMapping(value = "/addNote", method = RequestMethod.POST)
-	public ResponseEntity<ErrorMessage> saveNotes(@RequestBody Note note, HttpSession session) {
+	public ResponseEntity<ErrorMessage> saveNotes(@RequestHeader("Authorization") String Authorization,@RequestBody Note note, HttpSession session) {
 
-		User user = (User) session.getAttribute("user");
 		
+		 System.out.println("user toke"+Authorization);
+		 int id = VerifyJwt.verify(Authorization);
+		 System.out.println("id in note is "+id);
+		 if(id==0){
+			 errorMessage.setResponseMessage("Data Successfully updated ");
+		 }
+		User user1= userService.getUserById(id);
 		Date date = new Date();
 		note.setCreatedDate(date);
 		note.setModifiedDate(date);
 		
-		note.setUser(user);
+		note.setUser(user1);
 		int userId=noteService.saveNotes(note);
 
 		if(userId!=0){
@@ -94,8 +99,9 @@ public class NoteController {
 
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@RequestMapping(value = "/noteList", method = RequestMethod.GET)
-	public List<Note> findAllNote(@RequestHeader("Authorization") String Authorization,HttpSession session,  HttpServletRequest request) {
+	public ResponseEntity<List<Note>> findAllNote(@RequestHeader("Authorization") String Authorization,HttpSession session,  HttpServletRequest request) {
 		
 		 // String accessToken = TokenGenerate.generate(user.getId());
 		 /* String userToken = null;
@@ -111,13 +117,13 @@ public class NoteController {
 			 int id = VerifyJwt.verify(Authorization);
 			 System.out.println("id in note is "+id);
 			 if(id==0){
-				 errorMessage.setResponseMessage("Data Successfully updated ");
+				 return new ResponseEntity(HttpStatus.NOT_FOUND);
 			 }
-		User user = (User) session.getAttribute("user");
-		List<Note> notes = noteService.findAllNote(user);
+			 User user1= userService.getUserById(id);
+		//User user = (User) session.getAttribute("user");
+		List<Note> notes = noteService.findAllNote(user1);
 		//List<Note> notes = noteService.getAllNotes(user);
-		return notes;
-
+		 return new ResponseEntity(notes,HttpStatus.OK);
 	}
 
 	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)

@@ -2,6 +2,7 @@ var todoApp=angular.module('todoApp',[ 'ui.router','ngMaterial', 'ngAnimate', 'n
 
 todoApp.config([ '$stateProvider', '$urlRouterProvider',
 		function($stateProvider, $urlRouterProvider) {
+	
 			$stateProvider.state('register', {
 
 				url : '/register',
@@ -44,19 +45,20 @@ todoApp.config([ '$stateProvider', '$urlRouterProvider',
 				controller : 'homeController'
 			})
 			
+			.state('reminder',{
+				url : '/archive',
+				templateUrl : 'templates/Archive.html',
+				controller : 'homeController'
+			})
 			.state('update',{
 				url : '/update',
 				templateUrl : 'templates/UpdateNote.html',
 				controller : 'homeController'
 			})
 			
-			.state('facebook',{
-				url : '/facebookLogin',
-				templateUrl : 'templates/DummyLogin.html',
-				controller : 'dummyController'
-			})
-			.state('googleLogin',{
-				url : '/googleLogin',
+			
+			.state('dummy',{
+				url : '/dummy',
 				templateUrl : 'templates/DummyLogin.html',
 				controller : 'dummyController'
 			});

@@ -149,7 +149,7 @@
              Note: The pattern used is equivalent to using pattern="common" -->
         <Valve className="org.apache.catalina.valves.AccessLogValve" directory="logs" pattern="%h %l %u %t &quot;%r&quot; %s %b" prefix="localhost_access_log" suffix=".txt"/>
 
-      <Context docBase="/home/bridgeit/workspace/ToDoApp/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/ROOT" path="" reloadable="false"/><Context docBase="/home/bridgeit/workspace/ToDoApp/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/ToDo" path="/ToDo" reloadable="true" source="org.eclipse.jst.j2ee.server:ToDo"/></Host>
+      <Context docBase="/home/bridgeit/workspace/TODO-APPLICATION/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/ROOT" path="" reloadable="false"/><Context docBase="/home/bridgeit/workspace/TODO-APPLICATION/.metadata/.plugins/org.eclipse.wst.server.core/tmp0/wtpwebapps/ToDo" path="/ToDo" reloadable="true" source="org.eclipse.jst.j2ee.server:ToDo"/></Host>
     </Engine>
   </Service>
 </Server>

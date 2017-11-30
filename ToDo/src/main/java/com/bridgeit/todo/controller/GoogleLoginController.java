@@ -5,12 +5,13 @@ import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bridgeit.todo.Token.TokenGenerate;
@@ -70,26 +71,23 @@ public class GoogleLoginController {
 				String lastName = objectMapper.readTree(googleProfileInfo).get("family_name").asText();
 				googleUser.setLastName(lastName);
 				
-				/*String contact = objectMapper.readTree(googleProfileInfo).get("contact").asText();
-				googleUser.setContact(contact);*/
+				String profilePic = objectMapper.readTree(googleProfileInfo).get("picture").asText();
+				googleUser.setProfilePic(profilePic);
 				
 				googleUser.setActivated(true);
 				int  userId= userService.saveUser(googleUser); 
-				
-				if(userId == 0){
-					response.sendRedirect("http://localhost:8080/ToDoApp/#!/DummyLogin");
-				}
-				else {
-					String myaccessToken = TokenGenerate.generate(userId);
-					session.setAttribute("todoAppAccessToken", myaccessToken);
-					response.sendRedirect("http://localhost:8080/ToDo/#!/home");
-				}
+		     	System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+userId);
+		     	
+				String myaccessToken = TokenGenerate.generate(userId);
+			    session.setAttribute("todoAppAccessToken", myaccessToken);
+				response.sendRedirect("http://localhost:8080/ToDo/#!/dummy");
 					
 			} else {	
+				System.out.println("#############################"+user.getId());
 				String myaccessToken = TokenGenerate.generate(user.getId());
 				logger.info("token geneted by jwt" + myaccessToken);
-				session.setAttribute("AccessToken", myaccessToken);
-				response.sendRedirect("http://localhost:8080/ToDo/#!/home");
+				session.setAttribute("todoAppAccessToken", myaccessToken);
+				response.sendRedirect("http://localhost:8080/ToDo/#!/dummy");
 
 			}
 			
@@ -98,5 +96,19 @@ public class GoogleLoginController {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	@RequestMapping(value="/getToken",method = RequestMethod.GET )
+	public ResponseEntity<ErrorMessage> getSocialLoginToken(HttpSession session)
+	{
+	String token=(String) session.getAttribute("todoAppAccessToken");
+	errorMessage.setResponseMessage(token);
+	System.out.println("social token "+ token);
+	/*if(token!=null)
+	{
+	return ResponseEntity.status(HttpStatus.OK).body(errorMessage);
+	}*/
+	return ResponseEntity.status(HttpStatus.OK).body(errorMessage);
+
 	}
 }
