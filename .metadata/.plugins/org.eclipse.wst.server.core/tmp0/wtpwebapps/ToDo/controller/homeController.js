@@ -301,7 +301,7 @@ var todoApp = angular.module("todoApp");
 			          })
 			          }*/
 			    
-                 /*$scope.listView = true; 
+                /* $scope.listView = true; 
 			     $scope.listViewToggle = function() {
 			     if ($scope.listView == true) {
 			     $scope.listView = false;
@@ -324,6 +324,23 @@ var todoApp = angular.module("todoApp");
 			     }
 			     }
 			     }*/
+			     
+			     var update=function(note){
+						
+						var url='update';
+						var notes = homeService.service(url,'PUT',note);
+						notes.then(function(response) {
+
+							getNotes();
+
+						}, function(response) {
+
+							getNotes();
+							console.log(response);
+							$scope.error = response.data.responseMessage;
+
+						});
+					}
 
 		       //Image uploading.........@@@@@@@@@@@@@@@@@@@@@@@@@@@@@........
 			     $scope.openImageUploader = function(type) {
@@ -331,24 +348,18 @@ var todoApp = angular.module("todoApp");
 						$('#image').trigger('click');
 						return false;
 					}
-					
-					
 					$scope.stepsModel = [];
 					$scope.imageUpload = function(element){
 					    var reader = new FileReader();
 					    reader.onload = $scope.imageIsLoaded;
 					    reader.readAsDataURL(element.files[0]);
-					    console.log(element.files[0]);
 					}
 				
 					$scope.imageIsLoaded = function(e){
-					    $scope.$apply(function() {
+					        $scope.$apply(function() {
 					        $scope.stepsModel.push(e.target.result);
-					        console.log(e.target.result);
 					        var imageSrc=e.target.result;
 					        $scope.type.image=imageSrc;
-					        console.log(e.target.result);
-					        console.log(imageSrc);
 					        update($scope.type);
 					    });
 					}
