@@ -1,5 +1,5 @@
 var todoApp = angular.module("todoApp");
-  todoApp.controller('homeController', function ($scope,$state, homeService, $timeout, $filter, $mdSidenav, $mdDialog, mdcDateTimeDialog, toastr, $interval, $http, $location ,fileReader ,Upload, $base64) {
+  todoApp.controller('homeController', function ($scope,$state, fileReader,homeService, $timeout, $filter, $mdSidenav, $mdDialog, mdcDateTimeDialog, toastr, $interval, $http, $location ,Upload, $base64) {
 	  console.log('hello');
 	  $scope.mouse=false;
 	  
@@ -326,25 +326,22 @@ var todoApp = angular.module("todoApp");
 			     }*/
 
 		       //Image uploading.........@@@@@@@@@@@@@@@@@@@@@@@@@@@@@........
-					$scope.imageUploader = function(type) {
+			     $scope.openImageUploader = function(type) {
 						$scope.type = type;
-						console.log("image uploader............")
 						$('#image').trigger('click');
-						console.log("Trigger............")
 						return false;
 					}
 					
+					
 					$scope.stepsModel = [];
 					$scope.imageUpload = function(element){
-						console.log("image uploadergggggggggggggg............")
 					    var reader = new FileReader();
-					    console.log("element" +element);
-					    reader.onload = $scope.imageUpload;
+					    reader.onload = $scope.imageIsLoaded;
 					    reader.readAsDataURL(element.files[0]);
 					    console.log(element.files[0]);
 					}
 				
-					$scope.imageUpload = function(e){
+					$scope.imageIsLoaded = function(e){
 					    $scope.$apply(function() {
 					        $scope.stepsModel.push(e.target.result);
 					        console.log(e.target.result);
@@ -354,15 +351,7 @@ var todoApp = angular.module("todoApp");
 					        console.log(imageSrc);
 					        update($scope.type);
 					    });
-					};
-					
-					$scope.$on("fileProgress", function(e, progress) {
-						$scope.progress = progress.loaded / progress.total;
-					});
-					
-					$scope.type = {};
-					$scope.type.image = ''; 
-					 
+					}
 			     /*********logout**************/
 			     $scope.logout = function(){
 			    	 localStorage.removeItem("token");

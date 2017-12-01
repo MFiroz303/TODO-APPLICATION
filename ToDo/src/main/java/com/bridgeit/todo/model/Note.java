@@ -42,8 +42,17 @@ public class Note {
 	
 	private String noteColor; 
 	
+	/*@Column(columnDefinition = "LONGBLOB")*/
+	private String image;
 	
-	
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
 	public boolean isArchive() {
 		return archive;
 	}

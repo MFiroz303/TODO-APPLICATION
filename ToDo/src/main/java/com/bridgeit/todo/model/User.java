@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -36,8 +37,9 @@ public class User {
 
 	private String password;
 	
-	/*@Lob
-	@Column(columnDefinition="LONGBLOB")*/
+	/*
+	@Lob
+	@Column(name="IMAGE",columnDefinition="LONGBLOB")*/
 	private String profilePic;
 	
 	public String getProfilePic() {

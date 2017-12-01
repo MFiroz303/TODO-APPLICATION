@@ -15,11 +15,6 @@ todoApp.directive('sideNavBar', function() {
 
 });
 
-todoApp.directive("sideBar", function() {
-	return {
-		templateUrl : 'template/sideBar.html'
-	};
-});
 
 todoApp.directive("ngFileSelect", function(fileReader, $timeout) {
 	return {
