@@ -257,74 +257,59 @@ var todoApp = angular.module("todoApp");
 			     });
 			     };
 
-			    /* 
-			      $scope.selectedItemChange = function() {
-			         var array = [];
-			        var j = -1;
-			        for(var i=0; i<responseMessage.data.notesData.length; i++) {
-			        if(responseMessage.data.notesData[i].title == $scope.searchText)  {
-			            ++j;
-			            array[j] = responseMessage.data.notesData[i];
-			          }
-			          }
-			            $scope.searchResultNotes = array;
-			         }
-                   //search notes showing n dropdown
-			      $scope.noteQuery = function() {
-			        var array = [];
-			        var j = -1;
-			        for(var i=0; i<responseMessage.data.notesData.length; i++) {
-			        if(responseMessage.data.notesData[i].title == $scope.searchText)  {
-			            ++j;
-			            array[j] = responseMessage.data.notesData[i];
-			          }
-			          }
-			            return array;
-			         }*/
-			     
-			     //list and grid 
-			     /*
-			        $scope.listViewToggle = function() {
-			              var notes=homeService.service()
-			             notes.then(function(responseMessage) {
-			             if(responseMessage.data.status == 'change to listView') {
-			               $state.reload();
-			           }
-			           })
-			           }
-			         $scope.gridViewToggle = function() {
-			        	   var notes=homeService.service()
-				             notes.then(function(responseMessage) {
-			            if(responseMessage.data.status == 'change to gridView') {
-			              $state.reload();
-			           }
-			          })
-			          }*/
-			    
-                /* $scope.listView = true; 
-			     $scope.listViewToggle = function() {
-			     if ($scope.listView == true) {
-			     $scope.listView = false;
-			     console.log("inside true @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-
-			     var element = document.getElementsByClassName('card');
-			     for (var i = 0; i < element.length; i++) {
-			     element[i].style.width = "900px";
-			     }
-			     }
-			     else {
-				     console.log("else true @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-
-			     $scope.listView = true;
-			     var element = document.getElementsByClassName('card');
-			     for (var i = 0; i < element.length; i++) {
-				     console.log("for loop true @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@")
-
-			     element[i].style.width = "300px";
-			     }
-			     }
-			     }*/
-			     
+			     // collaborator
+				 	$scope.displayCollab = function(note,event)
+					{
+						$mdDialog.show({
+							locals:{
+								dataToPass : note
+							},
+							templateUrl : 'templates/Collaborator.html',
+							 parent: angular.element(document.description),
+						     targetEvent: event,
+						     clickOutsideToClose: true,
+						     controllerAs: 'controller',
+						     controller: openCollabModel
+						});
+					}
+					
+					function openCollabModel($scope, $state, dataToPass) {
+							
+							var getOwner=function(){
+								var url = 'getOwner';
+								var notes= homeService.service(url,'PUT',dataToPass)
+								notes.then(function(response){
+									$scope.owner=response.data;
+								},function(response){
+									$scope.error=response.data;
+								})
+							}
+							getOwner();
+							var getCollabUser=function(){
+								var url = 'getCollabUser';
+								var notes = homeService.service(url,'PUT',dataToPass);
+								notes.then(function(response){
+									$scope.users=response.data;
+								},function(response){
+									$scope.error=response.data;
+								});
+							}
+							
+							getOwner();
+							getCollabUser();
+							
+							$scope.shareCollabUer = function() {
+					    	var url = 'collaborate'; 
+					    	var notes=homeService.service(url,'PUT',dataToPass,$scope.search);
+					    	notes.then(function(response){
+					    	},function(response){
+					    	$scope.error=response.data;
+					    	})
+					    	
+					      }
+					
+					   }
+					
 			     var update=function(note){
 						
 						var url='update';

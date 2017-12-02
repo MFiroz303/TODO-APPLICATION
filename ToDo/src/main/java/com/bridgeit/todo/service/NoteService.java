@@ -16,5 +16,7 @@ public interface NoteService {
 	void updateNote(int id, Note note);
 
 	Note getNoteById(int id);
+	
+	void collaborateUser(User cUser, Note cNote);
 
 }

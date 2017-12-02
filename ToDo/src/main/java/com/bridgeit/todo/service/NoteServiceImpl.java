@@ -39,4 +39,10 @@ public class NoteServiceImpl implements NoteService {
 	public Note getNoteById(int id) {
 		return noteDao.getNoteById(id);
 	}
+
+	@Override
+	public void collaborateUser(User cUser, Note cNote) {
+		noteDao.collaborateUser(cUser, cNote);
+		
+	}
 }

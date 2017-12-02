@@ -1,16 +1,24 @@
 package com.bridgeit.todo.model;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.GenericGenerator;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="note_ToDo")
@@ -30,7 +38,21 @@ public class Note {
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="userId")
-	private User user;
+	private User user = new User();
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY, generator="idgen")
+	@GenericGenerator(name="idgen", strategy="increment")
+	private int noteId;
+
+
+	public int getNoteId() {
+		return noteId;
+	}
+
+	public void setNoteId(int noteId) {
+		this.noteId = noteId;
+	}
 
 	private boolean archive;
 	
@@ -42,8 +64,22 @@ public class Note {
 	
 	private String noteColor; 
 	
-	/*@Column(columnDefinition = "LONGBLOB")*/
+	@Column(columnDefinition = "LONGBLOB")
 	private String image;
+	
+
+	public Set<User> getCollabUsers() {
+		return collabUsers;
+	}
+
+	public void setCollabUsers(Set<User> collabUsers) {
+		this.collabUsers = collabUsers;
+	}
+
+	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
+	@ManyToMany
+	@JoinTable(name = "collabUsers", joinColumns = @JoinColumn(name = "noteid"), inverseJoinColumns = @JoinColumn(name = "userid"))
+	private Set<User> collabUsers = new HashSet<>();
 	
 	public String getImage() {
 		return image;
@@ -146,7 +182,5 @@ public class Note {
 		return "Note [id=" + id + ", title=" + title + ", description=" + description + ", createdDate=" + createdDate
 				+ ", modifiedDate=" + modifiedDate + "]";
 	}
-
-	
 
 }

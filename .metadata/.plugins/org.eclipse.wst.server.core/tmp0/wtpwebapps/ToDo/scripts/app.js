@@ -61,6 +61,12 @@ todoApp.config([ '$stateProvider', '$urlRouterProvider',
 				url : '/dummy',
 				templateUrl : 'templates/DummyLogin.html',
 				controller : 'dummyController'
+			/*})
+			
+			.state('collaborate',{
+				url : '/collaborate',
+				templateUrl : 'templates/Collaborator.html',
+				controller : 'homeController'*/
 			});
 			
 			$urlRouterProvider.otherwise('login');

@@ -16,4 +16,6 @@ public interface NoteDao {
 	List<Note> findAllNote(User user);
 
 	public Note getNoteById(int id);
+
+	public void collaborateUser(User cUser, Note cNote);
 }

@@ -1,6 +1,10 @@
 package com.bridgeit.todo.dao;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -121,4 +125,31 @@ public class NoteDaoImpl implements NoteDao {
 		return note;
 	}
 	
+	@Override
+	public void collaborateUser(User cUser, Note cNote) {
+		Session session = sessionFactory.openSession();
+
+		boolean isNoteCollab = false;
+		Set<User> collabUsers = cNote.getCollabUsers();
+		if (collabUsers == null) {
+			collabUsers = new HashSet<>();
+		} else {
+			for (User tempUser : collabUsers) {
+				if (cUser.getId()==(tempUser.getId()) ) {
+					isNoteCollab = true;
+				}
+			}
+		}
+		// add other to note collaboration
+		if (!isNoteCollab) {
+			cNote.getCollabUsers().add(cUser);
+		}
+		for (User tempUser : collabUsers) {
+			System.out.println("***********" + tempUser.getFirstName());
+		}
+		session.merge(cNote);
+		 session.close(); 
+		 return;
+	}
+
 }

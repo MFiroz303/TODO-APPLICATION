@@ -132,11 +132,9 @@ public class NoteController {
 
 	}
 	
-	@RequestMapping(value="/collaborate", method=RequestMethod.GET)
-	public ResponseEntity<User>collaborateNotes(@RequestHeader("Authorization") String Authorization,
-			                                     @RequestBody Note cNote,HttpServletRequest request,HttpServletResponse response ){
+	/*@RequestMapping(value="/collaborate", method=RequestMethod.PUT)
+	public ResponseEntity<User>collaborateNotes(@RequestHeader("Authorization") String Authorization,  @RequestBody Note cNote,HttpServletRequest request,HttpServletResponse response ){
 
-		     Collaborator collaborator = new Collaborator();
 		     User loggedUser = userService.getUserById(VerifyJwt.verify(Authorization));
 		     
 		    if(cNote==null){
@@ -147,53 +145,77 @@ public class NoteController {
 		    	return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
 		    }
 		    
+		    String email = request.getHeader("userEmail");
+			int userId = (int)request.getAttribute("userId");
+			User cUser = userService.getUserByEmail(email);
 		   
-		    if(userService.userExists(loggedUser)){
-		    	  String email = request.getHeader("userEmail");
-				  User cUser = userService.getUserByEmail(email);
+		    if(!userService.userExists(cUser)){
+		    	 
+		    	return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
 		    }
-	}}
+		    
+		    --------------------------------------------------------
+		    @RequestMapping(value="/getOwner",method=RequestMethod.POST)
+	public ResponseEntity<Object> getOwner(@RequestBody NoteBean note)
+	{
 		
-	/*	if (cNote == null) {
-			logger.info("Note Empty");
-			return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
-		}
-		if (request.getHeader("userEmail") == null) {
-			
-		}
+		NoteBean ownerNote = noteService.getNoteById(note.getNoteId());
+		return ResponseEntity.ok(ownerNote.getUser());
 		
-		String email = request.getHeader("userEmail");
-		User cUser = new User();
-		Integer userId = (Integer) request.getAttribute("userId");
-		cUser = userService.getUserByEmail(email, cUser);
-		if (!userService.userExists(cUser)) {
-			logger.info("Invalid Email in collaborator");
-			return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
-		}
-
-		logger.info("collaborating note with id: " + cNote.getNoteId());
-		Integer cUserId = cUser.getId();
-		// check if logged in user is editing note.
-		// or collaborated users' editing note //
-		User loggedUser = new User();
-		loggedUser = userService.getUserById(userId, loggedUser);
-		if (loggedUser.getId().compareTo(cNote.getUser().getId()) == 0 || cNote.getCollabUsers().contains(loggedUser)) {
-			cUser = userService.getUserById(cUserId, cUser);
-			try {
-				noteService.collaborateUser(cUser, cNote);
-			} catch (Exception E) {
-				logger.info("User is already collaborated");
+	}
+	
+	@RequestMapping(value="/getCollabUser",method=RequestMethod.POST)
+	public ResponseEntity<Object> getCollabUser(@RequestBody NoteBean note)
+	{
+		NoteBean collabNoteUsers = noteService.getNoteById(note.getNoteId());
+		return ResponseEntity.ok(collabNoteUsers.getCollaborator());
+		
+	}--------------------
+		    
+		    int cUserId = cUser.getId();
+			if (loggedUser.getId() == ( cNote.getUser().getId()) || cNote.getCollabUsers().contains(loggedUser)) {
+				cUser = userService.getUserById(cUserId);
+				noteService.collaborateUser(cUser,cNote);
+			}
+	
+			else{
 				return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
 			}
-
-		} else {
-			logger.info("Note Owner Authorization failed");
-			return new ResponseEntity<User>(HttpStatus.BAD_REQUEST);
+			return new ResponseEntity<User>(cUser, HttpStatus.OK);
+	}*/
+	@RequestMapping(value = "/getOwner", method = RequestMethod.POST)
+	public ResponseEntity<User> getOwner(@RequestHeader("Authorization") String Authorization, @RequestBody Note note, HttpServletRequest request){
+		
+		 int id = VerifyJwt.verify(Authorization);
+		 User user=userService.getUserById(id);
+		if(user!=null) {
+			Note owNote = noteService.getNoteById(note.getNoteId());
+			return ResponseEntity.ok(owNote.getUser());
 		}
+		else{
+			return ResponseEntity.ok(null);
+		}
+	}
 
-		return new ResponseEntity<User>(cUser, HttpStatus.OK);
-	}	
+	@RequestMapping(value = "/sharedNotesUser", method = RequestMethod.POST)
+	public ResponseEntity<List<User>> sharedNotesUser(@RequestHeader("Authorization") String Authorization, @RequestBody Note note, HttpServletRequest request){
 		
+		int id = VerifyJwt.verify(Authorization);
+		 User user=userService.getUserById(id);
+		 
+		if(user!=null) {
+			 
+			Note userNote=noteService.getNoteById(note.getNoteId());
+			if(userNote==null) {
+				return null;
+			}
+			List<User> owner=userNote.getSharedUser();
+		return ResponseEntity.ok(owner);
+		}
+		else{
+			return ResponseEntity.ok(null);
+		}
+	}
+}
 		
-		
-}*/
+	
