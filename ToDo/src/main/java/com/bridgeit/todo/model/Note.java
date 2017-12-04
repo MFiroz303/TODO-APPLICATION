@@ -2,10 +2,12 @@ package com.bridgeit.todo.model;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -19,40 +21,30 @@ import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 @Entity
 @Table(name="note_ToDo")
 public class Note {
 
 	@Id
-	@Column(name="id")
+	@Column(name="noteId")
 	@GeneratedValue(strategy  = GenerationType.IDENTITY)
-	private int id;
+	private int noteId;
 	
 	private String title;
+	
 	private String description;
 	
 	private Date createdDate;
+	
 	private Date modifiedDate;
 
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name="userId")
-	private User user = new User();
-	
-	@Id
-	@GeneratedValue(strategy=GenerationType.IDENTITY, generator="idgen")
-	@GenericGenerator(name="idgen", strategy="increment")
-	private int noteId;
-
-
-	public int getNoteId() {
-		return noteId;
-	}
-
-	public void setNoteId(int noteId) {
-		this.noteId = noteId;
-	}
+	private User user;
 
 	private boolean archive;
 	
@@ -64,22 +56,17 @@ public class Note {
 	
 	private String noteColor; 
 	
+	@ManyToMany(fetch=FetchType.EAGER)
+	@Column(name="sharedNoteId")
+	@JoinTable(name="sharedNoteId")
+	private List<User> sharedUser; 
+	
+	public List<User> getSharedUser() {
+		return sharedUser;
+	}
+	
 	@Column(columnDefinition = "LONGBLOB")
 	private String image;
-	
-
-	public Set<User> getCollabUsers() {
-		return collabUsers;
-	}
-
-	public void setCollabUsers(Set<User> collabUsers) {
-		this.collabUsers = collabUsers;
-	}
-
-	@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-	@ManyToMany
-	@JoinTable(name = "collabUsers", joinColumns = @JoinColumn(name = "noteid"), inverseJoinColumns = @JoinColumn(name = "userid"))
-	private Set<User> collabUsers = new HashSet<>();
 	
 	public String getImage() {
 		return image;
@@ -137,12 +124,12 @@ public class Note {
 		this.user = user;
 	}
 
-	public int getId() {
-		return id;
+	public int getNoteId() {
+		return noteId;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setNoteId(int noteId) {
+		this.noteId = noteId;
 	}
 	
 	public String getTitle() {
@@ -177,10 +164,19 @@ public class Note {
 		this.modifiedDate = modifiedDate;
 	}
 
+	public void setSharedUser(List<User> sharedUser) {
+		this.sharedUser = sharedUser;
+	}
+	
 	@Override
 	public String toString() {
-		return "Note [id=" + id + ", title=" + title + ", description=" + description + ", createdDate=" + createdDate
-				+ ", modifiedDate=" + modifiedDate + "]";
+		return "Note [noteId=" + noteId + ", title=" + title + ", description=" + description + ", createdDate="
+				+ createdDate + ", modifiedDate=" + modifiedDate + ", user=" + user + ", archive=" + archive
+				+ ", trash=" + trash + ", pinned=" + pinned + ", reminder=" + reminder + ", noteColor=" + noteColor
+				+ ", sharedUser=" + sharedUser +"]";
 	}
+
+
+	
 
 }

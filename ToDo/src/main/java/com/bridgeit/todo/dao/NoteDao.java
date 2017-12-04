@@ -6,16 +6,20 @@ import com.bridgeit.todo.model.Note;
 import com.bridgeit.todo.model.User;
 
 public interface NoteDao {
-	
+
 	public int saveNotes(Note note);
 
 	public void deleteNoteById(int id);
 
-	void updateNote(int id, Note note);
+	/* void updateNote(int id, Note note); */
 
 	List<Note> findAllNote(User user);
 
 	public Note getNoteById(int id);
 
-	public void collaborateUser(User cUser, Note cNote);
+	List<Note> getSharedNotes(int id);
+
+	public void updateNote(Note note);
+
+	public User getUserByEmail(String email, User user);
 }

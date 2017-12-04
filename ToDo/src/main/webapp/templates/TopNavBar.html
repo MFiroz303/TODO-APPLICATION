@@ -19,11 +19,13 @@
           >
         </md-autocomplete>    
      </div>
-        <md-button class="md-icon-button"  style="margin:10px 7px;" >
-           <md-icon ng-if="!listView" ng-click="listViewToggle()" md-svg-src="./images/view2.svg"></md-icon>
-            <md-icon ng-if="listView" ng-click="listViewToggle()" md-svg-src="./images/gridview.svg"></md-icon>
-          <!--  <md-icon ng-if="notesView=='list'" ng-click="gridViewToggle()" md-svg-icon="./images/gridview.svg"></md-icon> -->
+     <div ng-init="view()">
+        <md-button  class="md-icon-button"  style="margin:10px 7px;" >
+           <md-icon ng-if="list" ng-click="displayView('list')" md-svg-src="./images/view2.svg"></md-icon>
+            <md-icon ng-if="grid" ng-click="displayView('grid')" md-svg-src="./images/gridview.svg"></md-icon>
+         <!--   <md-icon ng-if="notesView=='list'" ng-click="gridViewToggle()" md-svg-icon="./images/gridview.svg"></md-icon> -->
         </md-button>    
+        </div>
 	                <md-menu>
 	               	  <md-button class="md-fab md-mini md-primary" aria-label="User" ng-click="$mdMenu.open($event)">
 	               	  <md-tooltip md-direction="bottom">{{getUser.email}}</md-tooltip>

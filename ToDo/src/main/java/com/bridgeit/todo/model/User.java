@@ -10,6 +10,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -23,8 +24,8 @@ public class User {
 
 	@Id
 	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY, generator="mygen")
-	@GenericGenerator(strategy="native", name="mygen")
+	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "mygen")
+	@GenericGenerator(strategy = "native", name = "mygen")
 	private int id;
 
 	private String firstName;
@@ -32,16 +33,14 @@ public class User {
 	private String lastName;
 
 	private String email;
-	
+
 	private String contact;
 
 	private String password;
-	
-	/*
-	@Lob
-	@Column(name="IMAGE",columnDefinition="LONGBLOB")*/
+
+	@Column(columnDefinition = "LONGBLOB")
 	private String profilePic;
-	
+
 	public String getProfilePic() {
 		return profilePic;
 	}
@@ -50,9 +49,9 @@ public class User {
 		this.profilePic = profilePic;
 	}
 
-	@Column(name="isActivated")
+	@Column(name = "isActivated")
 	private boolean isActivated;
-	
+
 	public boolean isActivated() {
 		return isActivated;
 	}
@@ -60,11 +59,10 @@ public class User {
 	public void setActivated(boolean isActivated) {
 		this.isActivated = isActivated;
 	}
-	
+
 	@JsonIgnore
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
+	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
 	private Set<Note> note;
-	
 
 	public int getId() {
 		return id;
@@ -113,9 +111,10 @@ public class User {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email + ", note="
-				+ note + ", contact=" + contact + ", password=" + password + "]";
+		return "User [id=" + id + ", firstName=" + firstName + ", lastName=" + lastName + ", email=" + email
+				+ ", contact=" + contact + ", password=" + password + "]";
 	}
 }

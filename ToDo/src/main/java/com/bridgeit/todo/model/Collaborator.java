@@ -1,4 +1,4 @@
-package com.bridgeit.todo.model;
+/*package com.bridgeit.todo.model;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -58,3 +58,4 @@ public class Collaborator {
 		this.noteId = noteId;
 	}
 }
+*/

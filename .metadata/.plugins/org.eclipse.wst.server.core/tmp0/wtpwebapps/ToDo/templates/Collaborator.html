@@ -1,4 +1,4 @@
-<md-dialog flex="35" >
+<md-dialog flex="45" >
 	<md-dialog-content>
 	
 			<md-title md-padding><h3>Collaborators</h3></md-title>
@@ -17,18 +17,18 @@
 			   				{{owner.email}}
 			   			</div>
 	   	</div>
-	   	<div ng-repeat="user in allUser">
+	   	<div ng-repeat="sharedUser in sharedUsers">
 	   			<div layout="row" flex >
 				<div layout="column" flex="15">
 					<md-button class="md-fab md-mini md-primary" aria-label="User">
-	   			         	<img ng-src="{{user.profilePic}}" style=" height: 100%;width: 100%;">
+	   			         	<img ng-src="{{sharedUser.profilePic}}" style=" height: 100%;width: 100%;">
 	       		</md-button>
 	       		</div>
 			       		<div layout="column" flex  style="margin-top: 15px;">
 			       			<div layout="row">
-			       			{{user.lastName}} 
+			       			{{sharedUser.lastName}} 
 			   				</div>	
-			   				{{user.email}}
+			   				{{sharedUser.email}}
 			   			</div>
 		
 	   	
@@ -41,10 +41,9 @@
 	   	<div layout="row" flex>
 	   		<div layout="column" flex="15">
 	   			<md-button class="md-fab md-mini md-primary" aria-label="User">
-	   			         <md-icon md-svg-src="images/share.svg" ng-click="" style="width:21px"></md-icon>
+	   			         <md-icon md-svg-src="./images/cancil.svg" ng-click="" style="width:21px"></md-icon>
 	   		 </md-button>	
-	   	</div>
-         
+	   	</div>    
          <md-input-container>
         <label>Email</label>
         	<input ng-model="search" type="text">
@@ -52,7 +51,7 @@
       </div>
 	   			<md-divider></md-divider>
 	   			<md-panel>
-	   				<md-button md-autofocus flex class="md-primary" ng-click="shareCollabUer()">
+	   				<md-button md-autofocus flex class="md-primary" ng-click="getUserEmail()">
       					Done
    				 </md-button>
 	   			</md-panel>

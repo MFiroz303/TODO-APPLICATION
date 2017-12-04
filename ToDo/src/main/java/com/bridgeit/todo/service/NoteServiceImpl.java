@@ -31,18 +31,18 @@ public class NoteServiceImpl implements NoteService {
 		
 	}
 
-	public void updateNote(int id, Note note) {
-		noteDao.updateNote(id,note);
+	public void updateNote(Note note) {
+		noteDao.updateNote(note);
 		
 	}
 	@Override
 	public Note getNoteById(int id) {
 		return noteDao.getNoteById(id);
 	}
-
 	@Override
-	public void collaborateUser(User cUser, Note cNote) {
-		noteDao.collaborateUser(cUser, cNote);
-		
+	public List<Note> getSharedNotes(int id) {
+		return noteDao.getSharedNotes(id);
+		 
 	}
+
 }

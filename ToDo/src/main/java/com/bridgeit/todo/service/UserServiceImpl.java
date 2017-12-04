@@ -1,9 +1,5 @@
 package com.bridgeit.todo.service;
-
-import javax.transaction.Transactional;
-
 import org.springframework.beans.factory.annotation.Autowired;
-
 import com.bridgeit.todo.dao.UserDao;
 import com.bridgeit.todo.model.User;
 
@@ -28,20 +24,17 @@ public class UserServiceImpl implements UserService {
 	}
 	@Override
 	public User getUserByEmail(String email) {
-		// TODO Auto-generated method stub
 		return userDao.getUserByEmail(email);
 	}
 
 
 	@Override
 	public boolean setPassword(User user1) {
-		// TODO Auto-generated method stub
 		return userDao.setPassword(user1);
 	}
 
 	@Override
 	public User getUserById(int id) {
-		// TODO Auto-generated method stub
 		return userDao.getUserById(id);
 	}
 
@@ -50,4 +43,5 @@ public class UserServiceImpl implements UserService {
 		return userDao.updateUser(user);
 		
 	}
+	
 }

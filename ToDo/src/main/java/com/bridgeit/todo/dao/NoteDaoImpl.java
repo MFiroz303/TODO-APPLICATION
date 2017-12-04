@@ -1,9 +1,7 @@
 package com.bridgeit.todo.dao;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -13,6 +11,7 @@ import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import com.bridgeit.todo.model.Note;
 import com.bridgeit.todo.model.User;
 
@@ -33,7 +32,7 @@ public class NoteDaoImpl implements NoteDao {
 	@Override
 	public int saveNotes(Note note) {
 		Session session = sessionFactory.openSession();
-		 Transaction transaction = null;
+		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
 			session.save(note);
@@ -52,11 +51,11 @@ public class NoteDaoImpl implements NoteDao {
 	public void deleteNoteById(int id) {
 
 		Session session = sessionFactory.openSession();
-		 Transaction transaction= null;
+		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
 			Note note = new Note();
-			note.setId(id);
+			note.setNoteId(id);
 			session.delete(note);
 			transaction.commit();
 		} catch (Exception e) {
@@ -72,41 +71,39 @@ public class NoteDaoImpl implements NoteDao {
 	@Override
 	public List<Note> findAllNote(User user) {
 		Session session = sessionFactory.openSession();
-	    Criteria criteria = session.createCriteria(Note.class);
+		Criteria criteria = session.createCriteria(Note.class);
 		criteria.add(Restrictions.eq("user", user));
 		criteria.addOrder(Order.desc("modifiedDate"));
 		List<Note> notes = criteria.list();
 		System.out.println(notes);
 		return notes;
 	}
-	
 
-	/*@SuppressWarnings({ "unchecked", "deprecation" })
-	@Override
-	public List<Note> findAllNote(User user) {
-		Session session = sessionFactory.openSession();
-	    Criteria criteria = session.createCriteria(Note.class);
-		criteria.add(Restrictions.eq("user", user))
-		.addOrder(Order.desc("modifiedDate"))
-		.setResultTransformer(Transformers.aliasToBean(Note.class));
-		List<Note> notes = criteria.list();
-		System.out.println(notes);
-		return notes;
-	}*/
+	/*
+	 * @SuppressWarnings({ "unchecked", "deprecation" })
+	 * 
+	 * @Override public List<Note> findAllNote(User user) { Session session =
+	 * sessionFactory.openSession(); Criteria criteria =
+	 * session.createCriteria(Note.class); criteria.add(Restrictions.eq("user",
+	 * user)) .addOrder(Order.desc("modifiedDate"))
+	 * .setResultTransformer(Transformers.aliasToBean(Note.class)); List<Note>
+	 * notes = criteria.list(); System.out.println(notes); return notes; }
+	 */
 
-	
-	public void updateNote(int id, Note note) {
+	public void updateNote(Note note) {
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {
 
 			transaction = session.beginTransaction();
-			/*Note note1 = session.byId(Note.class).load(id);
-			note1.setTitle(note.getTitle());
-			note1.setDescription(note.getDescription());
-			note1.setModifiedDate(note.getModifiedDate());
-			session.update(note1);*/
-			
+			/*
+			 * Note note1 = session.byId(Note.class).load(id);
+			 * note1.setTitle(note.getTitle());
+			 * note1.setDescription(note.getDescription());
+			 * note1.setModifiedDate(note.getModifiedDate());
+			 * session.update(note1);
+			 */
+
 			session.saveOrUpdate(note);
 			transaction.commit();
 		} catch (Exception e) {
@@ -117,39 +114,47 @@ public class NoteDaoImpl implements NoteDao {
 			session.close();
 		}
 	}
-	
-	public Note getNoteById(int id) {
+
+	public Note getNoteById(int noteId) {
 		Session session = sessionFactory.openSession();
-		Note note=session.get(Note.class, id);
+		Note note = session.get(Note.class, noteId);
 		session.close();
 		return note;
 	}
-	
-	@Override
-	public void collaborateUser(User cUser, Note cNote) {
-		Session session = sessionFactory.openSession();
 
-		boolean isNoteCollab = false;
-		Set<User> collabUsers = cNote.getCollabUsers();
-		if (collabUsers == null) {
-			collabUsers = new HashSet<>();
-		} else {
-			for (User tempUser : collabUsers) {
-				if (cUser.getId()==(tempUser.getId()) ) {
-					isNoteCollab = true;
-				}
+	@SuppressWarnings({ "unchecked" })
+	public User getUserByEmail(String email, User user) {
+		Session session = sessionFactory.openSession();
+		List<User> userList = new ArrayList<>();
+		// jpa
+		/*
+		 * CriteriaBuilder builder = session.getCriteriaBuilder();
+		 * CriteriaQuery<User> criteria = builder.createQuery(User.class);
+		 */
+		userList = session.createQuery("from User").getResultList();
+		for (User tempUser : userList) {
+			if (tempUser.getEmail().equalsIgnoreCase(email)) {
+				user = tempUser;
+				System.out.println("get uswer by email: " + user);
+				return user;
 			}
 		}
-		// add other to note collaboration
-		if (!isNoteCollab) {
-			cNote.getCollabUsers().add(cUser);
-		}
-		for (User tempUser : collabUsers) {
-			System.out.println("***********" + tempUser.getFirstName());
-		}
-		session.merge(cNote);
-		 session.close(); 
-		 return;
+
+		return user;
+	}
+
+	@Override
+	public List<Note> getSharedNotes(int noteId) {
+		Session session = sessionFactory.openSession();
+		Note note = session.get(Note.class, noteId);
+
+		Criteria criteria = session.createCriteria(Note.class);
+		criteria.createAlias("sharedUser", "c");
+		criteria.add(Restrictions.eq("sharedUser", noteId));
+		List<Note> sharedNotes = criteria.list();
+
+		session.close();
+		return sharedNotes;
 	}
 
 }

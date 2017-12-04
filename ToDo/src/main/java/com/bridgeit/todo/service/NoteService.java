@@ -13,10 +13,11 @@ public interface NoteService {
 
 	List<Note> findAllNote(User user);
 
-	void updateNote(int id, Note note);
-
 	Note getNoteById(int id);
-	
-	void collaborateUser(User cUser, Note cNote);
 
+	void updateNote(Note note);
+	
+	public List<Note> getSharedNotes(int id);
+/*	void collaborateUser(User cUser, Note cNote);
+*/
 }
