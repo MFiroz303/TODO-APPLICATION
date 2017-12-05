@@ -62,7 +62,7 @@
              
            <input  ng-show="false" id="image" type='file' ng-model-instant ng-model="file" onchange="angular.element(this).scope().imageUpload(this)" />	             
            <md-button id="image" class="mdButton" aria-label="IMAGE">
-           <input  id="image" type='file' ng-model-instant ng-model="file" onchange="angular.element(this).scope().imageUpload(this)" />
+           <input   id="image" type='file' ng-model-instant ng-model="file" onchange="angular.element(this).scope().imageUpload(this)" />
              
            <md-tooltip md-direction="bottom">IMAGE</md-tooltip>
             <md-icon md-svg-src="./images/picture.svg" class=iconHome ></md-icon>
@@ -82,7 +82,10 @@
                 <md-button ng-click="deleteNote(note)" style="height:5%;" aria-label="setting">delete</md-button>
                </md-menu-item> 
                 <md-menu-item>
-                <md-button  style="height:5%;" aria-label="setting">label...</md-button>
+                 <md-button  style="height:5%;" aria-label="setting"  ng-click="copy(note)">Make a Copy</md-button>
+                </md-menu-item> 
+                <md-menu-item>
+                <md-button  style="height:5%;" aria-label="setting"  ng-click="socialShare(note)">Social Sharing</md-button>
                 </md-menu-item> 
               </md-menu-content>
              </md-menu>
@@ -100,7 +103,7 @@
 		<h4 ng-hide="pinnedNotes.length">Pinned</h4>
 	
      <div layout="row" layout-wrap flex >
-      <div ng-repeat="note in notes"  ng-if="note.pinned"  flex="30" width: 90%; ng-mouseover="mouse=true" ng-mouseleave="mouse=false" class="card">
+      <div ng-repeat="note in notes"  ng-if="note.pinned" style="padding:10px" flex="{{view}}" id="note-scope"  ng-mouseover="mouse=true" ng-mouseleave="mouse=false" class="card">
        
        <md-card flex style="word-break: break-all;" ng-style="{'background-color' : note.noteColor}">
       <div style=" margin-top: 1px; margin-right: 1px;">
@@ -112,7 +115,8 @@
        </div> -->
        
 	        <div ng-if="note.image"><img ng-src={{note.image}} style="width: 95%;padding-left: 5px;"></div>
-       <div>
+<!-- 	        <span  ng-click="removeImage(note)" ><img ng-if="note.image!=''"  ng-src="images/deleteImage.svg" class="delete" ng-show="mouse"/></span>
+ -->       <div>
         <md-card-content style="width: 230;" ng-click="popUp(note,$event)">
         <div  style="width: 230;"> 
         <b>{{note.title}}</b></div>
@@ -166,6 +170,9 @@
                 <md-button ng-click="deleteNote(note)" style="height:5%;" aria-label="setting">delete</md-button>
                </md-menu-item> 
                 <md-menu-item>
+                <md-button  style="height:5%;" aria-label="setting"  ng-click="socialShare(note)">add label</md-button>
+                </md-menu-item> 
+                <md-menu-item>
                  <md-button  style="height:5%;" aria-label="setting"  ng-click="copy(note)">Make a Copy</md-button>
                 </md-menu-item> 
                 <md-menu-item>
@@ -182,18 +189,19 @@
   <!--##############################################################OThErS#################################################################-->
    <h4 ng-show="pinnedNotes.length">Others</h4>
      <div layout="row" layout-wrap flex >
-      <div ng-repeat="note in notes | filter:{trash:false,archive:false,pinned:false} as pinnedNotes" flex="30" width: 90%; ng-mouseover="mouse=true" ng-mouseleave="mouse=false" class="card">
+      <div ng-repeat="note in notes | filter:{trash:false,archive:false,pinned:false} as pinnedNotes" flex="{{view}}" id="note-scope"  style="padding:10px" ng-mouseover="mouse=true" ng-mouseleave="mouse=false" class="card">
        <md-card flex style="word-break: break-all;" ng-style="{'background-color' : note.noteColor}">
       
       <div style=" margin-top: 1px; margin-right: 1px;">
-       <img ng-src="images/pushpin-icon-63850.png" style="width:21px;float:right" ng-show="mouse"  ng-click="pinned(note,true)"/></div>
+       <img ng-src="images/pushpin-icon-63850.png" style="width:21px;float:right" ng-click="pinned(note,true)" ng-show="mouse"/></div>
      
        <!-- <md-button    class="mdButton" aria-label="setting" style=" margin-top: 1px; margin-right: 1px;">
        <md-icon md-svg-src="./images/pin.svg" style="width:21px;float:right"  class="ng-show" ng-click="pinned(note,false)"/>
          </md-button> -->
         
 	        <div ng-if="note.image"><img ng-src={{note.image}} style="width: 95%;padding-left: 5px;"></div>
-        <div>
+<!-- 	         <span  ng-click="removeImage(note)" ><img ng-if="note.image!=''"  ng-src="images/deleteImage.svg" class="delete" ng-show="mouse"/></span>
+ -->        <div>
         <md-card-content style="width: 230;" ng-click="popUp(note,$event)">
         <div  style="width: 230;"> 
         <b ng-bind-html="note.title" ></b></div>
@@ -238,6 +246,7 @@
             </md-button> -->
        
            <md-button style="min-width:25px;padding:5px" class="mdButton" aria-label="IMAGE" ng-click="openImageUploader(note)">
+          
              <md-tooltip md-direction="bottom">IMAGE</md-tooltip>	
            <md-icon md-svg-src="./images/picture.svg" class=iconHome ng-show="mouse"></md-icon>
            </md-button>
@@ -256,7 +265,16 @@
               <md-menu-content style="min-width: 180px;">
                <md-menu-item>
                 <md-button ng-click="deleteNote(note)" style="height:5%;" aria-label="setting">delete</md-button>
-               </md-menu-item> 
+               </md-menu-item>
+               
+                <md-menu>
+                <md-menu-item>
+                <md-button  style="height:5%;" aria-label="setting"  ng-click="$mdMenu.open($event)">add label</md-button>
+             <!--   <md-checkbox ng-checked="checkbox(note, label)"  ng-click="labelToggle(note,label)" ng-repeat="label in user.labels">
+               						 		{{label.name}}
+               </md-checkbox> -->
+                </md-menu-item> 
+                </md-menu>
                 <md-menu-item>
                 <md-button  style="height:5%;" aria-label="setting"  ng-click="copy(note)">Make a Copy</md-button>
                 </md-menu-item> 

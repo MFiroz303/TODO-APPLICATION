@@ -1,5 +1,6 @@
 package com.bridgeit.todo.dao;
 
+import com.bridgeit.todo.model.Label;
 import java.util.List;
 
 import com.bridgeit.todo.model.Note;
@@ -22,4 +23,8 @@ public interface NoteDao {
 	public void updateNote(Note note);
 
 	public User getUserByEmail(String email, User user);
+
+	Object removeCollabeUser(Note oldNote, User user);
+
+	public Label createLabel(User user, Label label);
 }

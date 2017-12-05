@@ -6,7 +6,7 @@
 			
 		<div layout="row" flex >
 				<div layout="column">
-					<md-button class="md-fab md-mini md-primary" aria-label="User">
+					<md-button class="md-fab md-icon my-icon-button" aria-label="User">
 	   			         	<img ng-src="{{owner.profilePic}}" style=" height: 100%;width: 100%;">
 	       		</md-button>
 	       		</div>
@@ -20,7 +20,7 @@
 	   	<div ng-repeat="sharedUser in sharedUsers">
 	   			<div layout="row" flex >
 				<div layout="column" flex="15">
-					<md-button class="md-fab md-mini md-primary" aria-label="User">
+					<md-button class="md-fab md-icon my-icon-button" aria-label="User">
 	   			         	<img ng-src="{{sharedUser.profilePic}}" style=" height: 100%;width: 100%;">
 	       		</md-button>
 	       		</div>
@@ -31,10 +31,9 @@
 			   				{{sharedUser.email}}
 			   			</div>
 		
-	   	
-	   	<md-button style="min-width:25px;padding:5px;float:right" ng-click="ABC(user)" aria-label="Delete">
+	   	<md-button style="min-width:25px;padding:5px;float:right" ng-click="removeCollab(sharedUser)" aria-label="Delete">
 		<md-tooltip md-direction="bottom">Delete</md-tooltip>
-			<md-icon md-svg-src="./images/cancil.svg" aria-lable="Delete"></md-icon>
+			<md-icon md-svg-src="./images/deleteImage.svg" aria-lable="Delete"></md-icon>
 		</md-button>
 		</div>
 	   	</div>

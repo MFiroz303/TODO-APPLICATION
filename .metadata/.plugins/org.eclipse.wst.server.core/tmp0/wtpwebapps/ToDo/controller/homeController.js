@@ -77,7 +77,7 @@ todoApp.controller('homeController',
 
 			/** ******* permanently delete the notes from trash************* */
 			$scope.deleteForever = function(note) {
-				var url = 'delete/' + note.id;
+				var url = 'delete/' + note.noteId;
 				var notes = homeService.service(url, 'DELETE', note);
 				notes.then(function(response) {
 					getNotes();
@@ -162,7 +162,7 @@ todoApp.controller('homeController',
 			/** ******* Set color of a created note ************* */
 			$scope.colors = [ '#fff', '#ff8a80', '#ffd180', '#ffff8d',
 					'#ccff90', '#a7ffeb', '#80d8ff', '#82b1ff', '#b388ff',
-					'#f8bbd0', '#d7ccc8', '#cfd8dc' ];
+					'#f8bbd0', '#d7ccc8', '#cfd8dc' ,'#581845','#ff0000','#2F4F4F','#32CD32','#191970', '#00007e','#00fa9a'];
 			$scope.noteColor = function(newColor, oldColor) {
 				console.log(newColor);
 				$scope.color = newColor;
@@ -238,7 +238,33 @@ todoApp.controller('homeController',
 
 				});
 			}
-
+			//List and Grid view
+			 $scope.view=function(){
+					var view = localStorage.getItem('view');
+					if(view=='list'){
+						$scope.displayView('list');
+					}else{
+						$scope.displayView('grid');
+					}
+				}
+				
+				$scope.displayView=function(type){
+					
+					if(type=='list'){
+						$scope.view='90';
+					    $scope.width='100%';
+						$scope.list=false
+						$scope.grid=true
+						localStorage.setItem('view','list');
+					}else{
+						$scope.view='30';
+						$scope.width='260px';
+						$scope.grid=false;
+						$scope.list=true;
+						localStorage.setItem('view','grid');
+					}
+						
+				}
 			/** **** Social Share ********** */
 			$scope.socialShare = function(note) {
 				FB.init({
@@ -267,8 +293,8 @@ todoApp.controller('homeController',
 			var firoz;
 			$scope.displayCollab = function(note, event) {
 				$scope.firozcollab1 = note;
-				console.log('huhuhuh')
-				console.log($scope.firozcollab1)
+				/*console.log('huhuhuh')
+				console.log($scope.firozcollab1)*/
 				$mdDialog.show({
 					locals : {
 						dataToPass : note
@@ -282,17 +308,16 @@ todoApp.controller('homeController',
 				});
 				$scope.firozcollab1 = note;
 				console.log('huhuhuh')
-				console.log($scope.firozcollab1)
+				/*console.log($scope.firozcollab1)*/
 				firoz = $scope.firozcollab1;
 
 			}
 			function openCollabModel($scope, $state, dataToPass) {
 				var getOwner = function() {
 					var url = 'getOwner';
-					var notes = homeService.service(url, 'PUT', dataToPass)
+					var notes = homeService.service(url, 'POST', dataToPass)
 					notes.then(function(response) {
 						$scope.owner = response.data;
-						console.log('this is inside shared user');
 					}, function(response) {
 						$scope.error = response.data;
 					})
@@ -300,32 +325,44 @@ todoApp.controller('homeController',
 
 				var getCollabUser = function() {
 					var url = 'sharedUserNotes';
-					var notes = homeService.service(url, 'PUT', dataToPass)
+					var notes = homeService.service(url, 'POST', dataToPass)
 					notes.then(function(response) {
-					console.log(firoz.sharedUser);
+					/*console.log(firoz.sharedUser);*/
 					$scope.sharedUsers = firoz.sharedUser;
-					console.log('getCollabUser')
+					/*console.log('getCollabUser')
 					console.log($scope.firozcollab1);
-					console.log(firoz);
+					console.log(firoz);*/
 				})
 				}
+				$scope.removeCollab=function(sharedUser){
+					var url='removeCollaborator';
+					var notes = homeService.service(url,'POST',dataToPass,sharedUser.email);
+					notes.then(function(response){
+						getNotes();
+						console.log('collab user delted sucesssfully..........@@@@@@@@@@@@@@@@@@@@@@@')
+					},function(response){
+						console.log("remove collabe fail");
+					});
+				
+				}
+			
 				getOwner();
 				getCollabUser();
+				
 				$scope.getUserEmail = function() {
 					console.log($scope.search);
 					var url = 'collaborator';
 					console.log(dataToPass)
-					var notes = homeService.service(url, 'PUT', dataToPass,
+					var notes = homeService.service(url, 'POST', dataToPass,
 							$scope.search);
 					notes.then(function(response) {
-						console.log('collaborator')
 						getNotes();
 						$mdDialog.cancel();
 						$state.reload();
 					}, function(response) {
 					})
 				}
-
+			}
 				var update = function(note) {
 					var url = 'update';
 					var notes = homeService.service(url, 'PUT', note);
@@ -336,7 +373,7 @@ todoApp.controller('homeController',
 						$scope.error = response.data.responseMessage;
 					});
 				}
-			}
+			
 			// Image uploading.........@@@@@@@@@@@@@@@@@@@@@@@@@@@@@........
 			$scope.openImageUploader = function(type) {
 				$scope.type = type;
@@ -358,6 +395,18 @@ todoApp.controller('homeController',
 					update($scope.type);
 				});
 			}
+			$scope.removeImage = function(note){
+				note.image=null;
+				var url = 'update';
+				var notes = homeService.service(url, 'PUT', note);
+				notes.then(function(response) {
+				}, function(response) {
+					getNotes();
+					$scope.error = response.data.message;
+				});
+			}
+
+				/*$scope.update(note);*/
 			
 			
 			/** *******logout************* */

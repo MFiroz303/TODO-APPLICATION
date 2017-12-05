@@ -1,5 +1,6 @@
 package com.bridgeit.todo.dao;
 
+import com.bridgeit.todo.model.Label;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -156,5 +157,44 @@ public class NoteDaoImpl implements NoteDao {
 		session.close();
 		return sharedNotes;
 	}
+	@Override
+	public Object removeCollabeUser(Note oldNote, User user) {
+		Session session = sessionFactory.openSession();
+		Transaction transaction = session.beginTransaction();
+		return null;
+	}
+	
+	@Override
+	public Label createLabel(User user, Label label) {
+		Session session = sessionFactory.openSession();
+		Transaction tx = session.beginTransaction();
+		label.setId(label.getId());
+		label.setUser(user);
+		session.save(label);
+		tx.commit();
+		session.close();
+		return label;
+	}
+	/*@Override
+	public List<Label> getLabels(User user) {
 
+		logger.info("Into getLabels()");
+		System.out.println("User is: " + user);
+		Session session = sessionFactory.openSession();
+		CriteriaBuilder builder = session.getCriteriaBuilder();
+		CriteriaQuery<Label> criteria = builder.createQuery(Label.class);
+		criteria.from(Label.class);
+		List<Label> entireLabelList = session.createQuery(criteria).getResultList();
+		// learn a more efficient way to retrieve notes
+		List<Label> labelList = new ArrayList<>();
+
+		// retrieve labels of which user is owner
+		if (entireLabelList.size() != 0)
+
+			for (Label tempLabel : entireLabelList)
+				if (tempLabel.getUser().getId().compareTo(user.getId()) == 0) {
+					labelList.add(tempLabel);
+				}
+		return labelList;
+	}*/
 }

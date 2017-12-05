@@ -47,6 +47,11 @@
     width: 0;
     min-width: 20px;
 }
+.delete{
+	
+	margin-left: 224px;
+    margin-top: -26px;
+}
 /*  
 [contenteditable=true]:empty:before{
   content: attr(placeholder);

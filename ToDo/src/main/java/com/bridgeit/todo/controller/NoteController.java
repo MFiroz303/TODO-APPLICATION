@@ -1,9 +1,13 @@
 package com.bridgeit.todo.controller;
 
+import com.bridgeit.todo.model.Label;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +24,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bridgeit.todo.Token.TokenGenerate;
 import com.bridgeit.todo.Token.VerifyJwt;
-import com.bridgeit.todo.dao.NoteDao;
 import com.bridgeit.todo.model.ErrorMessage;
 import com.bridgeit.todo.model.Note;
 import com.bridgeit.todo.model.User;
@@ -41,9 +44,6 @@ public class NoteController {
 
 	@Autowired
 	TokenGenerate tokenGenerate;
-
-	@Autowired
-	NoteDao noteDao;
 
 	@RequestMapping(value = "/addNote", method = RequestMethod.POST)
 	public ResponseEntity<ErrorMessage> saveNotes(@RequestHeader("Authorization") String Authorization,
@@ -127,16 +127,23 @@ public class NoteController {
 		List<Note> notes = noteService.findAllNote(user1);
 		// List<Note> notes = noteService.getAllNotes(user);
 		return new ResponseEntity(notes, HttpStatus.OK);
+	/*if(notes==null){
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST);
 	}
-
-	@ResponseStatus(value = HttpStatus.INTERNAL_SERVER_ERROR)
-	@ExceptionHandler(value = Exception.class)
-	public String exceptionHandler(Exception e) {
-		return "Exception";
-
+	    List<Note> collaboratedNotes=noteService.getSharedNotes();
+	    List<Note> allNotes=new ArrayList<Note>();
+	       for (int i = 0; i < notes.size(); i++) {
+	           allNotes.add(notes.get(i));
+	  }
+	          for (int j = 0; j < collaboratedNotes.size(); j++) {
+	                      allNotes.add(collaboratedNotes.get(j));
 	}
+            return new ResponseEntity<List<Note>>(allNotes, HttpStatus.OK);
+*/
+	}
+	
 
-	@RequestMapping(value = "/getOwner", method = RequestMethod.PUT)
+	@RequestMapping(value = "/getOwner", method = RequestMethod.POST)
 	public ResponseEntity<User> getOwner(@RequestHeader("Authorization") String Authorization, @RequestBody Note note,
 			HttpServletRequest request) {
 
@@ -150,7 +157,7 @@ public class NoteController {
 		}
 	}
 
-	@RequestMapping(value = "/sharedUserNotes", method = RequestMethod.PUT)
+	@RequestMapping(value = "/sharedUserNotes", method = RequestMethod.POST)
 	public ResponseEntity<List<User>> sharedNotesUser(@RequestHeader("Authorization") String Authorization,
 			@RequestBody Note note, HttpServletRequest request) {
 
@@ -169,17 +176,15 @@ public class NoteController {
 		}
 	}
 
-	@RequestMapping(value = "/collaborator", method = RequestMethod.PUT)
+	@RequestMapping(value = "/collaborator", method = RequestMethod.POST)
 	public ResponseEntity<ErrorMessage> collaborator(@RequestHeader("Authorization") String Authorization,
 			@RequestBody Note note, HttpServletRequest request) {
 		System.out.println("HUHUHUHUHUh");
 		int uId = VerifyJwt.verify(Authorization);
 		if (uId < 0) {
-			System.out.println("inside collaborator for controller if <zeros");
 			errorMessage.setResponseMessage("No user logged in");
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorMessage);
 		}
-		System.out.println("inside collaborator on page of note controller");
 		Note oldNote = noteService.getNoteById(note.getNoteId());
 		User sharedUser;
 		System.out.println("before: " + oldNote);
@@ -206,4 +211,31 @@ public class NoteController {
 		System.out.println("after: " + oldNote);
 		return ResponseEntity.status(HttpStatus.OK).body(errorMessage);
 	}
+	
+	@RequestMapping(value="/removeCollaborator",method=RequestMethod.POST)
+	public ResponseEntity<Void> removeCollaborator(@RequestBody Note note,HttpServletRequest request)
+	{
+		Note oldNote = noteService.getNoteById(note.getNoteId());
+		User user=userService.getUserByEmail(request.getHeader("email"));
+		
+		if(user!=null)
+		{
+			oldNote.getSharedUser().remove(user);
+			noteService.updateNote(oldNote);
+		}
+		return null;
+	}
+	
+	
+	@RequestMapping(value="/createlabel",  method =  RequestMethod.POST)
+	public ResponseEntity<User> createLabel(@RequestBody Label label, HttpServletRequest request,
+			HttpServletResponse response) {
+		int uId =  (int) request.getAttribute("userId");
+		User user = new User();
+		user = userService.getUserById(uId);
+		noteService.createLabel(user, label);
+		return new ResponseEntity<User>(HttpStatus.OK);
+	}
+
+	
 }
