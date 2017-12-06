@@ -1,10 +1,8 @@
 package com.bridgeit.todo.controller;
 
-import com.bridgeit.todo.model.Label;
-
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,18 +11,17 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.bridgeit.todo.Token.TokenGenerate;
 import com.bridgeit.todo.Token.VerifyJwt;
 import com.bridgeit.todo.model.ErrorMessage;
+import com.bridgeit.todo.model.Label;
 import com.bridgeit.todo.model.Note;
 import com.bridgeit.todo.model.User;
 import com.bridgeit.todo.service.NoteService;
@@ -109,37 +106,20 @@ public class NoteController {
 	public ResponseEntity<List<Note>> findAllNote(@RequestHeader("Authorization") String Authorization,
 			HttpSession session, HttpServletRequest request) {
 
-		/*
-		 * String userToken = null; Enumeration headerNames =
-		 * request.getHeaderNames();
-		 * 
-		 * while (headerNames.hasMoreElements()) { String key =
-		 * headerNames.nextElement().toString(); if
-		 * (key.equals("Authorization")) { userToken = request.getHeader(key); }
-		 * }
-		 */
+		
 		int id = VerifyJwt.verify(Authorization);
 		if (id == 0) {
 			return new ResponseEntity(HttpStatus.NOT_FOUND);
 		}
+		
 		User user1 = userService.getUserById(id);
-		// User user = (User) session.getAttribute("user");
+		if(user1!=null) {
 		List<Note> notes = noteService.findAllNote(user1);
-		// List<Note> notes = noteService.getAllNotes(user);
-		return new ResponseEntity(notes, HttpStatus.OK);
-	/*if(notes==null){
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST);
-	}
-	    List<Note> collaboratedNotes=noteService.getSharedNotes();
-	    List<Note> allNotes=new ArrayList<Note>();
-	       for (int i = 0; i < notes.size(); i++) {
-	           allNotes.add(notes.get(i));
-	  }
-	          for (int j = 0; j < collaboratedNotes.size(); j++) {
-	                      allNotes.add(collaboratedNotes.get(j));
-	}
-            return new ResponseEntity<List<Note>>(allNotes, HttpStatus.OK);
-*/
+	    List<Note> collabdNotes=noteService.getSharedNotes(user1.getId());
+	    notes.addAll(collabdNotes);
+	    return new  ResponseEntity(notes, HttpStatus.OK);
+		}
+		return new ResponseEntity(HttpStatus.BAD_REQUEST);
 	}
 	
 
@@ -223,19 +203,39 @@ public class NoteController {
 			oldNote.getSharedUser().remove(user);
 			noteService.updateNote(oldNote);
 		}
-		return null;
+		return new ResponseEntity(HttpStatus.BAD_REQUEST);
 	}
 	
 	
 	@RequestMapping(value="/createlabel",  method =  RequestMethod.POST)
-	public ResponseEntity<User> createLabel(@RequestBody Label label, HttpServletRequest request,
+	public ResponseEntity<User> createLabel( @RequestHeader("Authorization") String Authorization,@RequestBody Label label, HttpServletRequest request,
 			HttpServletResponse response) {
-		int uId =  (int) request.getAttribute("userId");
-		User user = new User();
-		user = userService.getUserById(uId);
+	//	int uId =  (int) request.getAttribute("userId");
+		int uId = VerifyJwt.verify(Authorization);
+		User user = userService.getUserById(uId);
+		if(user!=null){
 		noteService.createLabel(user, label);
 		return new ResponseEntity<User>(HttpStatus.OK);
 	}
-
+		return null;
+	}
+	@RequestMapping(value = "/getAllLabel", method = RequestMethod.POST)
+	public ResponseEntity<Object> getAllLabel(@RequestHeader("Authorization") String Authorization,HttpServletRequest request)
+	{
+		int uId = VerifyJwt.verify(Authorization);
+		User user = userService.getUserById(uId);
+		
+		Set<Label> labels=null;
+		if(user!=null)
+		{
+			 labels= user.getLabels();
+		}
+		else{
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User Not logged in");
+		}
+		return ResponseEntity.ok(labels);
+	}
+	
+	
 	
 }

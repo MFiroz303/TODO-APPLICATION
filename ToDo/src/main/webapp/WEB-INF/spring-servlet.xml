@@ -39,6 +39,7 @@
 			<list>
 				<value>com.bridgeit.todo.model.Note</value>
 				<value>com.bridgeit.todo.model.User</value>
+				<value>com.bridgeit.todo.model.Label</value>
 			</list>
 		</property>
 

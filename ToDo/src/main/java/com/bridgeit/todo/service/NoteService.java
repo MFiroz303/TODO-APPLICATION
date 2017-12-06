@@ -1,6 +1,7 @@
 package com.bridgeit.todo.service;
 
 import java.util.List;
+
 import com.bridgeit.todo.model.Label;
 import com.bridgeit.todo.model.Note;
 import com.bridgeit.todo.model.User;
@@ -18,10 +19,12 @@ public interface NoteService {
 	void updateNote(Note note);
 	
 	public List<Note> getSharedNotes(int id);
+	
 /*	void collaborateUser(User cUser, Note cNote);
 */
 	public void removeCollabeUser(Note oldNote, User user);
 
 	Label createLabel(User user, Label label);
+
 
 }

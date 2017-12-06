@@ -1,5 +1,7 @@
 package com.bridgeit.todo.model;
 
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -9,8 +11,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -18,13 +18,14 @@ import org.hibernate.annotations.GenericGenerator;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+
 @Entity
 @Table(name = "user_ToDo")
 public class User {
 
 	@Id
 	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "mygen")
+	@GeneratedValue(strategy = GenerationType.AUTO , generator = "label")
 	@GenericGenerator(strategy = "native", name = "mygen")
 	private int id;
 
@@ -32,6 +33,7 @@ public class User {
 
 	private String lastName;
 
+	@Column(unique=true)
 	private String email;
 
 	private String contact;
@@ -40,6 +42,21 @@ public class User {
 
 	@Column(columnDefinition = "LONGBLOB")
 	private String profilePic;
+
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
+	private List<Note> note;
+	
+	@OneToMany(mappedBy = "user",fetch=FetchType.EAGER)
+	private Set<Label> labels = new HashSet<Label>();
+	
+	public Set<Label> getLabels() {
+		return labels;
+	}
+	
+	public void setLabels(Set<Label> labels) {
+		this.labels = labels;
+	}
 
 	public String getProfilePic() {
 		return profilePic;
@@ -60,12 +77,16 @@ public class User {
 		this.isActivated = isActivated;
 	}
 
-	@JsonIgnore
-	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
-	private Set<Note> note;
-
 	public int getId() {
 		return id;
+	}
+
+	public List<Note> getNote() {
+		return note;
+	}
+
+	public void setNote(List<Note> note) {
+		this.note = note;
 	}
 
 	public void setId(int id) {

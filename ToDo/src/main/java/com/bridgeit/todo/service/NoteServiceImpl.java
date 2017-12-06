@@ -1,12 +1,12 @@
 package com.bridgeit.todo.service;
 
 import java.util.List;
-import com.bridgeit.todo.model.Label;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.bridgeit.todo.dao.NoteDao;
+import com.bridgeit.todo.model.Label;
 import com.bridgeit.todo.model.Note;
 import com.bridgeit.todo.model.User;
 
@@ -56,5 +56,6 @@ public class NoteServiceImpl implements NoteService {
 		return noteDao.createLabel( user, label);
 		
 	}
+
 
 }

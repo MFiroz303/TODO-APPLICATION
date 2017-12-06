@@ -13,6 +13,14 @@
       </md-list-item> <md-list-item  ui-sref="labels">
         <div class="md-list-item-text">
           <p>Labels</p>
+          <div ng-repeat="label in user.labels">
+  				<md-icon md-svg-src="/images/remindMe.svg" ></md-icon>
+  					{{label.name}}
+  				</div>
+  		<md-list-item ng-click="createLabel($event,user)">	
+  				Create new label
+  		</md-list-item>
+          
         </div>
       </md-list-item>
       <md-list-item   ui-sref="archive">

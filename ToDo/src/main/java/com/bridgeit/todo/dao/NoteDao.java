@@ -1,8 +1,8 @@
 package com.bridgeit.todo.dao;
 
-import com.bridgeit.todo.model.Label;
 import java.util.List;
 
+import com.bridgeit.todo.model.Label;
 import com.bridgeit.todo.model.Note;
 import com.bridgeit.todo.model.User;
 

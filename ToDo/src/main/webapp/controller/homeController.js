@@ -289,7 +289,77 @@ todoApp.controller('homeController',
 					alert('Somthing Wrong.');
 				});
 			};
-			// collaborator
+			
+			/*///////////////////////// create Label  ////////////////////////// */
+			
+			  $scope.createLabel=function($event,user){
+		    	  $mdDialog.show({
+		    		  locals: {
+		    		        dataToPass: user  // Pass the note data into dialog box
+		    		      },
+		    		 templateUrl : 'template/Label.html',
+		    		 parent : angular.element(document.body),
+		    		 targetEvent : event,
+		    		 clickOutsideToClose: true,
+		    		 controllerAs : 'controller',
+		    		 controller : createLabelController
+		    	  });
+		      }
+		      
+		      function createLabelController($scope,dataToPass){
+		    	  $scope.userlabel=dataToPass;
+		    	  $scope.createLabel=function(labelName){
+		    		  console.log(labelName)
+		    		  $scope.label={};
+		    		  $scope.label.name=labelName;
+		    		  url = 'createlabel';
+		    		  
+		    		  var addLabel= noteService.service(url,'POST',$scope.label)
+		    		  addLabel.then(function(response){
+		    			  console.log("label added successfully");
+		    			  $state.reload();
+		    			  $mdDialog.hide();
+		    		  },function(response){
+		    			  console.log("label failed to add")
+		    		  })
+		    	  }
+		      }
+		      
+		      $scope.labelToggle=function(note,label){
+		    	  console.log("clicked");
+		    	  
+		    	  var index = -1;
+		    	  var i=0;
+					for ( i = 0; i<note.labels.length;i++) {
+						if (note.labels[i].name === label.name) {
+							index = i;
+							break;
+						}
+					}
+
+					if (index == -1) {
+						note.labels.push(label);
+						update(note);
+					} else {
+						note.labels.splice(index, 1);
+						update(note);
+					}
+		    	  
+		      }
+		      
+				$scope.checkboxCheck = function(note, label) {
+					
+					var labels = note.labels;
+					for (var i = 0; i < labels.length; i++) {
+						if (labels[i].name === label.name) {
+							return true;
+						}
+					}
+					return false;
+				}
+				
+				
+			/** **** Collaborator ********** */
 			var firoz;
 			$scope.displayCollab = function(note, event) {
 				$scope.firozcollab1 = note;

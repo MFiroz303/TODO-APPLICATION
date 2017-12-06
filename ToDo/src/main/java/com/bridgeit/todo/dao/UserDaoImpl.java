@@ -1,7 +1,5 @@
 package com.bridgeit.todo.dao;
 
-import java.util.List;
-
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
@@ -12,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
-import com.bridgeit.todo.model.Note;
 import com.bridgeit.todo.model.User;
 
 @Service("UserDao")
@@ -29,9 +26,13 @@ public class UserDaoImpl implements UserDao {
 		this.sessionFactory = sessionFactory;
 	}
 
+	/*
+	 * @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ Register New
+	 * Users @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+	 */
 	public int saveUser(User user) {
 		String hashedPassword = null;
-		int id=0;
+		int id = 0;
 		System.out.println("User is :" + user);
 		if (!(user.getPassword() == null)) {
 			System.out.println("User pass is: " + user.getPassword());
@@ -44,7 +45,7 @@ public class UserDaoImpl implements UserDao {
 		Transaction transaction = null;
 		try {
 			transaction = session.beginTransaction();
-		    id= (int) session.save(user);
+			id = (int) session.save(user);
 			transaction.commit();
 
 		} catch (Exception e) {
@@ -54,6 +55,10 @@ public class UserDaoImpl implements UserDao {
 		}
 		return id;
 	}
+
+	/*
+	 ////////////////// Login RegisteredUser ////////////
+	 */
 
 	@SuppressWarnings("deprecation")
 	public User userLogin(User user) {
@@ -71,55 +76,92 @@ public class UserDaoImpl implements UserDao {
 		return finalUser;
 	}
 
-	@SuppressWarnings("deprecation")
+
+	@SuppressWarnings("finally")
 	@Override
 	public User getUserById(int id) {
 		Session session = sessionFactory.openSession();
 		// Transaction transaction = session.beginTransaction();
-		Criteria criteria = session.createCriteria(User.class);
-		criteria.add(Restrictions.eq("id", id));
-		User user = (User) criteria.uniqueResult();
-		session.close();
-		return user;
+		/*
+		 * Criteria criteria = session.createCriteria(User.class);
+		 * criteria.add(Restrictions.eq("id", id)); User user = (User)
+		 * criteria.uniqueResult(); session.close(); return user;
+		 */
+
+		// get user object from db
+		org.hibernate.query.Query<User> query = session.createQuery("from User where id= :id", User.class)
+				.setParameter("id", id);
+
+		// check this what it returns or throws an exception
+		// handle this properly later if any problem
+		User user = null;
+
+		try {
+			user = query.getSingleResult();
+
+		} catch (Exception e) {
+		} finally {
+
+			session.close();
+			return user;
+		}
+
 	}
 
 	@Override
-	@SuppressWarnings("deprecation")
+	@SuppressWarnings({ "finally" })
 	public User getUserByEmail(String email) {
 		// TODO Auto-generated method stub
 		Session session = sessionFactory.openSession();
-		Criteria criteria = session.createCriteria(User.class);
-		criteria.add(Restrictions.eq("email", email));
-		User user = (User) criteria.uniqueResult();
-		session.close();
-		return user;
+		/*
+		 * Criteria criteria = session.createCriteria(User.class);
+		 * criteria.add(Restrictions.eq("email", email)); User user = (User)
+		 * criteria.setMaxResults(1).uniqueResult();
+		 */
+
+		// get user object from db
+		org.hibernate.query.Query<User> query = session.createQuery("from User where email= :email", User.class)
+				.setParameter("email", email);
+
+		// check this what it returns or throws an exception
+		// handle this properly later if any problem
+		User user = null;
+
+		try {
+			user = query.getSingleResult();
+
+		} catch (Exception e) {
+		} finally {
+
+			session.close();
+			return user;
+		}
 	}
 
-	/*@Override
-	public boolean setPassword(User user1) {
-		Session session = sessionFactory.openSession();
-		Transaction tx = session.beginTransaction();
-		System.out.println("New Password: " + user1.getPassword());
-		String hashedPassword = BCrypt.hashpw(user1.getPassword(), BCrypt.gensalt(10));
-		user1.setPassword(hashedPassword);
-		System.out.println("decrpt passwrd: " + user1.getPassword());
-		try {
-			//String pass1 = user1.getPassword();
-			session.update(user1);
-			System.out.println("after commit: Updated Password: " + user1.getPassword());
-			String pass2 = user1.getPassword();
-			if (pass1.equalsIgnoreCase(pass2))
-				System.out.println("!!!!!!!*****!!!*!*!*!*!**!**");
-			tx.commit();
-		} catch (Exception e) {
-			
-		} finally {
-			session.close();
-		}
-		
-		return true;
-	}
-*/
+	/*
+	 * @Override public boolean setPassword(User user1) { Session session =
+	 * sessionFactory.openSession(); Transaction tx =
+	 * session.beginTransaction(); System.out.println("New Password: " +
+	 * user1.getPassword()); String hashedPassword =
+	 * BCrypt.hashpw(user1.getPassword(), BCrypt.gensalt(10));
+	 * user1.setPassword(hashedPassword); System.out.println("decrpt passwrd: "
+	 * + user1.getPassword()); try { //String pass1 = user1.getPassword();
+	 * session.update(user1);
+	 * System.out.println("after commit: Updated Password: " +
+	 * user1.getPassword()); String pass2 = user1.getPassword(); if
+	 * (pass1.equalsIgnoreCase(pass2))
+	 * System.out.println("!!!!!!!*****!!!*!*!*!*!**!**"); tx.commit(); } catch
+	 * (Exception e) {
+	 * 
+	 * } finally { session.close(); }
+	 * 
+	 * return true; }
+	 */
+	/*
+	 * @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ Update
+	 * User @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+	 */
+
 	@Override
 	public boolean updateUser(User user) {
 		// TODO Auto-generated method stub
@@ -139,34 +181,38 @@ public class UserDaoImpl implements UserDao {
 		}
 		return true;
 	}
-	
+
+	/*
+	 * @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ Set New
+	 * Password @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+	 */
+
 	public boolean setPassword(User user1) {
-		Session session=sessionFactory.openSession();
-		Transaction transaction=null;
-		try
-		{
-			
-		transaction=session.beginTransaction();
-		String hashedPassword = BCrypt.hashpw(user1.getPassword(), BCrypt.gensalt(10));
-		user1.setPassword(hashedPassword);
-		System.out.println(""+hashedPassword);
-		String hql="update User set password=:password where id=:id";
-		
-		Query query=session.createQuery(hql);
-		query.setParameter("password",hashedPassword);
-		query.setParameter("id", user1.getId());
-		query.executeUpdate();
-		
-		transaction.commit();
-		session.close();
-		return true;
+		Session session = sessionFactory.openSession();
+		Transaction transaction = null;
+		try {
+
+			transaction = session.beginTransaction();
+			String hashedPassword = BCrypt.hashpw(user1.getPassword(), BCrypt.gensalt(10));
+			user1.setPassword(hashedPassword);
+			System.out.println("" + hashedPassword);
+			String hql = "update User set password=:password where id=:id";
+
+			Query query = session.createQuery(hql);
+			query.setParameter("password", hashedPassword);
+			query.setParameter("id", user1.getId());
+			query.executeUpdate();
+
+			transaction.commit();
+			session.close();
+			return true;
 		}
-		
+
 		catch (Exception e) {
-		if(transaction!=null)
-		transaction.rollback();
-		e.printStackTrace();
+			if (transaction != null)
+				transaction.rollback();
+			e.printStackTrace();
 		}
 		return false;
-		}
+	}
 }
