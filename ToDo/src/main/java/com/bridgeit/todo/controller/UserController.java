@@ -65,13 +65,9 @@ public class UserController {
 				logger.info("cheaking information is valid or not");
 				String accessToken = TokenGenerate.generate(user.getId());
 				String url = request.getRequestURL().toString();
+				
 				url = url.substring(0, url.lastIndexOf("/")) + "/" + "verifyMail" + "/" + accessToken;
 				mailservice.sendMail(user.getEmail(), "mdfirozahmad2222@gmail.com", "emailVerification", url);
-				/*
-				HashMap<String, String> map=new HashMap<>();
-				map.put("to", user.getEmail());
-				map.put("message", url);
-				mailservice.send(map);*/
 				
 				logger.info("sending the mail for registration verification");
 				errorMessage.setResponseMessage("registered Successfully....");
@@ -163,13 +159,9 @@ public class UserController {
 			String accessToken = TokenGenerate.generate(email.getId());
 			String url = request.getRequestURL().toString();
 			url = url.substring(0, url.lastIndexOf("/")) + "/" + "setPassword" + "/" + accessToken;
+			
 			System.out.println("token" + accessToken);
 			mailservice.sendMail(user.getEmail(), "mdfirozahmad2222@gmail.com", "accessToken is :", url);
-			
-			/*HashMap<String, String> map=new HashMap<>();
-			map.put("to", user.getEmail());
-			map.put("message", url);
-			mailservice.send(map);*/
 			
 			errorMessage.setResponseMessage("success");
 			return ResponseEntity.ok(errorMessage);
@@ -214,8 +206,8 @@ public class UserController {
 		return ResponseEntity.status(HttpStatus.OK).body("password not updated");
 	}
 	
-	@RequestMapping(value = "/userProfile")
-	public ResponseEntity<User> currrentUser(@RequestHeader("Authorization") String Authorization, HttpServletRequest request) throws IOException {
+	@RequestMapping(value = "/userProfile" ,method=RequestMethod.GET)
+	public ResponseEntity<User> currentUser(@RequestHeader("Authorization") String Authorization, HttpServletRequest request) throws IOException {
 		System.out.println("########################################"+Authorization);
 		int userId = VerifyJwt.verify(Authorization);
 		User user = userService.getUserById(userId);

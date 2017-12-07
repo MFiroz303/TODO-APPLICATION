@@ -1,0 +1,77 @@
+package com.bridgeit.todo.model;
+import java.util.Set;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.GenericGenerator;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@Entity
+@Table(name = "note_Label")
+public class Label {
+
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@GenericGenerator(name="label",strategy="native")
+	@Column(name = "labelId")
+	private int labelId;
+
+	@Column(name="labelName")
+	private String name;
+	
+	
+	@ManyToOne
+	@JoinColumn(name="userId")
+	@JsonIgnore
+	 User user;
+	
+	@ManyToMany(mappedBy="labels")
+	@JsonIgnore
+	private Set<Note> notes ;
+
+	public int getLabelId() {
+		return labelId;
+	}
+
+	public void setLabelId(int labelId) {
+		this.labelId = labelId;
+	}
+
+	public String getName() {
+		return name;
+		}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Set<Note> getNotes() {
+		return notes;
+	}
+
+	public void setNotes(Set<Note> notes) {
+		this.notes = notes;
+	}
+
+	@Override
+	public String toString() {
+		return "Label [labelId=" + labelId + ", name=" + name + ", user=" + user + ", notes=" + notes + "]";
+	}
+
+}

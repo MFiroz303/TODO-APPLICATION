@@ -117,6 +117,7 @@ public class NoteController {
 		List<Note> notes = noteService.findAllNote(user1);
 	    List<Note> collabdNotes=noteService.getSharedNotes(user1.getId());
 	    notes.addAll(collabdNotes);
+	    System.out.println("");
 	    return new  ResponseEntity(notes, HttpStatus.OK);
 		}
 		return new ResponseEntity(HttpStatus.BAD_REQUEST);
@@ -182,11 +183,6 @@ public class NoteController {
 		}
 
 		oldNote.getSharedUser().add(sharedUser);
-		/*
-		 * User user = new User();
-		 * 
-		 * noteDao.getUserByEmail(email, user)
-		 */
 		noteService.updateNote(oldNote);
 		System.out.println("after: " + oldNote);
 		return ResponseEntity.status(HttpStatus.OK).body(errorMessage);
@@ -203,23 +199,25 @@ public class NoteController {
 			oldNote.getSharedUser().remove(user);
 			noteService.updateNote(oldNote);
 		}
-		return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
 	}
 	
 	
-	@RequestMapping(value="/createlabel",  method =  RequestMethod.POST)
+	@RequestMapping(value="/createLabel",  method =  RequestMethod.POST)
 	public ResponseEntity<User> createLabel( @RequestHeader("Authorization") String Authorization,@RequestBody Label label, HttpServletRequest request,
 			HttpServletResponse response) {
-	//	int uId =  (int) request.getAttribute("userId");
+	
 		int uId = VerifyJwt.verify(Authorization);
 		User user = userService.getUserById(uId);
+		
 		if(user!=null){
 		noteService.createLabel(user, label);
 		return new ResponseEntity<User>(HttpStatus.OK);
 	}
-		return null;
+		errorMessage.setResponseMessage("User not Exist");
+		return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 	}
-	@RequestMapping(value = "/getAllLabel", method = RequestMethod.POST)
+	@RequestMapping(value = "/getLabel", method = RequestMethod.POST)
 	public ResponseEntity<Object> getAllLabel(@RequestHeader("Authorization") String Authorization,HttpServletRequest request)
 	{
 		int uId = VerifyJwt.verify(Authorization);
@@ -235,7 +233,4 @@ public class NoteController {
 		}
 		return ResponseEntity.ok(labels);
 	}
-	
-	
-	
 }

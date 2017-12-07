@@ -2,6 +2,7 @@ package com.bridgeit.todo.dao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -86,6 +87,7 @@ public class NoteDaoImpl implements NoteDao {
 		Session session = sessionFactory.openSession();
 		User user1 = session.get(User.class, user.getId());
 		List<Note> note = user1.getNote();
+		System.out.println("=========>"+note.size());
 		note.size();
 		return note;
 	}
@@ -156,15 +158,21 @@ public class NoteDaoImpl implements NoteDao {
 		return null;
 	}
 	
+	/*/////////////////////////////// add label ///////////////////////////////*/
 	@Override
 	public Label createLabel(User user, Label label) {
 		Session session = sessionFactory.openSession();
 		Transaction tx = session.beginTransaction();
-		label.setLabelId(label.getLabelId());
+		label.setLabelId(0);
 		label.setUser(user);
 		session.save(label);
 		tx.commit();
 		session.close();
 		return label;
 	}
+	@Override
+	public Set<Label> getAllLabel(int id) {
+		return null;
+	}
+
 }

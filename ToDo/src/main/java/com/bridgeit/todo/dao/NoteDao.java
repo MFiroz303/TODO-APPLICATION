@@ -1,6 +1,7 @@
 package com.bridgeit.todo.dao;
 
 import java.util.List;
+import java.util.Set;
 
 import com.bridgeit.todo.model.Label;
 import com.bridgeit.todo.model.Note;
@@ -27,4 +28,7 @@ public interface NoteDao {
 	Object removeCollabeUser(Note oldNote, User user);
 
 	public Label createLabel(User user, Label label);
+
+	Set<Label> getAllLabel(int id);
+
 }

@@ -3,41 +3,37 @@ package com.bridgeit.todo.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.hibernate.annotations.GenericGenerator;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Table(name = "note_Label")
 @Entity
+@Table(name = "note_Label")
 public class Label {
 
 	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "labelId")
-	@GeneratedValue(strategy = GenerationType.AUTO , generator = "label")
-	@GenericGenerator(strategy = "native", name = "label")
 	private int labelId;
 
-	@Column(name="LABEL_NAME")
+	@Column(name = "labelName")
 	private String name;
-	
-	
+
 	@ManyToOne
-	@JoinColumn(name="userId")
 	@JsonIgnore
 	User user;
-	
-	@ManyToMany(mappedBy="labels")
+
+	@ManyToMany(mappedBy = "labels")
 	@JsonIgnore
-	private Set<Note> notes = new HashSet<Note>();
+	private Set<Note> notes = new HashSet<>();
 
 	public int getLabelId() {
 		return labelId;
@@ -49,7 +45,7 @@ public class Label {
 
 	public String getName() {
 		return name;
-		}
+	}
 
 	public void setName(String name) {
 		this.name = name;
@@ -57,10 +53,10 @@ public class Label {
 
 	public User getUser() {
 		return user;
-	}
+}
 
 	public void setUser(User user) {
-		this.user = user;
+	this.user = user;
 	}
 
 	public Set<Note> getNotes() {
@@ -73,7 +69,7 @@ public class Label {
 
 	@Override
 	public String toString() {
-		return "Label [labelId=" + labelId + ", name=" + name + ", user=" + user + ", notes=" + notes + "]";
+		return "Label [labelId=" + labelId + ", name=" + name + ", user=" + user + ", notes=]";
 	}
 
 }

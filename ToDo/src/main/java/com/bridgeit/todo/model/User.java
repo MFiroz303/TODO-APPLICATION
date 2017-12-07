@@ -25,8 +25,7 @@ public class User {
 
 	@Id
 	@Column(name = "id")
-	@GeneratedValue(strategy = GenerationType.AUTO , generator = "label")
-	@GenericGenerator(strategy = "native", name = "mygen")
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
 
 	private String firstName;
@@ -44,7 +43,7 @@ public class User {
 	private String profilePic;
 
 	@JsonIgnore
-	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "user", cascade = CascadeType.REMOVE)
 	private List<Note> note;
 	
 	@OneToMany(mappedBy = "user",fetch=FetchType.EAGER)

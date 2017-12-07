@@ -107,7 +107,7 @@
        
        <md-card flex style="word-break: break-all;" ng-style="{'background-color' : note.noteColor}">
       <div style=" margin-top: 1px; margin-right: 1px;">
-       <img ng-src="images/pushpin-icon-63850.png" style="width:21px;float:right" ng-show="mouse"  ng-click="pinned(note,false)"/></div>
+       <img ng-src="images/pushpin-icon-63850.png" style="width:21px;float:right"  ng-click="pinned(note,false)"/></div>
       
        <!-- <md-button    class="mdButton" aria-label="setting" > 
        <img ng-src="images/pin.svg" style="width:21px;float:right" ng-show="mouse"  ng-click="pinned(note,false)"/>
@@ -122,6 +122,12 @@
         <b>{{note.title}}</b></div>
 		<div style="width: 230;"><h2 style="font-weight: lighter;">{{note.description}}</h2></div>
          </md-card-content></div>
+         
+         <!--  <span ng-repeat="label in note.labels">{{label.name}}</span> -->
+          <div ng-if="note.labels">
+  				 <span ng-repeat="label in note.labels" class="chip">{{label.name}}
+  				<span class="closebtn" ng-click="removeLabel(note,label)">&times;</span></span>
+			</div>
          
         <md-button  ng-if="note.reminder">{{note.reminder | date:'medium'}}
            <md-icon md-svg-src="./images/Cancel.svg" ng-click="deleteReminder(note)"></md-icon>
@@ -169,9 +175,20 @@
                <md-menu-item>
                 <md-button ng-click="deleteNote(note)" style="height:5%;" aria-label="setting">delete</md-button>
                </md-menu-item> 
-                <md-menu-item>
-                <md-button  style="height:5%;" aria-label="setting"  ng-click="socialShare(note)">add label</md-button>
-                </md-menu-item> 
+               
+               <md-menu>
+                
+                <md-button  class="primary"  ng-click="$mdMenu.open($event)" >add label</md-button>
+                <md-menu-content>
+              	<md-menu-item>
+              	
+                 <md-checkbox ng-checked="checkboxCheck(note, label)" ng-click="labelToggle(note,label)" ng-repeat="label in getUser.labels">
+               			{{label.name}}
+                 </md-checkbox>
+                </md-menu-item>
+                </md-menu-content><br> 
+                </md-menu>
+                
                 <md-menu-item>
                  <md-button  style="height:5%;" aria-label="setting"  ng-click="copy(note)">Make a Copy</md-button>
                 </md-menu-item> 
@@ -208,14 +225,17 @@
 		  <div style="width: 230;"><h2 style="font-weight:lighter;" ng-bind-html="note.description" ></h2></div>
          </md-card-content></div>
          
+         
+         <div ng-if="note.labels">
+  				 <span ng-repeat="label in note.labels" class="chip">{{label.name}}
+  				<span class="closebtn" ng-click="removeLabel(note,label)">&times;</span></span>
+			</div>
+	      
+	       <!--  <span ng-repeat="label in note.labels" class="chip">{{label.name}}</span> -->
+         
             <md-button  ng-if="note.reminder">{{note.reminder | date:'medium'}}
            <md-icon md-svg-src="./images/Cancel.svg" ng-click="deleteReminder(note)"></md-icon>
         </md-button>
-          
-          <!-- <div ng-if="note.labels">
-  				 <span  ng-repeat="label in note.labels" class="chip">{{label.name}}
-  				</span>
-			</div> -->
           
       <md-card-action layout="row" style="margin: 2px;" aria-label="setting">
         <md-menu>
@@ -272,16 +292,23 @@
                </md-menu-item>
                
               
-                <md-menu-item>
-                <md-button  style="height:5%;" aria-label="setting"  ng-click="$mdMenu.open($event)">add label</md-button>
-                <!--  <md-checkbox ng-checked="checkboxCheck(note, label)" ng-click="labelToggle(note,label)" ng-repeat="label in user.labels">
-               						 		{{label.name}}
-               	 </md-checkbox> -->
-                </md-menu-item> 
+                <md-menu>
+                
+                <md-button  class="primary"  ng-click="$mdMenu.open($event)" >add label</md-button>
+                <md-menu-content >
+              	<md-menu-item   flex-direction="column" >
+              
+                 <md-checkbox  ng-checked="checkboxCheck(note, label)" ng-click="labelToggle(note,label)" ng-repeat="label in getUser.labels">
+               		{{label.name}}
+                 </md-checkbox>
+                </md-menu-item>
+                </md-menu-content><br> 
+                </md-menu>
                 
                 <md-menu-item>
                 <md-button  style="height:5%;" aria-label="setting"  ng-click="copy(note)">Make a Copy</md-button>
                 </md-menu-item> 
+                
                 <md-menu-item>
                 <md-button  style="height:5%;" aria-label="setting"  ng-click="socialShare(note)">Social Sharing</md-button>
                 </md-menu-item> 

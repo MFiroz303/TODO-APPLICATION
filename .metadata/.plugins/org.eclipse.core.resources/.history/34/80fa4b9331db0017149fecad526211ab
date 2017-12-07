@@ -1,0 +1,16 @@
+<md-dialog flex="30"flex layout="row"  >
+	
+		<h3>Edit labels</h3>
+		<md-input-container>
+			<label>Enter label name</label>
+			<input ng-model="labelName"/>
+		</md-input-container><br>
+				<div ng-repeat="labels in userlabel.labels">
+  				<md-icon md-svg-src="./images/picture.svg" ></md-icon>
+  					{{labels.name}}
+		<md-divider></md-divider>
+		<md-card-action>
+			<md-button md-autofocus flex class="md-primary" ng-click="createLabel(labelName)">Done</md-button>
+		</md-card-action>
+	
+</md-dialog>

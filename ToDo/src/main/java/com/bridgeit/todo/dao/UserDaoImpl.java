@@ -183,8 +183,7 @@ public class UserDaoImpl implements UserDao {
 	}
 
 	/*
-	 * @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ Set New
-	 * Password @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+	  @@@@@@@@@@@@@@@@@@@@ Set New Password @@@@@@@@@@@@@
 	 */
 
 	public boolean setPassword(User user1) {
