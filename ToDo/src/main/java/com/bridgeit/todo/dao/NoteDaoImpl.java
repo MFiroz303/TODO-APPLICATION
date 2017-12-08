@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 
 import org.hibernate.Criteria;
+import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -144,8 +145,6 @@ public class NoteDaoImpl implements NoteDao {
 		criteria.add(Restrictions.eq("c.id", id));
 		criteria.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		List<Note> sharedNotes = criteria.list();
-		
-
 		session.close();
 		return sharedNotes;
 	}
@@ -173,6 +172,31 @@ public class NoteDaoImpl implements NoteDao {
 	@Override
 	public Set<Label> getAllLabel(int id) {
 		return null;
+	}
+
+	/*/////////////////////////////// delete label ///////////////////////////////*/
+	@Override
+	public boolean deleteLabel(Label label, User user) {
+		Session session = sessionFactory.openSession();
+		Transaction transaction = null;
+		try {
+			transaction = session.beginTransaction();
+			session.delete(label );
+			for(Note note : label.getNotes())
+			{
+				note.getLabels().remove(label);
+			}
+			label.getNotes().clear();
+			transaction.commit();
+		} catch (HibernateException e) {
+			if(transaction!=null){
+				transaction.rollback();
+			}
+			e.printStackTrace();
+		}finally {
+			session.close();
+		}
+		return false;
 	}
 
 }

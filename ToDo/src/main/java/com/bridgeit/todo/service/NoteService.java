@@ -8,13 +8,13 @@ import com.bridgeit.todo.model.User;
 
 public interface NoteService {
 
-	int saveNotes(Note note);
+	public int saveNotes(Note note);
 
-	void deleteNoteById(int id);
+	public void deleteNoteById(int id);
 
-	List<Note> findAllNote(User user);
+	public List<Note> findAllNote(User user);
 
-	Note getNoteById(int id);
+	public Note getNoteById(int id);
 
 	void updateNote(Note note);
 	
@@ -24,7 +24,9 @@ public interface NoteService {
 */
 	public void removeCollabeUser(Note oldNote, User user);
 
-	Label createLabel(User user, Label label);
+	public Label createLabel(User user, Label label);
+
+	public boolean deleteLabel(Label label, User user);
 
 
 }

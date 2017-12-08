@@ -6,29 +6,29 @@
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog">
 		<item value="false" key="isRegEx"/>
-		<item value="set" key="selection"/>
+		<item value="" key="selection"/>
 		<item value="false" key="casesensitive"/>
 		<item value="false" key="incremental"/>
 		<item value="true" key="wrap"/>
 		<item value="false" key="wholeword"/>
 		<list key="findhistory">
+			<item value="currentUser"/>
+			<item value="getUser"/>
+			<item value="getu"/>
+			<item value="get"/>
+			<item value="label"/>
+			<item value="labels"/>
 			<item value="set"/>
 			<item value="notelist"/>
-			<item value="removeCollaborator"/>
-			<item value="delete"/>
-			<item value="dele reminderte"/>
-			<item value="image"/>
-			<item value="before"/>
-			<item value="getC"/>
 		</list>
 		<list key="replacehistory">
 		</list>
 	</section>
 	<section name="org.eclipse.ui.texteditor.FindReplaceDialog_dialogBounds">
-		<item value="316" key="DIALOG_WIDTH"/>
+		<item value="334" key="DIALOG_WIDTH"/>
 		<item value="1|Ubuntu|11.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
-		<item value="357" key="DIALOG_HEIGHT"/>
-		<item value="917" key="DIALOG_X_ORIGIN"/>
-		<item value="72" key="DIALOG_Y_ORIGIN"/>
+		<item value="348" key="DIALOG_HEIGHT"/>
+		<item value="764" key="DIALOG_X_ORIGIN"/>
+		<item value="367" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>

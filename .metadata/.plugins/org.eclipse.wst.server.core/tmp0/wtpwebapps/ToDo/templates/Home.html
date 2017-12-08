@@ -115,8 +115,8 @@
        </div> -->
        
 	        <div ng-if="note.image"><img ng-src={{note.image}} style="width: 95%;padding-left: 5px;"></div>
-<!-- 	        <span  ng-click="removeImage(note)" ><img ng-if="note.image!=''"  ng-src="images/deleteImage.svg" class="delete" ng-show="mouse"/></span>
- -->       <div>
+	        <span  ng-click="removeImage(note)" ><img ng-if="note.image!=''"  ng-src="images/deleteImage.svg" class="delete" ng-show="mouse"/></span>
+       <div>
         <md-card-content style="width: 230;" ng-click="popUp(note,$event)">
         <div  style="width: 230;"> 
         <b>{{note.title}}</b></div>
@@ -126,7 +126,7 @@
          <!--  <span ng-repeat="label in note.labels">{{label.name}}</span> -->
           <div ng-if="note.labels">
   				 <span ng-repeat="label in note.labels" class="chip">{{label.name}}
-  				<span class="closebtn" ng-click="removeLabel(note,label)">&times;</span></span>
+  				<span class="closebtn" ng-click="removeLabel(note,label)">&#x274C;</span></span>
 			</div>
          
         <md-button  ng-if="note.reminder">{{note.reminder | date:'medium'}}
@@ -228,10 +228,10 @@
          
          <div ng-if="note.labels">
   				 <span ng-repeat="label in note.labels" class="chip">{{label.name}}
-  				<span class="closebtn" ng-click="removeLabel(note,label)">&times;</span></span>
+  				<span class="closebtn" ng-click="removeLabel(note,label)">&#x274C;</span></span>
 			</div>
 	      
-	       <!--  <span ng-repeat="label in note.labels" class="chip">{{label.name}}</span> -->
+	       <!--  <span ng-repeat="label in note.labels" ng-click="removeLabel(note,label)">{{label.name}}</span> -->
          
             <md-button  ng-if="note.reminder">{{note.reminder | date:'medium'}}
            <md-icon md-svg-src="./images/Cancel.svg" ng-click="deleteReminder(note)"></md-icon>
@@ -248,6 +248,7 @@
 							ng-click="displayDialog(note)">Pick Date and Time</button>
 			              </md-menu-content>
 			       </md-menu>
+			       
             <!--  <md-menu-content>
 			                <button class="md-raised md-primary md-button md-ink-ripple" type="button"="" style="background-color: rgb(72, 73, 82);	ng-click="displayDialog(note)">Pick Date and Time</button>
 			              </md-menu-content>

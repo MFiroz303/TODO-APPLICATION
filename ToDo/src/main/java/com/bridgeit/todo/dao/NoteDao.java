@@ -31,4 +31,6 @@ public interface NoteDao {
 
 	Set<Label> getAllLabel(int id);
 
+	public boolean deleteLabel(Label label, User user);
+
 }

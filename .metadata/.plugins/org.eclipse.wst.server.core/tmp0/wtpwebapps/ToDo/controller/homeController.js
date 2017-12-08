@@ -428,7 +428,6 @@ todoApp.controller('homeController',
 			 function createLabelController($scope,dataToPass){
 		    	  $scope.userlabel=dataToPass;
 		    	  $scope.createLabel=function(labelName){
-		    		  console.log(labelName)
 		    		  $scope.label={};
 		    		  $scope.label.name=labelName;
 		    		  url = 'createLabel';
@@ -476,7 +475,24 @@ todoApp.controller('homeController',
 					return false;
 				}
 				
+				/*////////////////////////DELETE LABEL//////////////////*/
+				$scope.deleteLabel=function(label){
+					var url = 'deleteLabel';
+					var deletelabel = noteService.label(url,'POST',label);
+					deletelabel.then(function(response){
+						$state.reload();
+					},function(response){
+					})
+				}
+				
+				/*////////////////////////REMOVE LABEL//////////////////*/
 
+				$scope.removeLabel=function(note,label){
+					var removeLabel = note.labels;
+					var indexOfLabel = removeLabel.indexOf(label);
+					removeLabel.splice(indexOfLabel, 1);
+					update(note);
+				}
 
 			/** *******logout************* */
 			$scope.logout = function() {

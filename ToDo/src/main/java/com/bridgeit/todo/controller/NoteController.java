@@ -233,4 +233,20 @@ public class NoteController {
 		}
 		return ResponseEntity.ok(labels);
 	}
+	
+	@RequestMapping(value="/deleteLabel",method=RequestMethod.POST)
+	public ResponseEntity<Object> detelelabel (@RequestHeader("Authorization") String Authorization, @RequestBody Label label,HttpServletRequest request)
+	{
+		int uId = VerifyJwt.verify(Authorization);
+		User user = userService.getUserById(uId);
+		
+		if(user!=null){
+			noteService.deleteLabel(label, user);
+		}else{
+			errorMessage.setResponseMessage("User Not exits");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
+		}
+		return new  ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
+		
+	}
 }

@@ -57,4 +57,10 @@ public class NoteServiceImpl implements NoteService {
 		
 	}
 
+	@Override
+	public boolean deleteLabel(Label label, User user) {
+		
+		return noteDao.deleteLabel(label, user);
+	}
+
 }
