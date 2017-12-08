@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +32,8 @@ import com.bridgeit.todo.service.UserService;
 @RestController
 public class NoteController {
 
+	private Logger logger = (Logger) LoggerFactory.getLogger(NoteController.class);
+
 	@Autowired
 	NoteService noteService;
 
@@ -46,10 +50,11 @@ public class NoteController {
 	public ResponseEntity<ErrorMessage> saveNotes(@RequestHeader("Authorization") String Authorization,
 			@RequestBody Note note, HttpSession session) {
 
-		System.out.println("user toke" + Authorization);
 		int id = VerifyJwt.verify(Authorization);
-		System.out.println("id in note is " + id);
+		logger.info("userId in request is: " + id);
+		
 		if (id == 0) {
+			logger.info("User not found / Token validation failed");
 			errorMessage.setResponseMessage("Data Successfully updated ");
 		}
 		User user1 = userService.getUserById(id);
@@ -61,10 +66,11 @@ public class NoteController {
 		int userId = noteService.saveNotes(note);
 
 		if (userId != 0) {
+			logger.info("Data Successfully inserted");
 			errorMessage.setResponseMessage("Data Successfully inserted ");
 			return ResponseEntity.status(HttpStatus.CREATED).body(errorMessage);
-
 		}
+		logger.info("Data not inserted");
 		errorMessage.setResponseMessage("Note could not be added");
 
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
@@ -117,10 +123,11 @@ public class NoteController {
 		List<Note> notes = noteService.findAllNote(user1);
 	    List<Note> collabdNotes=noteService.getSharedNotes(user1.getId());
 	    notes.addAll(collabdNotes);
-	    System.out.println("");
+	    System.out.println("jkgbjkfdngklfdn gklfdnglmfkldgmsflgnls");
 	    return new  ResponseEntity(notes, HttpStatus.OK);
 		}
 		return new ResponseEntity(HttpStatus.BAD_REQUEST);
+		
 	}
 	
 

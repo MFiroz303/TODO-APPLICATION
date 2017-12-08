@@ -35,13 +35,13 @@
 		</list>
 	</section>
 	<section name="SearchDialog">
-		<item value="org.eclipse.rse.internal.files.ui.search.searchPage" key="PREVIOUS_PAGE"/>
+		<item value="org.eclipse.jdt.ui.JavaSearchPage" key="PREVIOUS_PAGE"/>
 	</section>
 	<section name="DialogBounds_SearchDialog">
 		<item value="1156" key="DIALOG_WIDTH"/>
 		<item value="1|Ubuntu|11.0|0|GTK|1|" key="DIALOG_FONT_NAME"/>
-		<item value="521" key="DIALOG_HEIGHT"/>
-		<item value="153" key="DIALOG_X_ORIGIN"/>
+		<item value="505" key="DIALOG_HEIGHT"/>
+		<item value="149" key="DIALOG_X_ORIGIN"/>
 		<item value="54" key="DIALOG_Y_ORIGIN"/>
 	</section>
 </section>

@@ -1,5 +1,4 @@
 <md-dialog flex="25"  >
-
 	<md-dialog-content>
 		<p>Edit labels</p>
 		
@@ -8,7 +7,7 @@
 			<input ng-model="labelName"/>
 		</md-input-container><br>
 			
-	    <div class=""  ng-repeat="label in getUser.labels"><br>
+	    <div  ng-repeat="label in userlabel.labels">
           <md-icon md-svg-src="./images/Label.svg" ></md-icon>
   					{{label.name}}
   				</div>

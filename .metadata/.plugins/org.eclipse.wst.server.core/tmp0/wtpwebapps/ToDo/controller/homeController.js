@@ -35,7 +35,8 @@ todoApp.controller('homeController',
 					}, 60000);
 				}, function(response) {
 					$scope.error = response.data.responseMessage;
-					$location.path('login');
+					console.log(response);
+					/*$location.path('login');*/
 					// $scope.logout();
 				});
 			}
@@ -411,7 +412,8 @@ todoApp.controller('homeController',
 			
 			
             ///////////////////////////// create Label//////////////////////////////
-			 $scope.createLabel=function($event,user){
+		
+			$scope.createLabel=function($event,user){
 		    	  $mdDialog.show({
 		    		  locals: {
 		    		        dataToPass: user 
@@ -427,17 +429,18 @@ todoApp.controller('homeController',
 		      
 			 function createLabelController($scope,dataToPass){
 		    	  $scope.userlabel=dataToPass;
+		    	  console.log(" $scope.userlabel "+ $scope.userlabel);
 		    	  $scope.createLabel=function(labelName){
 		    		  $scope.label={};
 		    		  $scope.label.name=labelName;
 		    		  url = 'createLabel';
 		    		  
-		    		  var addLabel= homeService.service(url,'POST',$scope.label)
-		    		  addLabel.then(function(response){
+		    		  var createLabel= homeService.service(url,'POST',$scope.label)
+		    		  createLabel.then(function(response){
 		    			  $state.reload();
 		    			  $mdDialog.hide();
 		    		  },function(response){
-		    			  console.log("label failed to add")
+		    			  $scope.error = response.data.responseMessage;
 		    		  })
 		    	  }
 		      }
@@ -478,9 +481,9 @@ todoApp.controller('homeController',
 				/*////////////////////////DELETE LABEL//////////////////*/
 				$scope.deleteLabel=function(label){
 					var url = 'deleteLabel';
-					var deletelabel = noteService.label(url,'POST',label);
+					var deletelabel = homeService.label(url,'POST',label);
 					deletelabel.then(function(response){
-						$state.reload();
+					$state.reload();
 					},function(response){
 					})
 				}

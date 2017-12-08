@@ -18,6 +18,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 @Entity
 @Table(name = "note_ToDo")
@@ -51,10 +53,11 @@ public class Note {
 
 	private String noteColor;
 	
-	@ManyToMany
+	@ManyToMany(fetch=FetchType.EAGER)
 	@JoinTable(name = "labels_of_note", joinColumns = @JoinColumn(name = "noteid"), inverseJoinColumns = @JoinColumn(name = "labelid"))
 	private Set<Label> labels = new HashSet<Label>();
-
+	
+	/*@JsonProperty(access=Access.WRITE_ONLY)*/
 	@ManyToMany(fetch = FetchType.EAGER)
 	@Column(name = "sharedNoteId")
 	@JoinTable(name = "sharedNoteId")
