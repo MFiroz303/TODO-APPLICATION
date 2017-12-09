@@ -1,23 +1,30 @@
-<md-toolbar style="background-color:rgba(236, 173, 26, 0.89);">
+<md-toolbar style="background-color:rgba(236, 173, 26, 0.89); position: fixed;" >
   <div layout >
- <md-button class="md-icon-button"  style="margin:10px;" ng-click="toggleLeft()" class="md-raised" aria-label="setting">
+ <md-button class="md-icon-button"  style="margin:10px;" ng-click="hideNav()" class="md-raised" aria-label="setting">
            <md-icon md-svg-src="./images/toggle.svg" ></md-icon>
         </md-button>
         <span class="fundoo">Fundoo Keep</span>
      <!--  <span flex></span> -->
      <div flex="70" style="margin: 11px;">
-         <md-autocomplete flex="65"
+     
+       <md-autocomplete flex="65"
+		    md-items=""
+		    placeholder="Search Note"
+		    ui-sref="search">
+		    
+      		</md-autocomplete> 
+        <!--  <md-autocomplete flex="65"
          id="mdAutocomplete"
-          ng-disabled=""
-          md-selected-item=""
-          md-search-text-change=""
-          md-items=""
+         
+            md-selected-item="selectedItem"
+          md-search-text-change="searchTextChange(searchText)"
+         md-items="item in querySearch(searchText)"
           md-item-text=""
-          md-min-length="0"
+          md-min-length="3"
           placeholder="Search"
            ui-sref="search"
-          >
-        </md-autocomplete>    
+         md-menu-class="autocomplete-custom-template" >
+        </md-autocomplete>     -->
      </div>
      <div ng-init="view()">
         <md-button  class="md-icon-button"  style="margin:10px 7px;" >
@@ -44,6 +51,8 @@
 	  				 <md-divider></md-divider>
 	  				 <md-button class="md-raised" ui-sref="login">Add Account</md-button>
 	  			     <md-button class="md-raised md-primary" ng-click="logout()">Logout</md-button>
+                     <!-- <md-divider></md-divider>
+	  			     <md-button class="md-raised md-primary" ng-click="openImageUploader('user')">  Change Profile  </md-button> -->
   				</div>
         </md-menu-content>
         </div>

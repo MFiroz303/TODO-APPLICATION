@@ -1,5 +1,5 @@
 .homeCard{
-	 
+	     width: fit-content;
 	     margin-left:12%; 
 	     margin-right:20%;
 	     margin-top:30px;
@@ -51,6 +51,11 @@
 	
 	margin-left: 224px;
     margin-top: -26px;
+}
+
+.sideNav{
+	padding:58px;
+	margin-left:-57px;
 }
 /*  
 [contenteditable=true]:empty:before{

@@ -1,0 +1,4 @@
+.sideNav{
+	padding:58px;
+	margin-left:-20px;
+}

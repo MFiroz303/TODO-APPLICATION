@@ -6,14 +6,28 @@ todoApp.controller('homeController',
 			console.log('hello');
 			$scope.mouse = false;
 			$scope.firozcollab = {};
+			
+			//Toggle
+			$scope.showNav=true;
+			$scope.hideNav=function(){
+				console.log("imside");
+				$scope.showNav=!$scope.showNav;
+			}
 
 			/** ******* get the notes ,fileReader,Upload, $base64************* */
+			var search=[];
 			var getNotes = function() {
 				var url = 'noteList';
 				var notes = homeService.service(url, 'GET', notes);
 				notes.then(function(response) {
 					$scope.notes = response.data;
-					console.log($scope.notes)
+					homeService.notes = response.data;
+					console.log(notes)
+					for (var i = 0; i < response.data.length; i++) {
+	    			 console.log("inside get notes push into............@@@@@@@@@@@@@")
+							search.push(response.data[i]);
+	    		
+					}
 					/*
 					 * console.log("$scope.notes::",$scope.notes);
 					 * },function(response){
@@ -258,7 +272,7 @@ todoApp.controller('homeController',
 						$scope.grid=true
 						localStorage.setItem('view','list');
 					}else{
-						$scope.view='30';
+						$scope.view='33';
 						$scope.width='260px';
 						$scope.grid=false;
 						$scope.list=true;
@@ -266,6 +280,38 @@ todoApp.controller('homeController',
 					}
 						
 				}
+				/** *******search Notes ************* */
+
+				 $scope.querySearch=function(searchText){
+					var arr=[];
+					j=-1;
+			     	console.log('serchinggg......'+search);
+					for(var i=0;i<search.length;i++)
+						{
+						console.log("search element   ",search[i].title)
+						console.log("search text"+searchText)
+							if(searchText==search[i].title){
+								j++;
+								arr[j]=search[i];
+							}
+						}
+					console.log(arr);
+					return arr;
+				 }
+				 
+			      $scope.searchTextChange = function(searchText) {
+			          var arr = [];
+			          var j = -1;
+			          for(var i=0; i<search.length; i++) {
+			            if(search[i].title == searchText)  {
+			              // console.log(res.data.notes[i]);
+			              ++j;
+			              arr[j] = search[i];
+			            }
+			          }
+			          $scope.searchResultNotes = arr;
+			        }
+
 			/** **** Social Share ********** */
 			$scope.socialShare = function(note) {
 				FB.init({
@@ -336,6 +382,8 @@ todoApp.controller('homeController',
 					console.log(firoz);*/
 				})
 				}
+				console.log("*********************")
+				console.log($scope.sharedUsers);
 				$scope.removeCollab=function(sharedUser){
 					var url='removeCollaborator';
 					var notes = homeService.service(url,'POST',dataToPass,sharedUser.email);
@@ -375,6 +423,24 @@ todoApp.controller('homeController',
 						$scope.error = response.data.responseMessage;
 					});
 				}
+				
+
+				var updateUser=function(user){
+				
+				var url='updateUser';
+				var notes = homeService.service(url,'POST',user);
+				notes.then(function(response) {
+
+					getNotes();
+
+				}, function(response) {
+
+					getNotes();
+					console.log(response);
+					$scope.error = response.data.responseMessage;
+
+				});
+			}
 			
 			// Image uploading.........@@@@@@@@@@@@@@@@@@@@@@@@@@@@@........
 			$scope.openImageUploader = function(type) {
@@ -393,8 +459,22 @@ todoApp.controller('homeController',
 				$scope.$apply(function() {
 					$scope.stepsModel.push(e.target.result);
 					var imageSrc = e.target.result;
+					
+					if($scope.type ==='input')
+		        	{
+			        	$scope.addImg= imageSrc;
+		        	}else if($scope.type ==='user'){
+		        		$scope.user.profilePic=imageSrc;
+		        		updateUser($scope.user);
+		        	}else if($scope.type ==='update'){
+		        		$scope.changeIamge.image=imageSrc;
+		        		update($scope.changeIamge);
+		        	}
+			        else{
+                       
 					$scope.type.image = imageSrc;
 					update($scope.type);
+			        }
 				});
 			}
 			$scope.removeImage = function(note){
@@ -504,4 +584,5 @@ todoApp.controller('homeController',
 			}
 			profilePic();
 			getNotes();
+			//getUser();
 		});

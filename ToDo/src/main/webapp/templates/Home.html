@@ -1,7 +1,7 @@
 <top-nav-bar></top-nav-bar>
 <div flex-xs layout="row">
-<side-nav-bar></side-nav-bar>
-	<md-content flex ng-hide="searchNote"> 
+<side-nav-bar ></side-nav-bar>
+	<md-content flex ng-hide="searchNote"  class = "sideNav"> 
 	 <md-card class="homeCard">
 	  <span class="md-headline" >
 	 
@@ -116,11 +116,11 @@
        
 	        <div ng-if="note.image"><img ng-src={{note.image}} style="width: 95%;padding-left: 5px;"></div>
 	        <span  ng-click="removeImage(note)" ><img ng-if="note.image!=''"  ng-src="images/deleteImage.svg" class="delete" ng-show="mouse"/></span>
-       <div>
-        <md-card-content style="width: 230;" ng-click="popUp(note,$event)">
-        <div  style="width: 230;"> 
-        <b>{{note.title}}</b></div>
-		<div style="width: 230;"><h2 style="font-weight: lighter;">{{note.description}}</h2></div>
+      <div>
+         <md-card-content  ng-click="popUp(note,$event)">
+          <div  style="width: 230;"> 
+          <b ng-bind-html="note.title" ></b></div>
+		  <div style="width: 230;"><h2 style="font-weight:lighter;" ng-bind-html="note.description" ></h2></div>
          </md-card-content></div>
          
          <!--  <span ng-repeat="label in note.labels">{{label.name}}</span> -->
@@ -133,7 +133,7 @@
            <md-icon md-svg-src="./images/Cancel.svg" ng-click="deleteReminder(note)"></md-icon>
         </md-button>
           
-      <md-card-action layout="row" style="margin: 2px;" aria-label="setting">
+      <md-card-action layout="row" style="margin: -11px;" aria-label="setting">
         <md-menu>
             <md-button    class="mdButton"  ng-click="$mdMenu.open($event)" aria-label="Remender">
               <md-icon md-svg-src="./images/remindMe.svg" class=iconHome ng-show="mouse"></md-icon>
@@ -219,7 +219,7 @@
 	        <div ng-if="note.image"><img ng-src={{note.image}} style="width: 95%;padding-left: 5px;"></div>
 <!-- 	         <span  ng-click="removeImage(note)" ><img ng-if="note.image!=''"  ng-src="images/deleteImage.svg" class="delete" ng-show="mouse"/></span>
  -->   <div>
-         <md-card-content style="width: 230;" ng-click="popUp(note,$event)">
+         <md-card-content  ng-click="popUp(note,$event)">
           <div  style="width: 230;"> 
           <b ng-bind-html="note.title" ></b></div>
 		  <div style="width: 230;"><h2 style="font-weight:lighter;" ng-bind-html="note.description" ></h2></div>
@@ -236,8 +236,13 @@
             <md-button  ng-if="note.reminder">{{note.reminder | date:'medium'}}
            <md-icon md-svg-src="./images/Cancel.svg" ng-click="deleteReminder(note)"></md-icon>
         </md-button>
+        
+        <div>
+        <div ng-repeat="user in note.sharedUser">
+	   				  <img ng-src="{{user.profilePic}}">
+          </div>
           
-      <md-card-action layout="row" style="margin: 2px;" aria-label="setting">
+      <md-card-action layout="row" style="margin: -11px;" aria-label="setting">
         <md-menu>
             <md-button    class="mdButton"  ng-click="$mdMenu.open($event)" aria-label="Remender">
               <md-icon md-svg-src="./images/remindMe.svg" class=iconHome ng-show="mouse"></md-icon>

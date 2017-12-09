@@ -1,7 +1,7 @@
  <top-nav-bar></top-nav-bar>
    <div layout="row">	
 <side-nav-bar></side-nav-bar>
-<md-content  flex  style="margin-top: 30;" >
+<md-content  flex  style="margin-top: 30; margin-top: 82px;" >
 	<div ng-repeat="note in notes | filter:{archive:true }" id="note-scope" flex="30"  ng-mouseover="mouse=true" ng-mouseleave="mouse=false">
 	<md-card   ng-click="showConfirm($event)" style="word-break: break-all;" ng-style="{'background-color' : note.color}">
 	<div style=" margin-top: 1px; margin-right: 1px;">
@@ -15,10 +15,10 @@
 		            <div>
 		            	<div ng-bind-html="note.body" ng-show="true" id="body" >{{note.description}}</div>
 		            </div> -->
-		             <md-card-content style="width: 230;" ng-click="popUp(note,$event)">
-                     <div  style="width: 230;"> 
+		             <md-card-content style="width:200px;" ng-click="popUp(note,$event)">
+                     <div  style="width: 200px;"> 
                      <b>{{note.title}}</b></div><br>
-		             <div style="width: 230;">{{note.description}}</div>
+		             <div style="width: 200px;">{{note.description}}</div>
                      </md-card-content></div>
 		          </md-card-title-text>
 		          </md-card-title>

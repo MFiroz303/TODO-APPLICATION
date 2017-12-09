@@ -17,7 +17,6 @@ todoApp.factory('homeService', function($http, $location) {
 	}
 	notes.service = function(url, method, note, email) {
 		console.log("in service");
-		console.log(JSON.stringify(note));
 		return $http({
 			method : method,
 			url : url,

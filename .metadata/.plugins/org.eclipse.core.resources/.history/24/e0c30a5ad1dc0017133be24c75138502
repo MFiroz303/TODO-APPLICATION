@@ -1,0 +1,18 @@
+<md-dialog flex="30">
+ 	<md-dialog-content>
+		<md-input-container class="md-block">
+
+  				<div ng-bind-html="mdDialogData.title"  id="getTitle" contenteditable="true" contenteditabledata  aria-multiline="true" role="textbox"   ></div>
+		</md-input-container>
+
+		<md-input-container class="md-block">
+			  <div ng-bind-html="mdDialogData.description" id="getDescription" contenteditable="true" contenteditabledata  aria-multiline="true" role="textbox" ></div>
+		</md-input-container>
+
+		<md-dialog-actions>
+			<md-panel>
+					<md-button ng-click="updateNote(note)" class="md-primary" >Done</md-button>
+			</md-panel>
+		</md-dialog-actions>
+</md-dialog-content>
+</md-dialog>
