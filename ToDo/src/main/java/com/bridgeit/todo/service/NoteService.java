@@ -10,7 +10,7 @@ public interface NoteService {
 
 	public int saveNotes(Note note);
 
-	public void deleteNoteById(int id);
+	public void deleteNoteById(int noteId);
 
 	public List<Note> findAllNote(User user);
 
@@ -27,6 +27,8 @@ public interface NoteService {
 	public Label createLabel(User user, Label label);
 
 	public boolean deleteLabel(Label label, User user);
+
+	public List<Note> getNotesForTrash();
 
 
 }

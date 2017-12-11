@@ -10,6 +10,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -155,6 +156,14 @@ public class NoteDaoImpl implements NoteDao {
 		Session session = sessionFactory.openSession();
 		Transaction transaction = session.beginTransaction();
 		return null;
+	}
+	
+	public List<Note> getNotesForTrash() {
+		Session session = sessionFactory.openSession();
+		Query query = session.createQuery("From Note where isTrashed=true");
+		List<Note> notes = query.list();		
+		session.close();
+		return notes;
 	}
 	
 	/*/////////////////////////////// add label ///////////////////////////////*/

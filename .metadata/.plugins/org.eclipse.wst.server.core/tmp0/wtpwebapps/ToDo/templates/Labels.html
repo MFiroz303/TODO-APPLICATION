@@ -7,9 +7,10 @@
 			<input ng-model="labelName"/>
 		</md-input-container><br>
 			
-	    <div  ng-repeat="label in userlabel.labels">
-          <md-icon md-svg-src="./images/Label.svg" ></md-icon>
-  					{{label.name}}
+	    <div style ="width:65px;" ng-repeat="label in userlabel.labels" >
+	    
+          <img  ng-src="./images/Label.svg"></md-icon>
+  					{{label.name}} <!--  <img   ng-src="./images/deleteImage.svg" ng-click="deleteLabel(label)"></md-icon> -->
   				</div>
 		 <md-divider></md-divider>
 		 

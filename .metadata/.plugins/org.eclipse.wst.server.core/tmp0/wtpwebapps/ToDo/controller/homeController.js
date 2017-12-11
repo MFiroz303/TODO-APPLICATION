@@ -3,18 +3,124 @@ todoApp.controller('homeController',
 		function($scope, $state, fileReader, homeService, $timeout, $filter,
 				$mdSidenav, $mdDialog, mdcDateTimeDialog, toastr, $interval,
 				$http, $location, Upload, $base64) {
+	
 			console.log('hello');
 			$scope.mouse = false;
 			$scope.firozcollab = {};
 			
-			//Toggle
+			/** *******toggle of sidebar ************* */
 			$scope.showNav=true;
 			$scope.hideNav=function(){
 				console.log("imside");
 				$scope.showNav=!$scope.showNav;
 			}
+			/** *******search Notes ************* */
 
-			/** ******* get the notes ,fileReader,Upload, $base64************* */
+			 $scope.search=function(searchText){
+				var arr=[];
+				j=-1;
+		     	console.log('serchinggg......'+search);
+				for(var i=0;i<search.length;i++)
+					{
+						if(searchText==search[i].title){
+							j++;
+							arr[j]=search[i];
+						}
+					}
+				console.log(arr);
+				return arr;
+			 }
+			 
+		      $scope.searchTextChange = function(searchText) {
+		          var arr = [];
+		          var j = -1;
+		          for(var i=0; i<search.length; i++) {
+		            if(search[i].title == searchText)  {
+		              ++j;
+		              arr[j] = search[i];
+		            }
+		          }
+		          $scope.searchResultNotes = arr;
+		        }
+		      
+		      /** *******profile image ************* */
+				var profilePic = function() {
+					var url = 'userProfile';
+					var getUser = homeService.service(url, 'GET');
+					getUser.then(function(response) {
+						var User = response.data;
+						$scope.getUser = User;
+						console.log($scope.getUser)
+
+					}, function(response) {
+
+					});
+				}
+				//List and Grid view
+				 $scope.view=function(){
+						var view = localStorage.getItem('view');
+						if(view=='list'){
+							$scope.displayView('list');
+						}else{
+							$scope.displayView('grid');
+						}
+					}
+			
+					$scope.displayView=function(type){
+						
+						if(type=='list'){
+							$scope.view='90';
+						    $scope.width='100%';
+							$scope.list=false
+							$scope.grid=true
+							localStorage.setItem('view','list');
+						}else{
+							$scope.view='33';
+							$scope.width='260px';
+							$scope.grid=false;
+							$scope.list=true;
+							localStorage.setItem('view','grid');
+						}
+							
+					}
+					/** *******logout************* */
+					$scope.logout = function() {
+						localStorage.removeItem("token");
+						$state.go('login');
+					}
+					
+					/** ******* Reminder ************* */
+					$scope.displayDialog = function(note) {
+						mdcDateTimeDialog.show({
+							time : true,
+							shortTime : true
+						}).then(function(date) {
+							$scope.selectedDateTime = date;
+							note.reminder = date;
+							var url = 'update';
+							var notes = homeService.service(url, 'PUT', note);
+							notes.then(function(response) {
+								getNotes();
+							}, function(response) {
+								getNotes();
+								$scope.error = response.data.message;
+							});
+						});
+					};
+
+					/** *******Delete Reminder ************* */
+					$scope.deleteReminder = function(note) {
+						note.reminder = null;
+						var url = 'update';
+						var notes = homeService.service(url, 'PUT', note);
+						notes.then(function(response) {
+						}, function(response) {
+							getNotes();
+							$scope.error = response.data.message;
+						});
+					}
+
+			/** ******* get the notes************* */
 			var search=[];
 			var getNotes = function() {
 				var url = 'noteList';
@@ -75,7 +181,7 @@ todoApp.controller('homeController',
 				});
 			}
 
-			/** ******* delete notes from homepage ************* */
+			/** ******* delete notes ************* */
 			$scope.deleteNote = function(note) {
 				console.log($scope.note);
 				note.trash = true;
@@ -208,109 +314,9 @@ todoApp.controller('homeController',
 				});
 			}
 
-			/** ******* Reminder ************* */
-			$scope.displayDialog = function(note) {
-				mdcDateTimeDialog.show({
-					time : true,
-					shortTime : true
-				}).then(function(date) {
-					$scope.selectedDateTime = date;
-					note.reminder = date;
-					console.log('New Date / Time selected:', date);
-					var url = 'update';
-					var notes = homeService.service(url, 'PUT', note);
-					notes.then(function(response) {
-						getNotes();
-					}, function(response) {
-						getNotes();
-						$scope.error = response.data.message;
-					});
-				});
-			};
-
-			/** *******Delete Reminder ************* */
-			$scope.deleteReminder = function(note) {
-				note.reminder = null;
-				var url = 'update';
-				var notes = homeService.service(url, 'PUT', note);
-				notes.then(function(response) {
-				}, function(response) {
-					getNotes();
-					$scope.error = response.data.message;
-				});
-			}
-
-			/** *******profile image ************* */
-			var profilePic = function() {
-				var url = 'userProfile';
-				var getUser = homeService.service(url, 'GET');
-				getUser.then(function(response) {
-					var User = response.data;
-					$scope.getUser = User;
-					console.log($scope.getUser)
-
-				}, function(response) {
-
-				});
-			}
-			//List and Grid view
-			 $scope.view=function(){
-					var view = localStorage.getItem('view');
-					if(view=='list'){
-						$scope.displayView('list');
-					}else{
-						$scope.displayView('grid');
-					}
-				}
+			
+			
 				
-				$scope.displayView=function(type){
-					
-					if(type=='list'){
-						$scope.view='90';
-					    $scope.width='100%';
-						$scope.list=false
-						$scope.grid=true
-						localStorage.setItem('view','list');
-					}else{
-						$scope.view='33';
-						$scope.width='260px';
-						$scope.grid=false;
-						$scope.list=true;
-						localStorage.setItem('view','grid');
-					}
-						
-				}
-				/** *******search Notes ************* */
-
-				 $scope.querySearch=function(searchText){
-					var arr=[];
-					j=-1;
-			     	console.log('serchinggg......'+search);
-					for(var i=0;i<search.length;i++)
-						{
-						console.log("search element   ",search[i].title)
-						console.log("search text"+searchText)
-							if(searchText==search[i].title){
-								j++;
-								arr[j]=search[i];
-							}
-						}
-					console.log(arr);
-					return arr;
-				 }
-				 
-			      $scope.searchTextChange = function(searchText) {
-			          var arr = [];
-			          var j = -1;
-			          for(var i=0; i<search.length; i++) {
-			            if(search[i].title == searchText)  {
-			              // console.log(res.data.notes[i]);
-			              ++j;
-			              arr[j] = search[i];
-			            }
-			          }
-			          $scope.searchResultNotes = arr;
-			        }
 
 			/** **** Social Share ********** */
 			$scope.socialShare = function(note) {
@@ -577,11 +583,6 @@ todoApp.controller('homeController',
 					update(note);
 				}
 
-			/** *******logout************* */
-			$scope.logout = function() {
-				localStorage.removeItem("token");
-				$state.go('login');
-			}
 			profilePic();
 			getNotes();
 			//getUser();

@@ -33,4 +33,6 @@ public interface NoteDao {
 
 	public boolean deleteLabel(Label label, User user);
 
+	public List<Note> getNotesForTrash();
+
 }

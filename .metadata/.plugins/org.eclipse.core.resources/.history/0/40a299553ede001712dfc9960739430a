@@ -1,0 +1,26 @@
+<md-dialog flex="25"  >
+	<md-dialog-content>
+		<p>Edit labels</p>
+		
+		<md-input-container>
+			<label>Enter label name</label>
+			<input ng-model="labelName"/>
+		</md-input-container><br>
+			
+	    <div  ng-repeat="label in userlabel.labels">
+          <md-icon ng-if="label" md-svg-src="./images/Label.svg" ></md-icon>
+          <md-icon ng-if="delete" style=" margin-left: 176px;" md-svg-src="./images/deleteImage.svg" ng-click="deleteLabel(label)"></md-icon>
+  					{{label.name}}
+  				</div>
+		 <md-divider></md-divider>
+		 
+		 <md-dialog-actions>
+          <md-panel>
+		   <md-button  md-autofocus flex class="md-primary"  ng-click="createLabel(labelName)">Done</md-button>
+		  </md-panel>		    
+		 </md-dialog-actions>
+
+	</md-dialog-content>	
+</md-dialog>
+
+ 

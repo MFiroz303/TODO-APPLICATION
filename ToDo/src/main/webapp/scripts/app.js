@@ -45,14 +45,15 @@ todoApp.config([ '$stateProvider', '$urlRouterProvider',
 				controller : 'homeController'
 			})
 			
+			.state('reminder',{
+				url : '/reminder',
+				templateUrl : 'templates/Reminder.html',
+				controller : 'homeController'
+			})
+			
 			.state('update',{
 				url : '/update',
 				templateUrl : 'templates/UpdateNote.html',
-				controller : 'homeController'
-			})
-			.state('reminder',{
-				url : '/trash',
-				templateUrl : 'templates/reminder.html',
 				controller : 'homeController'
 			})
 			

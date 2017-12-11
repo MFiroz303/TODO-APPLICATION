@@ -1,8 +1,9 @@
 <top-nav-bar></top-nav-bar>
 <div flex-xs layout="row">
 <side-nav-bar ></side-nav-bar>
+
 	<md-content flex ng-hide="searchNote"  class = "sideNav"> 
-	 <md-card class="homeCard">
+	 <md-card class="homeCard" ng-style="{'background-color' : note.noteColor}">
 	  <span class="md-headline" >
 	 
 	   <md-card-title ng-show="click">
@@ -32,7 +33,6 @@
 		    </md-card-title-text>
 	         </md-card-title> 
 	 
-	 
 	          <md-button  ng-if="note.reminder">{{note.reminder | date:'medium'}}
                 <md-icon md-svg-src="./images/cancil.svg" ng-click="deleteReminder(note)"></md-icon>
               </md-button>
@@ -57,6 +57,7 @@
            <!--  <md-button  class="mdButton" aria-label="setting">
               <md-icon md-svg-src="./images/color_icons.svg" class=iconHome ng-show="mouse"></md-icon>
             </md-button> -->
+            
            <color-picker style="margin-top: 11px;"
              class ="colorIcon" value ="cardColor" color="color"  options="colors" on-color-changed="colorChanged(newColor, oldColor,note)"></color-picker>
              
@@ -107,7 +108,8 @@
        
        <md-card flex style="word-break: break-all;" ng-style="{'background-color' : note.noteColor}">
       <div style=" margin-top: 1px; margin-right: 1px;">
-       <img ng-src="images/pushpin-icon-63850.png" style="width:21px;float:right"  ng-click="pinned(note,false)"/></div>
+             <img ng-src="images/pushpin-icon-63850.png" style="width:21px; margin-left: 223px; position:absolute;" ng-click="pinned(note,false)" ng-show="mouse"/></div>
+
       
        <!-- <md-button    class="mdButton" aria-label="setting" > 
        <img ng-src="images/pin.svg" style="width:21px;float:right" ng-show="mouse"  ng-click="pinned(note,false)"/>
@@ -115,8 +117,8 @@
        </div> -->
        
 	        <div ng-if="note.image"><img ng-src={{note.image}} style="width: 95%;padding-left: 5px;"></div>
-	        <span  ng-click="removeImage(note)" ><img ng-if="note.image!=''"  ng-src="images/deleteImage.svg" class="delete" ng-show="mouse"/></span>
-      <div>
+<!-- 	        <span  ng-click="removeImage(note)" ><img ng-if="note.image!=''"  ng-src="images/deleteImage.svg" class="delete" ng-show="mouse"/></span>
+ -->      <div>
          <md-card-content  ng-click="popUp(note,$event)">
           <div  style="width: 230;"> 
           <b ng-bind-html="note.title" ></b></div>
@@ -128,6 +130,11 @@
   				 <span ng-repeat="label in note.labels" class="chip">{{label.name}}
   				<span class="closebtn" ng-click="removeLabel(note,label)">&#x274C;</span></span>
 			</div>
+			
+			 <div ng-repeat="user in note.sharedUser" >
+        <md-button class="md-fab md-mini md-primary" aria-label="User">
+	   				  <img  ng-src="{{user.profilePic}}"  style=" height: 100%;width:35px;" /></md-button>
+          </div>
          
         <md-button  ng-if="note.reminder">{{note.reminder | date:'medium'}}
            <md-icon md-svg-src="./images/Cancel.svg" ng-click="deleteReminder(note)"></md-icon>
@@ -209,9 +216,10 @@
       <div ng-repeat="note in notes | filter:{trash:false,archive:false,pinned:false} as pinnedNotes" flex="{{view}}" id="note-scope"  style="padding:10px" ng-mouseover="mouse=true" ng-mouseleave="mouse=false" class="card">
        <md-card flex style="word-break: break-all;" ng-style="{'background-color' : note.noteColor}">
       
-      <div style=" margin-top: 1px; margin-right: 1px;">
-       <img ng-src="images/pushpin-icon-63850.png" style="width:21px;float:right" ng-click="pinned(note,true)" ng-show="mouse"/></div>
-     
+      <div>
+       <img ng-src="images/pushpin-icon-63850.png"  style="width:21px; margin-left: 223px; position:absolute;" ng-click="pinned(note,true)" ng-show="mouse"/></div>
+<!--             <img ng-src="images/pushpin-icon-63850.png" ng-if="note.pinned" style="width:21px; margin-left: 223px; color:blue; position:absolute;" ng-click="pinned(note,true)" ng-show="mouse"/></div>
+ -->     
        <!-- <md-button    class="mdButton" aria-label="setting" style=" margin-top: 1px; margin-right: 1px;">
        <md-icon md-svg-src="./images/pin.svg" style="width:21px;float:right"  class="ng-show" ng-click="pinned(note,false)"/>
          </md-button> -->
@@ -219,6 +227,7 @@
 	        <div ng-if="note.image"><img ng-src={{note.image}} style="width: 95%;padding-left: 5px;"></div>
 <!-- 	         <span  ng-click="removeImage(note)" ><img ng-if="note.image!=''"  ng-src="images/deleteImage.svg" class="delete" ng-show="mouse"/></span>
  -->   <div>
+ 
          <md-card-content  ng-click="popUp(note,$event)">
           <div  style="width: 230;"> 
           <b ng-bind-html="note.title" ></b></div>
@@ -232,15 +241,16 @@
 			</div>
 	      
 	       <!--  <span ng-repeat="label in note.labels" ng-click="removeLabel(note,label)">{{label.name}}</span> -->
-         
+        
+      
+        <div ng-repeat="user in note.sharedUser" >
+        <md-button class="md-fab md-mini md-primary" class="mdButton" aria-label="collabarator" ng-click="displayCollab(note, $event)">
+	   				  <img  ng-src="{{user.profilePic}}"  style=" height: 100%;width:35px;" /></md-button>
+          </div>
+          
             <md-button  ng-if="note.reminder">{{note.reminder | date:'medium'}}
            <md-icon md-svg-src="./images/Cancel.svg" ng-click="deleteReminder(note)"></md-icon>
         </md-button>
-        
-        <div>
-        <div ng-repeat="user in note.sharedUser">
-	   				  <img ng-src="{{user.profilePic}}">
-          </div>
           
       <md-card-action layout="row" style="margin: -11px;" aria-label="setting">
         <md-menu>

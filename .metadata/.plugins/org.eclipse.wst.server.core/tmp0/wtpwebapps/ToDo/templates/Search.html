@@ -1,8 +1,6 @@
-
-
 <md-toolbar style="background-color:blue; position: fixed;" >
   <div layout >
- <md-button class="md-icon-button"  style="margin:10px; background-color:white;" ng-click="toggleLeft()" class="md-raised" aria-label="setting">
+ <md-button class="md-icon-button" ng-click="hideNav()" style="margin:10px; background-color:white;" ng-click="toggleLeft()" class="md-raised" aria-label="setting">
            <md-icon md-svg-src="./images/toggle.svg" ></md-icon>
         </md-button>
         <span class="fundoo" style="color:white;">Fundoo Keep</span>
@@ -13,7 +11,7 @@
           md-selected-item="selectedItem"
           md-search-text-change="searchTextChange(searchText)"
           md-search-text="searchText"
-          md-items="item in querySearch(searchText)"
+          md-items="item in Search(searchText)"
           md-min-length="3"
           placeholder="Search Note"
           md-item-text=""

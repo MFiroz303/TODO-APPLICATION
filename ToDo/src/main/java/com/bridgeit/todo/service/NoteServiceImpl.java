@@ -22,8 +22,8 @@ public class NoteServiceImpl implements NoteService {
 	}
 
 	@Override
-	public void deleteNoteById(int id) {
-		noteDao.deleteNoteById(id);
+	public void deleteNoteById(int noteId) {
+		noteDao.deleteNoteById(noteId);
 		
 	}
 
@@ -61,6 +61,12 @@ public class NoteServiceImpl implements NoteService {
 	public boolean deleteLabel(Label label, User user) {
 		
 		return noteDao.deleteLabel(label, user);
+	}
+
+	@Override
+	public List<Note> getNotesForTrash() {
+		
+		return noteDao.getNotesForTrash();
 	}
 
 }
