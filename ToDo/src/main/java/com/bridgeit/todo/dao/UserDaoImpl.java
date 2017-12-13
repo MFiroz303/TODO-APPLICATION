@@ -26,10 +26,8 @@ public class UserDaoImpl implements UserDao {
 		this.sessionFactory = sessionFactory;
 	}
 
-	/*
-	 * @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ Register New
-	 * Users @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-	 */
+	/////////////// Register New Users ///////////////////////// */
+	
 	public int saveUser(User user) {
 		String hashedPassword = null;
 		int id = 0;
@@ -56,10 +54,8 @@ public class UserDaoImpl implements UserDao {
 		return id;
 	}
 
-	/*
 	 ////////////////// Login RegisteredUser ////////////
-	 */
-
+	
 	@SuppressWarnings("deprecation")
 	public User userLogin(User user) {
 		Session session = sessionFactory.openSession();
@@ -76,26 +72,13 @@ public class UserDaoImpl implements UserDao {
 		return finalUser;
 	}
 
-
 	@SuppressWarnings("finally")
 	@Override
 	public User getUserById(int id) {
 		Session session = sessionFactory.openSession();
-		// Transaction transaction = session.beginTransaction();
-		/*
-		 * Criteria criteria = session.createCriteria(User.class);
-		 * criteria.add(Restrictions.eq("id", id)); User user = (User)
-		 * criteria.uniqueResult(); session.close(); return user;
-		 */
-
-		// get user object from db
 		org.hibernate.query.Query<User> query = session.createQuery("from User where id= :id", User.class)
-				.setParameter("id", id);
-
-		// check this what it returns or throws an exception
-		// handle this properly later if any problem
+				                               .setParameter("id", id);
 		User user = null;
-
 		try {
 			user = query.getSingleResult();
 
@@ -105,13 +88,11 @@ public class UserDaoImpl implements UserDao {
 			session.close();
 			return user;
 		}
-
 	}
 
 	@Override
 	@SuppressWarnings({ "finally" })
 	public User getUserByEmail(String email) {
-		// TODO Auto-generated method stub
 		Session session = sessionFactory.openSession();
 		/*
 		 * Criteria criteria = session.createCriteria(User.class);
@@ -122,9 +103,6 @@ public class UserDaoImpl implements UserDao {
 		// get user object from db
 		org.hibernate.query.Query<User> query = session.createQuery("from User where email= :email", User.class)
 				.setParameter("email", email);
-
-		// check this what it returns or throws an exception
-		// handle this properly later if any problem
 		User user = null;
 
 		try {
@@ -157,10 +135,8 @@ public class UserDaoImpl implements UserDao {
 	 * 
 	 * return true; }
 	 */
-	/*
-	 * @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@ Update
-	 * User @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
-	 */
+	
+	////////////////////////////Update User///////////////////////////////////////
 
 	@Override
 	public boolean updateUser(User user) {
@@ -182,15 +158,12 @@ public class UserDaoImpl implements UserDao {
 		return true;
 	}
 
-	/*
-	  @@@@@@@@@@@@@@@@@@@@ Set New Password @@@@@@@@@@@@@
-	 */
-
+	////////////////// Set New Password //////////////////////////////
+	
 	public boolean setPassword(User user1) {
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;
 		try {
-
 			transaction = session.beginTransaction();
 			String hashedPassword = BCrypt.hashpw(user1.getPassword(), BCrypt.gensalt(10));
 			user1.setPassword(hashedPassword);
@@ -206,7 +179,6 @@ public class UserDaoImpl implements UserDao {
 			session.close();
 			return true;
 		}
-
 		catch (Exception e) {
 			if (transaction != null)
 				transaction.rollback();

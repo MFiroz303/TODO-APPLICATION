@@ -32,10 +32,10 @@
             <md-icon ng-if="grid" ng-click="displayView('grid')" md-svg-src="./images/gridview.svg"></md-icon>
          <!--   <md-icon ng-if="notesView=='list'" ng-click="gridViewToggle()" md-svg-icon="./images/gridview.svg"></md-icon> -->
         </md-button>    
-        </div>
+               </div>
 	                <md-menu>
 	               	  <md-button class="md-fab md-mini md-primary" aria-label="User" ng-click="$mdMenu.open($event)">
-	               	  <md-tooltip md-direction="bottom">{{getUser.email}}</md-tooltip>
+	               	   <md-tooltip md-direction="bottom">{{getUser.email}}</md-tooltip>
 	   			       <img ng-src="{{getUser.profilePic}}" alt="{{getUser.lastName.charAt(0)}}" style=" height: 100%;width:40px;">
 	                  </md-button>
 	                  
@@ -47,7 +47,8 @@
 	        			</md-button>
 	        			<b> {{getUser.lastName}}</b>
 	  					<p> {{getUser.email}}</p>
-	  				</span><br>
+	  				   </span><br>
+	  				   
 	  				 <md-divider></md-divider>
 	  				 <md-button class="md-raised" ui-sref="login">Add Account</md-button>
 	  			     <md-button class="md-raised md-primary" ng-click="logout()">Logout</md-button>

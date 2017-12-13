@@ -72,6 +72,7 @@ public class NoteDaoImpl implements NoteDao {
 	}
 
  /*/////////////////////////////// Get All Notes ///////////////////////////////*/	
+	
 	/*@SuppressWarnings({ "unchecked", "deprecation" })
 	@Override
 	public List<Note> findAllNote(User user) {
@@ -160,7 +161,7 @@ public class NoteDaoImpl implements NoteDao {
 	
 	public List<Note> getNotesForTrash() {
 		Session session = sessionFactory.openSession();
-		Query query = session.createQuery("From Note where isTrashed=true");
+		Query query = session.createQuery("From Note where trash=true");
 		List<Note> notes = query.list();		
 		session.close();
 		return notes;
@@ -207,5 +208,4 @@ public class NoteDaoImpl implements NoteDao {
 		}
 		return false;
 	}
-
 }

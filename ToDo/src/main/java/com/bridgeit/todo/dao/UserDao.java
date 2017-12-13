@@ -1,5 +1,8 @@
 package com.bridgeit.todo.dao;
 
+import java.util.List;
+
+import com.bridgeit.todo.model.Note;
 import com.bridgeit.todo.model.User;
 
 public interface UserDao {

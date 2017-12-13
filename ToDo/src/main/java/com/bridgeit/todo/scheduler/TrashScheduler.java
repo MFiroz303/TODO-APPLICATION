@@ -16,10 +16,11 @@ public class TrashScheduler {
 	@Autowired
 	NoteService noteService;
 	
-	@Scheduled(fixedDelay=20000)
+	@Scheduled(fixedDelay=200000)
 	public void deleteTrashNote() {
 		
 		List<Note> notes=noteService.getNotesForTrash();
+		/*System.out.println("insidse trash@@@@@@@@@@@@@");*/
 		int size=notes.size();
 		
 		long sevenDayBefore=System.currentTimeMillis();
@@ -27,13 +28,9 @@ public class TrashScheduler {
 		Date current=new Date(sevenDayBefore);
 	    for(int i=0;i<size;i++) {
 			
-			if(notes.get(i).getLastUpdated().before(current)){
-				
-				noteService.deleteNoteById(notes.get(i));
+			if(notes.get(i).getModifiedDate().before(current)) {
+				noteService.deleteNoteById(notes.get(i).getNoteId());
 			}
-			/*if(notes.get(i).getLastUpdated().before(current)) {
-				noteService.deleteNoteById(notes.get(i));
-			}*/
 		}
 		
 	}

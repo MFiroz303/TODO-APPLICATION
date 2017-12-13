@@ -25,9 +25,15 @@ import com.bridgeit.todo.Token.VerifyJwt;
 import com.bridgeit.todo.model.ErrorMessage;
 import com.bridgeit.todo.model.User;
 import com.bridgeit.todo.service.MailService;
-
 import com.bridgeit.todo.service.UserService;
 import com.bridgeit.todo.validation.Validator;
+
+/**
+ * This Controller called when any operations having related to User Accounts operation
+ * 
+ * @author MD FIROZ
+ * 
+ * */
 
 @RestController
 public class UserController {
@@ -36,8 +42,8 @@ public class UserController {
 
 	@Autowired
 	UserService userService;
-
-	/*@Autowired
+/*
+	@Autowired
 	ProducerImpl mailservice;*/
 	
 	@Autowired
@@ -52,6 +58,19 @@ public class UserController {
 	@Autowired
 	TokenGenerate tokenGenerate;
 
+	/**
+	 * @param User(register new user account)
+	 * 
+	 * 
+	 * @param Token(generating token and verifying user by sending Email )
+	 * 
+	 * @return ResponseMessage
+	 * 
+	 * @param User(check validUser)
+	 * 
+	 * Description (method used here saveUsre, validateUserRegistration to check user Email present in database or note  )
+	 * */
+	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public ResponseEntity<ErrorMessage> saveUser(@RequestBody User user, HttpSession session,
 			HttpServletRequest request) {
@@ -69,6 +88,11 @@ public class UserController {
 				url = url.substring(0, url.lastIndexOf("/")) + "/" + "verifyMail" + "/" + accessToken;
 				mailservice.sendMail(user.getEmail(), "mdfirozahmad2222@gmail.com", "emailVerification", url);
 				
+				/*HashMap<String, String> map = new HashMap<>();
+				map.put("to", user.getEmail());
+				map.put("url", url);
+				Producer.send(map);*/
+				
 				logger.info("sending the mail for registration verification");
 				errorMessage.setResponseMessage("registered Successfully....");
 				return ResponseEntity.ok(errorMessage);
@@ -81,6 +105,17 @@ public class UserController {
 		        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
 	}
 
+	/**
+	 * @param User
+	 * 
+	 * @param Token(generating token and verifying user by sending Email )
+	 * 
+	 * @return ResponseMessage
+	 * 
+	 * @param User(check user Email by sending token in header)
+	 * 
+	 * Description (method used here getUSrById to validate usre by id, clicking on link in Email to activate and verify the Email of user)
+	*/
 	@RequestMapping(value = "/verifyMail/{accessToken:.+}", method = RequestMethod.GET)
 	public ResponseEntity<ErrorMessage> verifyUser(@PathVariable("accessToken") String accessToken,
 			HttpServletResponse response) throws IOException {
@@ -113,6 +148,18 @@ public class UserController {
 
 	}
 
+	/**
+	 * @param User(get user password and Email)
+	 * 
+	 * @param Token(generating token and set the token for specified time )
+	 * 
+	 * @return ResponseMessage
+	 * 
+	 * @param User(check user by Email)
+	 * 
+	 * @Description (method used here getUSrByEmail for login, Encrpit the password)
+	*/
+	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ResponseEntity<ErrorMessage> userLogin(@RequestBody User user, HttpSession session) {
 
@@ -142,6 +189,18 @@ public class UserController {
 		
 	}
 
+	/**
+	 * @param User(get user password and Email)
+	 *  
+	 * @param Token(generating token and sending mail on Email)
+	 * 
+	 * @return ResponseMessage
+	 * 
+	 * @param User(check user Email and send mail)
+	 * 
+	 * @Description (method used here getUSrByEmail for send the Email for forgot password ,check for valid Email)
+	*/
+	
 	@RequestMapping(value = "/forgotPassword", method = RequestMethod.POST)
 	public ResponseEntity<ErrorMessage> forgaotPassword(@RequestBody User user, HttpServletRequest request,
 			HttpSession session) {
@@ -163,10 +222,28 @@ public class UserController {
 			System.out.println("token" + accessToken);
 			mailservice.sendMail(user.getEmail(), "mdfirozahmad2222@gmail.com", "accessToken is :", url);
 			
+			/*HashMap<String, String> map = new HashMap<>();
+			map.put("to", user.getEmail());
+			map.put("url", url);
+			Producer.send(map);*/
+			
 			errorMessage.setResponseMessage("success");
 			return ResponseEntity.ok(errorMessage);
 		}
 	}
+	
+	/**
+	 * @param User(get user password and Email)
+	 * 
+	 * @param Token(verify the token in header)
+	 * 
+	 * @return ResponseMessage
+	 * 
+	 * @param User(check user Email and send mail)
+	 * 
+	 * @Description (method used here to get the link on email to set the passowrd)
+	*/
+	
 	@RequestMapping(value = "/setPassword/{Token:.+}", method = RequestMethod.PUT)
 	public ResponseEntity<String> setPassword(@RequestBody User user1, HttpSession session,
 			HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -181,10 +258,10 @@ public class UserController {
 			 userToken = request.getHeader(key);
 			}
 		}
-		int id = VerifyJwt.verify(userToken);
-		User user = userService.getUserById(id);
-		System.out.println("User id is:  " + id);
-		user1.setId(id);
+		    int id = VerifyJwt.verify(userToken);
+		    User user = userService.getUserById(id);
+		    System.out.println("User id is:  " + id);
+		    user1.setId(id);
 		
 		if (user == null) {
 			logger.info("No user Found at this id");
@@ -200,18 +277,29 @@ public class UserController {
 			return ResponseEntity.ok("password updated");
 		}
 
-		logger.info("password not updated");
-		errorMessage.setResponseMessage("password not updated");
-		//return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
-		return ResponseEntity.status(HttpStatus.OK).body("password not updated");
+		    logger.info("password not updated");
+		    errorMessage.setResponseMessage("password not updated");
+		    return ResponseEntity.status(HttpStatus.OK).body("password not updated");
 	}
+	
+	/**
+	 * @param User
+	 * 
+	 * @param Token(verify the token in header)
+	 * 
+	 * @return ResponseMessage
+	 * 
+	 * 
+	 * @Description (method used here to get the User information to for profile image of user)
+	*/	
 	
 	@RequestMapping(value = "/userProfile" ,method=RequestMethod.GET)
 	public ResponseEntity<User> currentUser(@RequestHeader("Authorization") String Authorization, HttpServletRequest request) throws IOException {
-		System.out.println("########################################"+Authorization);
-		int userId = VerifyJwt.verify(Authorization);
-		User user = userService.getUserById(userId);
-		System.out.println("#########################################"+user);
-		return ResponseEntity.ok(user);
+	     
+		   System.out.println("########################################"+Authorization);
+		   int userId = VerifyJwt.verify(Authorization);
+		   User user = userService.getUserById(userId);
+		   System.out.println("#########################################"+user);
+		   return ResponseEntity.ok(user);
 	}
 }

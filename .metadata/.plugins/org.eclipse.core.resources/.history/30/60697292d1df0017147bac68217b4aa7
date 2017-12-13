@@ -1,0 +1,389 @@
+package com.bridgeit.todo.controller;
+
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.bridgeit.todo.Token.TokenGenerate;
+import com.bridgeit.todo.Token.VerifyJwt;
+import com.bridgeit.todo.model.ErrorMessage;
+import com.bridgeit.todo.model.Label;
+import com.bridgeit.todo.model.Note;
+import com.bridgeit.todo.model.User;
+import com.bridgeit.todo.service.NoteService;
+import com.bridgeit.todo.service.UserService;
+
+
+/**
+ * This Controller called when any operations having related to Notes
+ * 
+ * @author MD FIROZ
+ * 
+ * */
+
+@RestController
+public class NoteController {
+
+	private Logger logger = (Logger) LoggerFactory.getLogger(NoteController.class);
+
+	@Autowired
+	NoteService noteService;
+
+	@Autowired
+	ErrorMessage errorMessage;
+
+	@Autowired
+	UserService userService;
+
+	@Autowired
+	TokenGenerate tokenGenerate;
+
+	/**
+	 * @param Notes(create new notes)
+	 * 
+	 * @param Token(verifying token for user )
+	 * 
+	 * @return ResponseMessage
+	 * 
+	 * @param User(check Current User)
+	 * 
+	 * Description (method used here add new notes )
+	 * */
+	
+	@RequestMapping(value = "/addNote", method = RequestMethod.POST)
+	public ResponseEntity<ErrorMessage> saveNotes(@RequestHeader("Authorization") String Authorization,
+			@RequestBody Note note, HttpSession session) {
+
+		int id = VerifyJwt.verify(Authorization);
+		logger.info("userId in request is: " + id);
+		
+		if (id == 0) {
+			logger.info("User not found / Token validation failed");
+			errorMessage.setResponseMessage("Data Successfully added ");
+		}
+		User user1 = userService.getUserById(id);
+		Date date = new Date();
+		note.setCreatedDate(date);
+		note.setModifiedDate(date);
+
+		note.setUser(user1);
+		int userId = noteService.saveNotes(note);
+
+		if (userId != 0) {
+			logger.info("Data Successfully inserted");
+			errorMessage.setResponseMessage("Data Successfully inserted ");
+			return ResponseEntity.status(HttpStatus.CREATED).body(errorMessage);
+		}
+		logger.info("Data not inserted");
+		errorMessage.setResponseMessage("Note could not be added");
+		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+		// return ResponseEntity.ok(errorMessage);
+	}
+
+	
+	/**
+	 * @param Notes(update created notes)
+	 * 
+	 * @param Token(verifying  and passing token header )
+	 * 
+	 * @return ResponseMessage
+	 * 
+	 * @param User(check Current User and get the notes with user)
+	 * 
+	 * Description (method used here to get the note by ID ,update the notes,   )
+	 * */
+	
+	@RequestMapping(value = "/update", method = RequestMethod.PUT)
+	public ResponseEntity<ErrorMessage> updateNote(@RequestHeader("Authorization") String Authorization,
+			@RequestBody Note note) {
+
+		User user = userService.getUserById(VerifyJwt.verify(Authorization));
+		Note oldNote = noteService.getNoteById(note.getNoteId());
+		if (user != null) {
+
+			if (oldNote.getUser().getId() == user.getId()) {
+				note.setUser(user);
+
+				noteService.updateNote(note);
+				logger.info("Note Updated");
+				errorMessage.setResponseMessage("Data Successfully updated ");
+				return ResponseEntity.ok(errorMessage);
+			}
+
+		}
+		errorMessage.setResponseMessage("User is not logged in");
+		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(errorMessage);
+	}
+	
+	/**
+	 * @param Notes(Delete notes)
+	 * 
+	 * @return ResponseMessage
+	 * 
+	 * @param User(check Current User)
+	 * 
+	 * Description (method used here to delete the note by ID )
+	 * */
+
+	@RequestMapping(value = "/delete/{id}", method = RequestMethod.DELETE)
+	public ResponseEntity<ErrorMessage> deleteNoteById(@PathVariable("id") int id) {
+
+		      noteService.deleteNoteById(id);
+		      logger.info("note deleted by id");
+		      errorMessage.setResponseMessage("Successfully deleted");
+		      return ResponseEntity.ok(errorMessage);
+	  }
+	
+	
+	/**
+	 * @param Notes(get the all notes,Merge User Collaborator with notes)
+	 * 
+	 * @param Token(verifying and passing token header )
+	 * 
+	 * @return ResponseEntity, {@link HttpStatus.Ok}
+	 * 
+	 * @param User(check Current User)
+	 * 
+	 * Description (method used here to get the note by ID ,find all notes, get Shared notes , add all collaborated notes  )
+	 * */
+
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@RequestMapping(value = "/noteList", method = RequestMethod.GET)
+	public ResponseEntity<List<Note>> findAllNote(@RequestHeader("Authorization") String Authorization,
+			HttpSession session, HttpServletRequest request) {
+
+		     int id = VerifyJwt.verify(Authorization);
+		     logger.info("Verifying token for header");
+
+		   if (id == 0) {
+			 logger.info("Cheking user id null or not");
+			 return new ResponseEntity(HttpStatus.NOT_FOUND);
+	 }
+		 
+		     User user1 = userService.getUserById(id);
+		 if(user1!=null) {
+		     logger.info("check User found");
+		     List<Note> notes = noteService.findAllNote(user1);
+		
+	         List<Note> collabdNotes=noteService.getSharedNotes(user1.getId());
+	         notes.addAll(collabdNotes);
+	         logger.info("merging user collaborator with note");
+	         return new  ResponseEntity(notes, HttpStatus.OK);
+		}
+		     return new ResponseEntity(HttpStatus.BAD_REQUEST);	
+	}
+	
+	/**
+	 * @param Owner(get the owner of notes)
+	 * 
+	 * @param Token(verifying and passing token header )
+	 * 
+	 * @return ResponseEntity.Ok
+	 * 
+	 * @param User(check Current User )
+	 * 
+	 * Description (method used here to get note by ID ,get user by Id, getUser with ownNotes  )
+	 * */
+	
+	
+	@RequestMapping(value = "/getOwner", method = RequestMethod.POST)
+	public ResponseEntity<User> getOwner(@RequestHeader("Authorization") String Authorization, @RequestBody Note note,
+			HttpServletRequest request) {
+
+		    int id = VerifyJwt.verify(Authorization);
+		    logger.info("verifying user by passing token in header for owner note");
+		    User user = userService.getUserById(id);
+		
+	    if (user != null) {
+		    Note owNote = noteService.getNoteById(note.getNoteId());
+			return ResponseEntity.ok(owNote.getUser());
+		} else {
+			return ResponseEntity.ok(null);
+		}
+	}
+
+	
+	/**
+	 * @param UserNotes(get the shared notes by user)
+	 * 
+	 * @param Token(verifying and passing token header )
+	 * 
+	 * @return ResponseEntity.Ok
+	 * 
+	 * @param User(check Current User , current user notes, owner )
+	 * 
+	 * Description (method used here to get note by ID ,get user by Id, get shared User)
+	 * */
+	
+	@RequestMapping(value = "/sharedUserNotes", method = RequestMethod.POST)
+	public ResponseEntity<List<User>> sharedNotesUser(@RequestHeader("Authorization") String Authorization,
+			@RequestBody Note note, HttpServletRequest request) {
+
+		    int id = VerifyJwt.verify(Authorization);
+		    User user = userService.getUserById(id);
+
+		if (user != null) {
+			logger.info("verifying shared notes by passing token in header.");
+			Note userNote = noteService.getNoteById(note.getNoteId());
+			if (userNote == null) {
+				return null;
+			}
+			List<User> owner = userNote.getSharedUser();
+			return ResponseEntity.ok(owner);
+		} else {
+			return ResponseEntity.ok(null);
+		}
+	}
+
+	/**
+	 * @param CollabNotes(get the collab User with Owner)
+	 * 
+	 * @param Token(verifying and passing token header, passing email in header )
+	 * 
+	 * @return ResponseEntity.Ok
+	 * 
+	 * @param User(check Current User)
+	 * 
+	 * Description (method used here to get note by ID ,get user by Email, get shared User, add shared user, 
+	                                                                 update old notes with shared user)
+	 * */
+	
+	@RequestMapping(value = "/collaborator", method = RequestMethod.POST)
+	public ResponseEntity<ErrorMessage> collaborator(@RequestHeader("Authorization") String Authorization,
+			@RequestBody Note note, HttpServletRequest request) {
+		
+		    System.out.println("HUHUHUHUHUh");
+		    int uId = VerifyJwt.verify(Authorization);
+		    if (uId < 0) {
+			logger.info("User not found / Token validation failed in collaborator");
+			errorMessage.setResponseMessage("No user logged in");
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorMessage);
+		}
+		    Note oldNote = noteService.getNoteById(note.getNoteId());
+		    User sharedUser;
+		    System.out.println("before: " + oldNote);
+
+		try {
+			sharedUser = userService.getUserByEmail(request.getHeader("email"));
+		if (sharedUser == null) {
+			System.out.println("No User Email found");
+		    return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorMessage);
+		 }
+
+		} catch (Exception E) {
+			System.out.println("No User Email found");
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).body(errorMessage);
+		}
+
+		    oldNote.getSharedUser().add(sharedUser);
+		    noteService.updateNote(oldNote);
+		   System.out.println("after: " + oldNote);
+		   return ResponseEntity.status(HttpStatus.OK).body(errorMessage);
+	}
+	
+	
+	/**
+	 * @param CollabNotes(get the collab User from notes)
+	 * 
+	 * @param Token(verifying and passing token header, passing email in header )
+	 * 
+	 * @return {HttpStatus.BAD_REQUEST}
+	 * 
+	 * Description (method used here to get note by ID ,get user by Email, get shared User, remove shared user, 
+	                                                                 update old notes with shared user)
+	 * */
+	@RequestMapping(value="/removeCollaborator",method=RequestMethod.POST)
+	public ResponseEntity<Void> removeCollaborator(@RequestBody Note note,HttpServletRequest request)
+	{
+		   Note oldNote = noteService.getNoteById(note.getNoteId());
+		   User user=userService.getUserByEmail(request.getHeader("email"));
+		
+		if(user!=null)
+		  {
+		   oldNote.getSharedUser().remove(user);
+		   noteService.updateNote(oldNote);
+		}
+		   return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+	}
+	
+
+	/**
+	 * @param Labels(create labels)
+	 * 
+	 * @param Token(verifying and passing token header)
+	 * 
+	 * @return ResponseMessage
+	 * 
+	 * @param User(check Current User)
+	 * 
+	 * Description (method used here to get note by ID ,get user by Email, get shared User, add shared user, 
+	                                                                 update old notes with shared user)
+	 * */
+	
+	@RequestMapping(value="/createLabel",  method =  RequestMethod.POST)
+	public ResponseEntity<User> createLabel( @RequestHeader("Authorization") String Authorization,@RequestBody Label label, HttpServletRequest request,
+			HttpServletResponse response) {
+	
+		   int uId = VerifyJwt.verify(Authorization);
+		   User user = userService.getUserById(uId);
+		
+		if(user!=null){
+		   logger.info("checking user found or not in create label and Token validation");
+		   noteService.createLabel(user, label);
+		   return new ResponseEntity<User>(HttpStatus.OK);
+	}
+		   errorMessage.setResponseMessage("User not Exist");
+		   System.out.println("User Note Found");
+		   return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+	}
+	@RequestMapping(value = "/getLabel", method = RequestMethod.POST)
+	public ResponseEntity<Object> getAllLabel(@RequestHeader("Authorization") String Authorization,HttpServletRequest request)
+	{
+		  int uId = VerifyJwt.verify(Authorization);
+		  User user = userService.getUserById(uId);
+		  Set<Label> labels=null;
+		  
+	 if(user!=null)
+		 {
+		  logger.info("User and Token is valid for get Label");
+		  labels= user.getLabels();
+		}
+		else{
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User Not logged in");
+		}
+		    return ResponseEntity.ok(labels);
+	}
+	
+	@RequestMapping(value="/deleteLabel",method=RequestMethod.POST)
+	public ResponseEntity<Object> detelelabel (@RequestHeader("Authorization") String Authorization, @RequestBody Label label,HttpServletRequest request)
+	{
+		    int uId = VerifyJwt.verify(Authorization);
+		    User user = userService.getUserById(uId);
+		
+		if(user!=null){
+			logger.info("User and Token is valid for get Label");
+			noteService.deleteLabel(label, user);
+		}else{
+			errorMessage.setResponseMessage("User Not exits");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorMessage);
+		}
+		    return new  ResponseEntity<Object>(HttpStatus.BAD_REQUEST);
+		
+	}
+}
