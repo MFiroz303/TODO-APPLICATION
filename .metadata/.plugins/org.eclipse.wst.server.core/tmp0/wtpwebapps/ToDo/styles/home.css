@@ -41,7 +41,8 @@
 }
 
 .mdButton{
-	    min-width: 10px;
+	    min-width: 15px;
+	    padding:10px;
 }
 .iconHome{
     width: 0;
@@ -57,10 +58,25 @@
 	padding:58px;
 	margin-left:-57px;
 }
-/*  
-[contenteditable=true]:empty:before{
-  content: attr(placeholder);
-  display: block; For Firefox
+
+.card{
+	     width: fit-content;
+	     padding:10px;
+}
+.pinned{
+	width:21px;
+	 float:right;
+	/*  margin-left:224px; */
+	 position:inherit;	
+}
+.proflPics{
+       height: 100%;
+       width:35px;"
 }
 
- */
+.color{
+      border:none;
+      display:inline-block;
+      vertical-align:middle; 
+      margin-top: 11px;
+}

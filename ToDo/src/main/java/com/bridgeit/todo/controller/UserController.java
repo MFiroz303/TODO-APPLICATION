@@ -116,6 +116,7 @@ public class UserController {
 	 * 
 	 * Description (method used here getUSrById to validate usre by id, clicking on link in Email to activate and verify the Email of user)
 	*/
+	
 	@RequestMapping(value = "/verifyMail/{accessToken:.+}", method = RequestMethod.GET)
 	public ResponseEntity<ErrorMessage> verifyUser(@PathVariable("accessToken") String accessToken,
 			HttpServletResponse response) throws IOException {
@@ -258,37 +259,36 @@ public class UserController {
 			 userToken = request.getHeader(key);
 			}
 		}
-		    int id = VerifyJwt.verify(userToken);
-		    User user = userService.getUserById(id);
-		    System.out.println("User id is:  " + id);
-		    user1.setId(id);
+		     int id = VerifyJwt.verify(userToken);
+		     User user = userService.getUserById(id);
+		     System.out.println("User id is:  " + id);
+		     user1.setId(id);
 		
 		if (user == null) {
-			logger.info("No user Found at this id");
-			errorMessage.setResponseMessage("No user Found at this id");
-			return ResponseEntity.status(HttpStatus.OK).body("user empty");
+			 logger.info("No user Found at this id");
+			 errorMessage.setResponseMessage("No user Found at this id");
+			 return ResponseEntity.status(HttpStatus.OK).body("user empty");
 		}
-			response.sendRedirect("http://localhost:8080/ToDo/#!/setPassword");
+			 response.sendRedirect("http://localhost:8080/ToDo/#!/setPassword");
           
 		if (userService.setPassword(user1)) {
-			logger.info("check and set password for user");
-			errorMessage.setResponseMessage("password updated");
-			logger.debug("password updated successfully");
-			return ResponseEntity.ok("password updated");
+			 logger.info("check and set password for user");
+			 errorMessage.setResponseMessage("password updated");
+			 logger.debug("password updated successfully");
+			 return ResponseEntity.ok("password updated");
 		}
 
-		    logger.info("password not updated");
-		    errorMessage.setResponseMessage("password not updated");
-		    return ResponseEntity.status(HttpStatus.OK).body("password not updated");
+		     logger.info("password not updated");
+		     errorMessage.setResponseMessage("password not updated");
+		     return ResponseEntity.status(HttpStatus.OK).body("password not updated");
 	}
 	
 	/**
 	 * @param User
 	 * 
-	 * @param Token(verify the token in header)
+	 * @param Token(verifying  token in header)
 	 * 
 	 * @return ResponseMessage
-	 * 
 	 * 
 	 * @Description (method used here to get the User information to for profile image of user)
 	*/	
@@ -296,10 +296,10 @@ public class UserController {
 	@RequestMapping(value = "/userProfile" ,method=RequestMethod.GET)
 	public ResponseEntity<User> currentUser(@RequestHeader("Authorization") String Authorization, HttpServletRequest request) throws IOException {
 	     
-		   System.out.println("########################################"+Authorization);
-		   int userId = VerifyJwt.verify(Authorization);
-		   User user = userService.getUserById(userId);
-		   System.out.println("#########################################"+user);
-		   return ResponseEntity.ok(user);
+		     System.out.println("########################################"+Authorization);
+		     int userId = VerifyJwt.verify(Authorization);
+		     User user = userService.getUserById(userId);
+		     System.out.println("#########################################"+user);
+		     return ResponseEntity.ok(user);
 	}
 }

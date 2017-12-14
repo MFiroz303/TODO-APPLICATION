@@ -69,7 +69,7 @@ todoApp.controller('homeController',
 					$scope.displayView=function(type){
 						
 						if(type=='list'){
-							$scope.view='90';
+							$scope.view='70';
 						    $scope.width='100%';
 							$scope.list=false
 							$scope.grid=true
