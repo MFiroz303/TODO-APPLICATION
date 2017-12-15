@@ -6,6 +6,7 @@ todoApp.directive('topNavBar', function() {
 		templateUrl : './templates/TopNavBar.html'
 	}
 })
+
 todoApp.directive('sideNavBar', function() {
 
 	return {

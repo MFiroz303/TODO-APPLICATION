@@ -11,7 +11,7 @@ todoApp.controller('homeController',
 			/** *******toggle of sidebar ************* */
 			$scope.showNav=true;
 			$scope.hideNav=function(){
-				console.log("imside");
+				console.log("########inside sidebar#######");
 				$scope.showNav=!$scope.showNav;
 			}
 			/** *******search Notes ************* */
@@ -43,20 +43,7 @@ todoApp.controller('homeController',
 		          $scope.searchResultNotes = arr;
 		        }
 		      
-		      /** *******profile image ************* */
-				var profilePic = function() {
-					var url = 'userProfile';
-					var getUser = homeService.service(url, 'GET');
-					getUser.then(function(response) {
-						var User = response.data;
-						$scope.getUser = User;
-						console.log($scope.getUser)
-
-					}, function(response) {
-
-					});
-				}
-				//List and Grid view
+		    //List and Grid view
 				 $scope.view=function(){
 						var view = localStorage.getItem('view');
 						if(view=='list'){
@@ -89,6 +76,21 @@ todoApp.controller('homeController',
 						$state.go('login');
 					}
 					
+		      
+		      /** *******profile image ************* */
+				var profilePic = function() {
+					var url = 'userProfile';
+					var getUser = homeService.service(url, 'GET');
+					getUser.then(function(response) {
+						var User = response.data;
+						$scope.getUser = User;
+						console.log($scope.getUser)
+
+					}, function(response) {
+
+					});
+				}
+				
 					/** ******* Reminder ************* */
 					$scope.displayDialog = function(note) {
 						mdcDateTimeDialog.show({
@@ -118,8 +120,10 @@ todoApp.controller('homeController',
 							getNotes();
 							$scope.error = response.data.message;
 						});
+					
 					}
-
+					
+				
 			/** ******* get the notes************* */
 			var search=[];
 			var getNotes = function() {
@@ -127,39 +131,52 @@ todoApp.controller('homeController',
 				var notes = homeService.service(url, 'GET', notes);
 				notes.then(function(response) {
 					$scope.notes = response.data;
+					reminder($scope.notes);
 					homeService.notes = response.data;
 					console.log(notes)
 					for (var i = 0; i < response.data.length; i++) {
 	    			 console.log("inside get notes push into............@@@@@@@@@@@@@")
 							search.push(response.data[i]);
-	    		
 					}
-					/*
-					 * console.log("$scope.notes::",$scope.notes);
-					 * },function(response){
-					 * $scope.error=response.data.responseMessage;
-					 * $location.path('login'); }); $scope.notes=notes; }
-					 */
-					// reminder checker
-					$interval(function() {
-						for (var i = 0; i < response.data.length; i++) {
-							if (response.data[i].reminder) {
-								var date = new Date(response.data[i].reminder);
-								if ($filter('date')(date) == $filter('date')(
-										new Date())) {
-									toastr.success(response.data[i].body,
-											response.data[i].title);
-								}
-							}
-						}
-					}, 60000);
 				}, function(response) {
 					$scope.error = response.data.responseMessage;
 					console.log(response);
-					/*$location.path('login');*/
-					// $scope.logout();
 				});
 			}
+			
+			//////////////////toastr///////////////////////
+			
+			
+		/*	var reminder=function(notes){
+					    var date = new Date(notes.reminder);
+					     if ($filter('date') (date) == $filter('date')(new Date(), 'reminder')) {
+							toastr.success(notes.description, 'Reminder Deleted',
+							notes.title);
+								}
+					     else{
+					    	 
+					    	 notes.reminder="";
+					     }
+							}
+			*/
+			
+			var reminder=function(notes){
+			 $interval(function() {
+				for (var i = 0; i < notes.length; i++) {
+				  if (notes[i].reminder) {
+				    var date = new Date(notes[i].reminder);
+					console.log("date",$filter('date')(date,"MM/dd/yyyy hh:mm") )
+					console.log("reminder",date)
+					date=$filter('date')(date,"MM/dd/yyyy hh:mm")
+				     if (date == $filter('date')(new Date(),"MM/dd/yyyy hh:mm")) {
+						toastr.success(notes[i].description, 'Reminder Deleted',
+						notes[i].title);
+							}
+						}
+					}
+				},60000);
+			}
+			
 			/** ******* create notes ************* */
 			$scope.createNote = function() {
 				console.log('hello');
@@ -585,5 +602,6 @@ todoApp.controller('homeController',
 
 			profilePic();
 			getNotes();
+			
 			//getUser();
 		});

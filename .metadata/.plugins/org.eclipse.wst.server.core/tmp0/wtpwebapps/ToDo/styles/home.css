@@ -80,3 +80,9 @@
       vertical-align:middle; 
       margin-top: 11px;
 }
+.delete{
+	float:right;
+	 position:inherit;	
+	
+	
+}

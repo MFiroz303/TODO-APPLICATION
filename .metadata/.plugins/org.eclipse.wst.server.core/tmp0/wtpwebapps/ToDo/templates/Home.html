@@ -110,7 +110,7 @@
          <img ng-src="images/pushpin-icon-63850.png"  class ="pinned" ng-click="pinned(note,false)" ng-show="mouse"/></div>
 
 	     <div ng-if="note.image"><img ng-src={{note.image}} style="width: 100%;height:30%;"></div>
-            <span  ng-click="removeImage(note)" ><img ng-if="note.image!=''"  ng-src="images/deleteImage.svg" class="delete" ng-show="mouse"/></span> 
+            <span  ng-click="removeImage(note)" class="delete"><img ng-if="note.image!=''"  ng-src="images/deleteImage.svg" class="delete" ng-show="mouse"/></span> 
         <div>
         
          <md-card-content  ng-click="popUp(note,$event)">
