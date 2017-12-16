@@ -58,8 +58,8 @@
    <div layout="row">	
 <side-nav-bar></side-nav-bar>
 
-	  <div layout="row" layout-wrap flex style="padding: 58px;">
-      <div ng-repeat="note in searchResultNotes" flex="{{view}}" id="note-scope"  style="padding:10px" ng-mouseover="mouse=true" ng-mouseleave="mouse=false" >
+	  <div layout="row" layout-wrap flex style="padding: 55px;">
+      <div ng-repeat="note in searchResultNotes" flex="{{view}}" id="note-scope"  style="padding:10px; width:fit-content; padding:10px;" ng-mouseover="mouse=true" ng-mouseleave="mouse=false" >
       <md-card flex style="word-break: break-all;" ng-style="{'background-color' : note.noteColor}">
       
       <div style=" margin-top: 1px; margin-right: 1px;">
@@ -78,6 +78,10 @@
   			<span ng-repeat="label in note.labels" class="chip">{{label.name}}
   		    <span class="closebtn" ng-click="removeLabel(note,label)">&#x274C;</span></span>
 		 </div>
+		  <div ng-repeat="user in note.sharedUser" >
+        <md-button class="md-fab md-mini md-primary" aria-label="User" ng-click="displayCollab(note, $event)">
+	   				  <img  ng-src="{{user.profilePic}}"  style=" height: 100%;width:35px;" /></md-button>
+          </div>
 	      
          <md-button  ng-if="note.reminder">{{note.reminder | date:'medium'}}
            <md-icon md-svg-src="./images/Cancel.svg" ng-click="deleteReminder(note)"></md-icon>

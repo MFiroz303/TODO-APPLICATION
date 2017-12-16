@@ -1,0 +1,38 @@
+var todoApp = angular.module("todoApp");
+todoApp.controller('trashController',
+		function($scope, $state, $mdSidenav, trashService, $http, $location) {
+	
+					/** ******* Reminder ************* */
+					$scope.displayDialog = function(note) {
+						mdcDateTimeDialog.show({
+							time : true,
+							shortTime : true
+						}).then(function(date) {
+							$scope.selectedDateTime = date;
+							note.reminder = date;
+							var url = 'update';
+							var notes = homeService.service(url, 'PUT', note);
+							notes.then(function(response) {
+								getNotes();
+							}, function(response) {
+								getNotes();
+								$scope.error = response.data.message;
+							});
+						});
+					};
+
+					/** *******Delete Reminder ************* */
+					$scope.deleteReminder = function(note) {
+						note.reminder = null;
+						var url = 'update';
+						var notes = homeService.service(url, 'PUT', note);
+						notes.then(function(response) {
+						}, function(response) {
+							getNotes();
+							$scope.error = response.data.message;
+						});
+					
+					}
+		getNotes();
+});
+					

@@ -5,7 +5,7 @@ todoApp.controller('homeController',
 				$http, $location, Upload, $base64) {
 	
 			console.log('hello');
-			$scope.mouse = false;
+			$scope.mouse = true;
 			$scope.firozcollab = {};
 			
 			/** *******toggle of sidebar ************* */
@@ -602,6 +602,4 @@ todoApp.controller('homeController',
 
 			profilePic();
 			getNotes();
-			
-			//getUser();
 		});

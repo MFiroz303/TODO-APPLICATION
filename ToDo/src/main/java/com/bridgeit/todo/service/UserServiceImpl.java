@@ -10,6 +10,15 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int saveUser(User user) {
+		
+		/*String hashedPassword = null;
+          int id =0;
+    
+    if (!(user.getPassword() == null)) {
+		  hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(10));
+		  user.setPassword(hashedPassword);}
+	      return id;*/
+		
 		return userDao.saveUser(user);
 	}
 

@@ -1,0 +1,21 @@
+var todoApp = angular.module("todoApp");
+todoApp.controller('homeController',
+		function($scope, $state, fileReader, homeService, $timeout, $filter,
+				$mdSidenav, $mdDialog, mdcDateTimeDialog, toastr, $interval,
+				$http, $location, Upload, $base64) {
+
+         /** *******archive notes ************* */
+			$scope.archive = function(note, archive) {
+				note.archive = archive;
+				note.pinned = false;
+				var url = 'update';
+				var notes = homeService.service(url, 'PUT', note)
+				notes.then(function(response) {
+					getNotes();
+				}, function(response) {
+					$scope.error = response.data.responseMessage;
+				});
+			}
+            getNotes();
+			
+		});

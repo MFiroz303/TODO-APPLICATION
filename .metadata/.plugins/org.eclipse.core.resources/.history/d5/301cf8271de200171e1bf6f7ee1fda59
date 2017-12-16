@@ -1,0 +1,7 @@
+var todoApp = angular.module("todoApp");
+todoApp.controller('homeController',
+		function($scope, $state, fileReader, homeService, $timeout, $filter,
+				$mdSidenav, $mdDialog, mdcDateTimeDialog, toastr, $interval,
+				$http, $location, Upload, $base64) {
+
+		});

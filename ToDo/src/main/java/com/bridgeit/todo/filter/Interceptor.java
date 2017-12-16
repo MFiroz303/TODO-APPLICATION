@@ -1,4 +1,4 @@
-package com.bridgeit.todo.filter;
+/*package com.bridgeit.todo.filter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -32,4 +32,4 @@ public class Interceptor implements HandlerInterceptor {
 		return true;
 	}
 
-}
+}*/
