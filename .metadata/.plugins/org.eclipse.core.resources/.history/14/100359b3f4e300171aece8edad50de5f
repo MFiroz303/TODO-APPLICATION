@@ -350,9 +350,8 @@ todoApp.controller('homeController',
 					action_properties : JSON.stringify({
 						object : {
 							'og:title' : note.title,
-							'og:description' : note.description
-							/*'og:image' : note.image*/
-							
+							'og:description' : note.description,
+							'og:description' : note.image
 						}
 					})
 				}, function(response) {

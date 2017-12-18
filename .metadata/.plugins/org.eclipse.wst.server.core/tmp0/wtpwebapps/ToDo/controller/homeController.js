@@ -351,6 +351,8 @@ todoApp.controller('homeController',
 						object : {
 							'og:title' : note.title,
 							'og:description' : note.description
+							/*'og:image' : note.image*/
+							
 						}
 					})
 				}, function(response) {
