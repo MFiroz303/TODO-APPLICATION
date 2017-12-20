@@ -172,7 +172,7 @@ public class NoteController {
 		     logger.info("Verifying token for header");
 
 		   if (id == 0) {
-			 logger.info("Cheking user id null or not");
+			 logger.info("Cheking user is null or not");
 			 return new ResponseEntity(HttpStatus.NOT_FOUND);
 	 }
 		 
@@ -188,6 +188,7 @@ public class NoteController {
 		}
 		     return new ResponseEntity(HttpStatus.BAD_REQUEST);	
 	}
+	
 	
 	/**
 	 * @param Owner(get the owner of notes)
@@ -268,7 +269,7 @@ public class NoteController {
 	public ResponseEntity<ErrorMessage> collaborator(@RequestHeader("Authorization") String Authorization,
 			@RequestBody Note note, HttpServletRequest request) {
 		
-		    System.out.println("HUHUHUHUHUh");
+		    System.out.println("HUHUHUHUHU");
 		    int uId = VerifyJwt.verify(Authorization);
 		    if (uId < 0) {
 			logger.info("User not found / Token validation failed in collaborator");

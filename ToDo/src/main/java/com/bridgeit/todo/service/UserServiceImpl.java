@@ -1,5 +1,7 @@
 package com.bridgeit.todo.service;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+
 import com.bridgeit.todo.dao.UserDao;
 import com.bridgeit.todo.model.User;
 
@@ -10,8 +12,8 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public int saveUser(User user) {
-		
-		/*String hashedPassword = null;
+		/*
+		String hashedPassword = null;
           int id =0;
     
     if (!(user.getPassword() == null)) {

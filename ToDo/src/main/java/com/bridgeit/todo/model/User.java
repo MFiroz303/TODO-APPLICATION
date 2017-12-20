@@ -26,6 +26,9 @@ public class User {
 	@Id
 	@Column(name = "id")
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	//@GeneratedValue(strategy = GenerationType.AUTO , generator="mygen")
+	@GenericGenerator(strategy="native", name="mygen")
+	
 	private int id;
 
 	private String firstName;
