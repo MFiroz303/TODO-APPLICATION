@@ -1,0 +1,20 @@
+
+ <md-card flex="flex" flex-gt-sm="50" flex-gt-md="33" style="width: 404px;  margin: 140px; margin-left: 451px;"> 
+   
+     <form name="Form" style="height:200px;">
+     
+       <md-input-container class="md-block" > 
+	     <label>Password</label>
+	     <input type="password" name="password" ng-model="user.password">
+	   </md-input-container>
+	   
+	    <md-input-container class="md-block"> 
+	     <label>Conform Password</label>
+	     <input type="conformPassword" name="conformPassword" ng-model="user.conformPassword">
+	   </md-input-container>
+	   <md-button  ng-click="setPassword()" class="md-raised md-primary">&nbsp Set &nbsp</md-button>
+	 </form>
+  
+ </md-card>
+
+	  

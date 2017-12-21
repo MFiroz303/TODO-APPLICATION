@@ -7,10 +7,11 @@ todoApp.controller('passwordController', function($scope, passwordService,
 		var app = passwordService.sendEmail($scope.user,$scope.error);
 		app.then(function (response) {
 			
-			$state.go('login');
+			$state.go('setPassword');
 		},
 		function (error) {
 			$scope.errorMessage = error.data.message;
+			console.log('wrong email...');
 			$state.go('/');	
 		})
 		

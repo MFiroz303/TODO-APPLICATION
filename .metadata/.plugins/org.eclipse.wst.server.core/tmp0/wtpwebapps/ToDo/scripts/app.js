@@ -29,7 +29,7 @@ todoApp.config([ '$stateProvider', '$urlRouterProvider',
 					
 			}).state('setPassword',{
 				url:'/setPassword',
-				templateUrl : 'templates/setPassword.html',
+				templateUrl : 'templates/SetPassword.html',
 				controller : 'setPasswordController'
 			})
 			
