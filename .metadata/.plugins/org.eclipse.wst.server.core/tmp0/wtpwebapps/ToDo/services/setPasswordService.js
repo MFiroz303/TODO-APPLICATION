@@ -5,7 +5,7 @@ todoApp.factory('setPasswordService', function($http, $location) {
 
 	set.setPassword = function(user) {
 		return $http({
-			method : "PUT",
+			method : "POST",
 			url : 'setPassword',
 			data : user
 		})

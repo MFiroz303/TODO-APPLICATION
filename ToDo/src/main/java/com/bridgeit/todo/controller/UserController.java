@@ -218,7 +218,7 @@ public class UserController {
 		} else {
 			String accessToken = TokenGenerate.generate(email.getId());
 			String url = request.getRequestURL().toString();
-			url = url.substring(0, url.lastIndexOf("/")) + "/" + "setPassword" + "/" + accessToken;
+			url = url.substring(0, url.lastIndexOf("/")) +  "/" + "#!/" + "setPassword" + "/" + accessToken;
 			
 			System.out.println("token" + accessToken);
 			mailservice.sendMail(user.getEmail(), "mdfirozahmad2222@gmail.com", "accessToken is :", url);
@@ -245,7 +245,7 @@ public class UserController {
 	 * @Description (method used here to get the link on email to set the passowrd)
 	*/
 	
-	@RequestMapping(value = "/setPassword/{Token:.+}", method = RequestMethod.PUT)
+	@RequestMapping(value = "/setPassword/{Token:.+}", method = RequestMethod.POST)
 	public ResponseEntity<String> setPassword(@RequestBody User user1, HttpSession session,
 			HttpServletRequest request, HttpServletResponse response) throws IOException {
 		
@@ -260,6 +260,9 @@ public class UserController {
 			}
 		}
 		     int id = VerifyJwt.verify(userToken);
+		/*
+		     int id = VerifyJwt.verify(Authorization);*/
+		     
 		     User user = userService.getUserById(id);
 		     System.out.println("User id is:  " + id);
 		     user1.setId(id);
@@ -270,7 +273,7 @@ public class UserController {
 			 return ResponseEntity.status(HttpStatus.OK).body("user empty");
 		}
 			 response.sendRedirect("http://localhost:8080/ToDo/#!/setPassword");
-          
+	
 		if (userService.setPassword(user1)) {
 			 logger.info("check and set password for user");
 			 errorMessage.setResponseMessage("password updated");

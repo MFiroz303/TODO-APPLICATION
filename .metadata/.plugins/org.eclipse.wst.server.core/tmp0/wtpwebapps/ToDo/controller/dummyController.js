@@ -11,17 +11,4 @@ todoApp.controller('dummyController', function($scope, $state, dummyService, $lo
 	    }, function(error) {
 		$scope.errorMessage = error.data.responseMessage;
 	})
-	
-
- /*  var google =function(){
-   url : 'googleLogin'
-	var notes = homeService.getToken(url,'GET',notes);
-      notes.then(function(response) {
-		console.log("login Success");
-		$state.go('home');
-	}, function(error) {
-		$scope.errorMessage = error.data.message;
-		$state.go('/');
-	});
-	}*/
 });
