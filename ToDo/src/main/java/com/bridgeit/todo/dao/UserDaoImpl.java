@@ -90,7 +90,8 @@ public class UserDaoImpl implements UserDao {
 	/////////////// Register New Users ///////////////////////// */
 	
 	public int saveUser(User user) {
-		String hashedPassword = null;
+		int id = 0;
+		/*String hashedPassword = null;
 		int id = 0;
 		System.out.println("User is :" + user);
 		if (!(user.getPassword() == null)) {
@@ -98,7 +99,7 @@ public class UserDaoImpl implements UserDao {
 			hashedPassword = BCrypt.hashpw(user.getPassword(), BCrypt.gensalt(10));
 			user.setPassword(hashedPassword);
 			System.out.println("hashed password: " + hashedPassword);
-		}
+		}*/
 
 		Session session = sessionFactory.openSession();
 		Transaction transaction = null;

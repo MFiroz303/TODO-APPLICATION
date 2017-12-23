@@ -104,8 +104,9 @@
 	   <h4 ng-hide="pinnedNotes.length">Pinned</h4>
        <div layout="row" layout-wrap flex >
        <div ng-repeat="note in notes"  ng-if="note.pinned" flex="{{view}}" id="note-scope" style="padding:10px; height:fit-content;" ng-mouseover="mouse=true" ng-mouseleave="mouse=false" class="card">
-       
-       <md-card flex style="word-break: break-all;" ng-style="{'background-color' : note.noteColor}">
+   
+<!--   <noteDirctv ng-repeat="note in notes" ng-if="note.pinned" flex="{{view}}" id="note-scope" style="padding:10px; height:fit-content;" ng-mouseover="mouse=true" ng-mouseleave="mouse=false" class="card">    
+ -->       <md-card flex style="word-break: break-all;" ng-style="{'background-color' : note.noteColor}">
        <div >
          <img ng-src="images/pushpin-icon-63850.png"  class ="pinned" ng-click="pinned(note,false)" /></div>
 
@@ -209,8 +210,11 @@
   <!--##############################################################OThErS#################################################################-->
    <h4 ng-show="pinnedNotes.length">Others</h4>
      <div layout="row" layout-wrap flex >
-      <div ng-repeat="note in notes | filter:{trash:false,archive:false,pinned:false} as pinnedNotes" flex="{{view}}" id="note-scope" style="padding:10px;" ng-mouseover="mouse=true" ng-mouseleave="mouse=false" class="card">
-       <md-card flex style="word-break: break-all;" ng-style="{'background-color' : note.noteColor}">
+     
+      <div ng-repeat="note in notes | filter:{trash:false,archive:false,pinned:false} as pinnedNotes"   flex="{{view}}" id="note-scope" style="padding:10px;" ng-mouseover="mouse=true" ng-mouseleave="mouse=false" class="card">
+     
+<!--    <noteDirctv ng-repeat="note in notes" flex="{{view}}" id="note-scope" style="padding:10px;" ng-mouseover="mouse=true" ng-mouseleave="mouse=false" class="card">
+ -->   <md-card flex style="word-break: break-all;" ng-style="{'background-color' : note.noteColor}">
       
      
 <!--             <img ng-src="images/pushpin-icon-63850.png" ng-if="note.pinned" color:blue; position:absolute;" ng-click="pinned(note,true)" ng-show="mouse"/></div>

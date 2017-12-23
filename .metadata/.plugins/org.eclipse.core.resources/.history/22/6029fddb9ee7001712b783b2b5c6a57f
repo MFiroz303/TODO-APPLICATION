@@ -1,0 +1,5 @@
+package com.bridgeit.todo.util;
+
+public class GoogleUtil {
+
+}

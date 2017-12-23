@@ -22,7 +22,7 @@ public class NoteServiceImpl implements NoteService {
 	}
 
 	@Override
-	public void deleteNoteById(int noteId) {
+	public void deleteNoteById(int noteId){
 		noteDao.deleteNoteById(noteId);
 		
 	}

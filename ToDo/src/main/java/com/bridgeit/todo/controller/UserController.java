@@ -245,23 +245,25 @@ public class UserController {
 	 * @Description (method used here to get the link on email to set the passowrd)
 	*/
 	
-	@RequestMapping(value = "/setPassword/{Token:.+}", method = RequestMethod.POST)
+	@RequestMapping(value = "/setPassword", method = RequestMethod.POST)
 	public ResponseEntity<String> setPassword(@RequestBody User user1, HttpSession session,
 			HttpServletRequest request, HttpServletResponse response) throws IOException {
 		
-		    String userToken = null;
+		/*  String userToken = null;
 		    @SuppressWarnings("rawtypes")
 			Enumeration headerNames = request.getHeaderNames();
-		    
+		  
 		 while (headerNames.hasMoreElements()) {
 			 String key = headerNames.nextElement().toString();
+			 System.out.println(key);
 			 if (key.equals("Authorization")) {
 			 userToken = request.getHeader(key);
+			 System.out.println("user token ----------"+userToken);
 			}
 		}
-		     int id = VerifyJwt.verify(userToken);
-		/*
-		     int id = VerifyJwt.verify(Authorization);*/
+		   int id = VerifyJwt.verify(userToken);*/
+		
+		     int id = VerifyJwt.verify(request.getHeader("token"));
 		     
 		     User user = userService.getUserById(id);
 		     System.out.println("User id is:  " + id);

@@ -1,0 +1,4 @@
+<top-nav-bar></top-nav-bar>
+<div flex-xs layout="row">
+<side-nav-bar ></side-nav-bar>
+<note-gate></note-gate>

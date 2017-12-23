@@ -5,24 +5,28 @@
 		<item value="0" key="DIALOG_Y_ORIGIN"/>
 	</section>
 	<section name="org.eclipse.ui.internal.QuickAccess">
-		<item value="64" key="dialogHeight"/>
-		<item value="164" key="dialogWidth"/>
+		<item value="46" key="dialogHeight"/>
+		<item value="146" key="dialogWidth"/>
 		<list key="textEntries">
+			<item value="1"/>
 			<item value="3"/>
 			<item value="1"/>
 			<item value="1"/>
 		</list>
 		<list key="orderedElements">
+			<item value="org.eclipse.pde.ui.organizeManifest"/>
 			<item value="org.eclipse.egit.ui.internal.preferences.WindowCachePreferencePage"/>
 			<item value="org.eclipse.ant.ui.views.AntView"/>
 			<item value="org.eclipse.jdt.ui.PackageExplorer"/>
 		</list>
 		<list key="orderedProviders">
+			<item value="org.eclipse.ui.commands"/>
 			<item value="org.eclipse.ui.preferences"/>
 			<item value="org.eclipse.e4.ui.parts"/>
 			<item value="org.eclipse.e4.ui.parts"/>
 		</list>
 		<list key="textArray">
+			<item value="sts"/>
 			<item value="window"/>
 			<item value="w"/>
 			<item value="wi"/>

@@ -45,6 +45,7 @@
 
 <!-- -================================================================================================= -->
 <script type="text/javascript" src="directives/homeDirectives.js"></script>
+<script type="text/javascript" src="directives/noteDirctv.js"></script>
 <script src="bower_components/angular-base64/angular-base64.js"></script>
 <script src="bower_components/angular-base64-upload/dist/angular-base64-upload.js"></script>
 <script src="bower_components/angular-base64-upload/dist/angular-base64-upload.min.js"></script>

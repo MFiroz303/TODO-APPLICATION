@@ -42,3 +42,4 @@ SpringWorkspace
 bower_components
 RemoteSystemsTempFiles
 Servers
+/target/

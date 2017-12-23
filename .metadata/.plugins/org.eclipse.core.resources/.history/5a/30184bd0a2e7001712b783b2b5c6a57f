@@ -1,0 +1,5 @@
+package com.bridgeit.todo.scheduler;
+
+public class TrashScheduler {
+
+}

@@ -120,13 +120,11 @@ todoApp.controller('homeController',
 							getNotes();
 							$scope.error = response.data.message;
 						});
-					
 					}
 					
-				
 			/** ******* get the notes************* */
-			var search=[];
-			var getNotes = function() {
+			  var search=[];
+			  var getNotes = function() {
 				var url = 'noteList';
 				var notes = homeService.service(url, 'GET', notes);
 				notes.then(function(response) {

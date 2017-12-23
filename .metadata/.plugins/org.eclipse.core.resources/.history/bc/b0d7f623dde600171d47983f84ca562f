@@ -1,0 +1,14 @@
+var todoApp = angular.module('todoApp');
+
+todoApp.factory('setPasswordService', function($http, $location) {
+	var set = {};
+
+	set.setPassword = function(user) {
+		return $http({
+			method : "POST",
+			url : 'setPassword'+,
+			data : user
+		})
+	}
+	return set;
+});
